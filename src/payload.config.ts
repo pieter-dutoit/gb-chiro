@@ -1,19 +1,22 @@
 import sharp from "sharp";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { buildConfig } from "payload";
+import { s3Storage } from "@payloadcms/storage-s3";
+import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { postgresAdapter } from "@payloadcms/db-postgres";
+
 import { fileURLToPath } from "url";
 import path from "path";
-import { s3Storage } from "@payloadcms/storage-s3";
+
 import { Media } from "./cms-config/collections/media";
-import { BusinessDetails } from "./cms-config/globals/business-details";
+import { BusinessDetailsGlobal } from "./cms-config/globals/business-details";
+import { Logo } from "./cms-config/globals/logo";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
   editor: lexicalEditor(),
-  globals: [BusinessDetails],
+  globals: [BusinessDetailsGlobal, Logo],
   collections: [Media],
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({
@@ -24,7 +27,6 @@ export default buildConfig({
     disableCreateDatabase: true,
   }),
   sharp,
-
   typescript: {
     autoGenerate: true,
     outputFile: path.resolve(dirname, "payload-types.ts"),
@@ -51,7 +53,7 @@ export default buildConfig({
   ],
   upload: {
     limits: {
-      fileSize: 10 * 1024 * 1024, // 10MB in bytes
+      fileSize: 20 * 1024 * 1024, // 20mb
     },
   },
 });

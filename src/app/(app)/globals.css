@@ -75,11 +75,11 @@
   --popover: oklch(0.99 0 95);
   --popover-foreground: oklch(0.23 0.02 75);
   /* Brand greens (from the logo) */
-  --primary: oklch(0.52 0.14 160); /* deep emerald/teal */
+  --primary: oklch(0.4139 0.0792 171.52); /* deep emerald/teal */
   --primary-foreground: oklch(0.98 0 0); /* white text */
   --secondary: oklch(0.86 0.07 160); /* lighter supportive green */
   --secondary-foreground: oklch(0.22 0.02 160); /* readable on green */
-  --accent: oklch(0.92 0.06 160); /* mint highlight */
+  --accent: oklch(93.705% 0.00011 271.152); /* mint highlight */
   --accent-foreground: oklch(0.25 0.02 160);
   /* Muted / UI scaffolding */
   --muted: oklch(0.95 0.02 95); /* stone panel bg */

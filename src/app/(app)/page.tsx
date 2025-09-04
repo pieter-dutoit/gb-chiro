@@ -1,9 +1,10 @@
-import Image from "next/image";
+import Hero from "@/components/hero";
+import { getBusinessDetails } from "@/lib/data";
 
-export default function Home() {
+export default async function Home() {
   return (
-    <main>
-      <h1>Hello</h1>
-    </main>
+    <>
+      <Hero />
+    </>
   );
 }

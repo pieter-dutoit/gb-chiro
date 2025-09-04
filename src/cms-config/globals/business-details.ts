@@ -25,7 +25,7 @@ export const PhoneField: TextField = {
   required: true,
 };
 
-export const BusinessDetails: GlobalConfig = {
+export const BusinessDetailsGlobal: GlobalConfig = {
   slug: "business-details",
   access: {
     read: isLoggedInOrIsPublished,

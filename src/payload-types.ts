@@ -86,9 +86,11 @@ export interface Config {
   };
   globals: {
     'business-details': BusinessDetail;
+    logo: Logo;
   };
   globalsSelect: {
     'business-details': BusinessDetailsSelect<false> | BusinessDetailsSelect<true>;
+    logo: LogoSelect<false> | LogoSelect<true>;
   };
   locale: null;
   user: User & {
@@ -504,11 +506,17 @@ export interface BusinessDetail {
   bookingLink: string;
   email: string;
   phone: string;
-  address?: {
-    street?: string | null;
-    suburb?: string | null;
-    state?: ('nsw' | 'vic' | 'qld' | 'wa' | 'sa' | 'tas' | 'act' | 'nt') | null;
-    code?: string | null;
+  address: {
+    street: string;
+    suburb: string;
+    state: 'nsw' | 'vic' | 'qld' | 'wa' | 'sa' | 'tas' | 'act' | 'nt';
+    code: string;
+    mapsLink: string;
+    /**
+     * @minItems 2
+     * @maxItems 2
+     */
+    coords: [number, number];
   };
   /**
    * Add one row per set of days that share the same hours. Tick the days this row applies to. Leave a day un-ticked to mark it closed.
@@ -537,6 +545,17 @@ export interface BusinessDetail {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "logo".
+ */
+export interface Logo {
+  id: number;
+  logo: number | Media;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "business-details_select".
  */
 export interface BusinessDetailsSelect<T extends boolean = true> {
@@ -550,6 +569,8 @@ export interface BusinessDetailsSelect<T extends boolean = true> {
         suburb?: T;
         state?: T;
         code?: T;
+        mapsLink?: T;
+        coords?: T;
       };
   operatingHours?:
     | T
@@ -565,6 +586,17 @@ export interface BusinessDetailsSelect<T extends boolean = true> {
         Sunday?: T;
         id?: T;
       };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "logo_select".
+ */
+export interface LogoSelect<T extends boolean = true> {
+  logo?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;

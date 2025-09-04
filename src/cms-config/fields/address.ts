@@ -14,6 +14,7 @@ export const AddressField: GroupField = {
           label: "Street name and number",
           minLength: 1,
           maxLength: 100,
+          required: true,
         },
         {
           type: "text",
@@ -21,11 +22,13 @@ export const AddressField: GroupField = {
           label: "Suburb",
           minLength: 1,
           maxLength: 100,
+          required: true,
         },
         {
           type: "select",
           name: "state",
           label: "State",
+          required: true,
           options: [
             { value: "nsw", label: "NSW" },
             { value: "vic", label: "VIC" },
@@ -41,8 +44,28 @@ export const AddressField: GroupField = {
           type: "text",
           name: "code",
           label: "Code",
+          required: true,
           minLength: 1,
-          maxLength: 5,
+          maxLength: 6,
+        },
+      ],
+    },
+    {
+      type: "row",
+      fields: [
+        {
+          type: "text",
+          required: true,
+          minLength: 1,
+          maxLength: 200,
+          name: "mapsLink",
+          label: "Maps Link",
+        },
+        {
+          type: "point",
+          required: true,
+          name: "coords",
+          label: "Coordinates",
         },
       ],
     },

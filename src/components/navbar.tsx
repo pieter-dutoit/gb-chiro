@@ -1,12 +1,15 @@
+import Link from "next/link";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import Link from "next/link";
+
+import type { Media } from "@/payload-types";
+
+import { Button } from "./ui/button";
+import Image from "next/image";
 
 const NAV_LINKS = [
   {
@@ -22,46 +25,54 @@ const NAV_LINKS = [
     path: "/practice",
   },
   {
-    name: "About Us",
-    path: "/about-us",
-  },
-  {
     name: "Testimonials",
     path: "/testimonials",
   },
   {
-    name: "Book Now",
-    path: "https://gbchiro.bookings.pracsuite.com",
-    external: true,
+    name: "Contact Us",
+    path: "/contact-us",
   },
 ];
 
-export default function Navbar() {
+type NavbarProps = {
+  logo: Media | number;
+  bookingLink: string;
+};
+
+export default function Navbar({ logo, bookingLink }: NavbarProps) {
   return (
-    <NavigationMenu className="bg-slate-100 min-w-full">
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <NavigationMenu className="bg-white min-w-full">
+      <div className="mx-auto container flex flex-row w-full items-center justify-between h-16">
         {/* Left: Logo */}
-        <NavigationMenuList className="flex items-center gap-4">
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <Link href="/" className="font-bold">
-                Logo here
-              </Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-        </NavigationMenuList>
+        <Link href="/" className="font-bold h-14 w-36 relative">
+          {typeof logo !== "number" && (
+            <Image
+              fill
+              src={logo.sizes?.["480w"]?.url ?? ""}
+              alt="logo"
+              className="object-contain object-left"
+            />
+          )}
+        </Link>
 
         {/* Right: Nav links */}
         <NavigationMenuList className="flex items-center gap-6">
-          {NAV_LINKS.map(({ name, path }) => {
+          {NAV_LINKS.map(({ name, path }, index) => {
             return (
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
+              <NavigationMenuItem key={path + index}>
+                <NavigationMenuLink asChild className="text-md font-semibold">
                   <Link href={path}>{name}</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             );
           })}
+          <NavigationMenuItem>
+            <Button asChild className="text-md font-semibold ">
+              <Link href={bookingLink} rel="noopener noreferrer">
+                Book an Appointment
+              </Link>
+            </Button>
+          </NavigationMenuItem>
         </NavigationMenuList>
       </div>
     </NavigationMenu>

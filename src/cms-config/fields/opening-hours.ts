@@ -26,9 +26,10 @@ const DAYS = [
 // Count days selected, to ensure each day is selected at most once.
 const detectDayOverlap: ArrayFieldValidation = (rows) => {
   if (!rows) return true;
-  const daysCount: Record<(typeof DAYS)[number], number> = Object.fromEntries(
-    DAYS.map((day) => [day, 0])
-  ) as any;
+  const daysCount = Object.fromEntries(DAYS.map((day) => [day, 0])) as Record<
+    (typeof DAYS)[number],
+    number
+  >;
 
   for (const r of rows) {
     const row = r as OperatingHoursEntry;
