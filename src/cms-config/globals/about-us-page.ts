@@ -2,8 +2,8 @@ import type { GlobalConfig } from "payload";
 
 import { isLoggedInOrIsPublished } from "../access/logged-in-or-published";
 
-export const AboutUs: GlobalConfig = {
-  slug: "about-us",
+export const AboutUsPage: GlobalConfig = {
+  slug: "about-us-page",
   versions: {
     drafts: true,
   },

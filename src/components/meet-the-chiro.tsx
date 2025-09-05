@@ -1,8 +1,8 @@
-import { getAboutUs } from "@/lib/data";
+import { getAboutUsPageData } from "@/lib/data";
 import CMSImage from "./cms-image";
 
 export default async function MeetTheChiro() {
-  const { meetTheChiroImage } = await getAboutUs();
+  const { meetTheChiroImage } = await getAboutUsPageData();
   return (
     <section className="bg-gradient-to-b from-primary/20 to-white">
       <div className="flex flex-col container mx-auto px-4 md:px-12 py-16 lg:py-24 xl:py-30 gap-20 lg:gap-30 relative">

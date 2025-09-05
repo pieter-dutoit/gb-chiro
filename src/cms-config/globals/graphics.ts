@@ -28,8 +28,8 @@ export const Graphics: GlobalConfig = {
       required: true,
     },
     {
-      name: "heroBackground",
-      label: "Hero Background",
+      name: "backgroundGraphic",
+      label: "Background Graphic",
       type: "upload",
       relationTo: "media",
       hasMany: false,

@@ -33,12 +33,12 @@ export default function OversizedLink({
       asChild
       variant="outline"
       className={twMerge(
-        "lg:h-14 text-md lg:text-xl gap-2 lg:gap-4",
+        "xl:h-14 text-md xl:text-xl gap-2 lg:gap-4",
         VARIANTS[variant]
       )}
     >
       <Link href={href}>
-        {Icon ? <Icon className="size-4 lg:size-6" /> : null}
+        {Icon ? <Icon className="size-4 xl:size-6" /> : null}
         {label}
       </Link>
     </Button>

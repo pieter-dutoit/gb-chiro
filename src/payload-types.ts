@@ -85,14 +85,16 @@ export interface Config {
     defaultIDType: number;
   };
   globals: {
-    'about-us': AboutUs;
     'business-details': BusinessDetail;
     graphics: Graphic;
+    'home-page': HomePage;
+    'about-us-page': AboutUsPage;
   };
   globalsSelect: {
-    'about-us': AboutUsSelect<false> | AboutUsSelect<true>;
     'business-details': BusinessDetailsSelect<false> | BusinessDetailsSelect<true>;
     graphics: GraphicsSelect<false> | GraphicsSelect<true>;
+    'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>;
   };
   locale: null;
   user: User & {
@@ -591,21 +593,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about-us".
- */
-export interface AboutUs {
-  id: number;
-  /**
-   * First image on About Us page.
-   */
-  welcomeImage: number | Media;
-  meetTheChiroImage: number | Media;
-  _status?: ('draft' | 'published') | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "business-details".
  */
 export interface BusinessDetail {
@@ -658,22 +645,39 @@ export interface Graphic {
   id: number;
   logo: number | Media;
   horizontalLogo: number | Media;
-  heroBackground: number | Media;
+  backgroundGraphic: number | Media;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "about-us_select".
+ * via the `definition` "home-page".
  */
-export interface AboutUsSelect<T extends boolean = true> {
-  welcomeImage?: T;
-  meetTheChiroImage?: T;
-  _status?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
+export interface HomePage {
+  id: number;
+  /**
+   * First image on Home page.
+   */
+  landingImage: number | Media;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-us-page".
+ */
+export interface AboutUsPage {
+  id: number;
+  /**
+   * First image on About Us page.
+   */
+  welcomeImage: number | Media;
+  meetTheChiroImage: number | Media;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -719,7 +723,30 @@ export interface BusinessDetailsSelect<T extends boolean = true> {
 export interface GraphicsSelect<T extends boolean = true> {
   logo?: T;
   horizontalLogo?: T;
-  heroBackground?: T;
+  backgroundGraphic?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  landingImage?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-us-page_select".
+ */
+export interface AboutUsPageSelect<T extends boolean = true> {
+  welcomeImage?: T;
+  meetTheChiroImage?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -2,27 +2,27 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { parsePhoneNumber } from "libphonenumber-js/min";
 
-import { getBusinessDetails, getGraphics } from "@/lib/data";
+import { getBusinessDetails, getHomePageData } from "@/lib/data";
 
 import CMSImage from "./cms-image";
 import OversizedLink from "./oversized-link";
 
 export default async function Hero() {
   const { phone, email, address, bookingLink } = await getBusinessDetails();
-  const { heroBackground } = await getGraphics();
+  const { landingImage } = await getHomePageData();
 
   const number = parsePhoneNumber(phone, "AU");
 
   return (
-    <section className="w-screen py-16 lg:py-24 xl:py-30 flex items-center relative bg-gradient-to-br from-primary to-primary/85">
+    <section className="w-screen py-16 lg:py-24 xl:py-30 flex items-center relative">
       {/* Graphics */}
-      <div className="opacity-6 absolute w-full h-full lg:opacity-10 overflow-hidden">
+      <div className="absolute w-full h-full overflow-hidden -z-10">
         <CMSImage
-          media={heroBackground}
+          media={landingImage}
           sizes=""
-          className="scale-125 sm:scale-150 lg:scale-200 -z-0 translate-x-1/3"
-          priority
+          className="object-cover object-center md:object-contain md:object-top-right"
         />
+        <div className="absolute inset-0 size-full bg-gradient-to-r from-[#023b2e] via-[#023b2e] via-[30%] to-[#023b2e]/90 sm:to-primary/60" />
       </div>
 
       {/* Container */}
@@ -34,14 +34,14 @@ export default async function Hero() {
               Chiropractor in Griffith
             </h1>
             {/* Title */}
-            <p className="text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight whitespace-pre-wrap mt-2 ">
+            <p className="text-5xl md:text-6xl xl:text-8xl font-bold tracking-tight whitespace-pre-wrap mt-2 ">
               Move Better{`\n`}
               <span>Live Freely</span>
             </p>
           </div>
 
           {/* Overview */}
-          <p className="text-lg lg:text-2xl">
+          <p className="text-lg xl:text-2xl">
             Relief for back, neck and joint pain — right here in Griffith.
             Evidence-based care and a clear plan to help you move well again.
           </p>
@@ -51,10 +51,10 @@ export default async function Hero() {
             href={address.mapsLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm px-2 py-1 rounded-full  text-white bg-white/10 hover:bg-white/14 ring-1 ring-white/25 hover:ring-white/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/90"
+            className="inline-flex items-center gap-2 text-sm px-2 py-1 rounded-full text-white bg-white/5 hover:bg-white/10 ring-1 ring-white/25 hover:ring-white/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/90"
           >
             <MapPin className="size-5" />
-            <span className="font-semibold lg:text-lg">
+            <span className="font-semibold xl:text-lg">
               {address.street}, {address.suburb}, {address.state.toUpperCase()},{" "}
               {address.code}
             </span>

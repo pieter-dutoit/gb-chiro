@@ -22,11 +22,20 @@ export const getBusinessDetails = unstable_cache(
   }
 );
 
-export const getAboutUs = unstable_cache(
-  async () => payload.findGlobal({ slug: "about-us", depth: 1 }),
+export const getHomePageData = unstable_cache(
+  async () => payload.findGlobal({ slug: "home-page", depth: 1 }),
   undefined,
   {
-    tags: ["payload", "about-us"],
+    tags: ["payload", "home-page"],
+    revalidate: false,
+  }
+);
+
+export const getAboutUsPageData = unstable_cache(
+  async () => payload.findGlobal({ slug: "about-us-page", depth: 1 }),
+  undefined,
+  {
+    tags: ["payload", "about-us-page"],
     revalidate: false,
   }
 );

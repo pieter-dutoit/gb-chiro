@@ -1,8 +1,8 @@
-import { getAboutUs } from "@/lib/data";
+import { getAboutUsPageData } from "@/lib/data";
 import CMSImage from "./cms-image";
 
 export default async function About() {
-  const { welcomeImage } = await getAboutUs();
+  const { welcomeImage } = await getAboutUsPageData();
 
   return (
     <section className="flex flex-col container mx-auto px-4 md:px-12 py-16 lg:py-24 xl:py-30 gap-20 lg:gap-30 relative">
