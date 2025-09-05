@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Mail, Phone } from "lucide-react";
-import { Button } from "./ui/button";
 import { twMerge } from "tailwind-merge";
+
+import { Button } from "./ui/button";
 
 type OversizedLinkProps = {
   href: string;
@@ -16,7 +17,7 @@ const ICON_MAP = {
 };
 
 const VARIANTS = {
-  default: "text-primary",
+  default: "bg-blue-600",
   outline: "bg-transparent",
 };
 

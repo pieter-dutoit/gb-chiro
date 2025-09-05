@@ -16,7 +16,7 @@ export default async function Hero() {
   return (
     <section className="w-screen py-16 lg:py-24 xl:py-30 flex items-center relative bg-gradient-to-br from-primary to-primary/85">
       {/* Graphics */}
-      <div className="opacity-4 absolute w-full h-full lg:opacity-10 overflow-hidden">
+      <div className="opacity-6 absolute w-full h-full lg:opacity-10 overflow-hidden">
         <CMSImage
           media={heroBackground}
           sizes=""
@@ -30,12 +30,13 @@ export default async function Hero() {
         {/* Left */}
         <div className="flex flex-col gap-6 lg:gap-10 text-white w-full lg:w-4/6 max-w-[45rem] items-baseline">
           <div>
-            <h1 className="opacity-80 text-lg font-bold">
+            <h1 className="opacity-80 text-lg lg:text-xl font-bold ">
               Chiropractor in Griffith
             </h1>
             {/* Title */}
-            <p className="text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight whitespace-pre-wrap mt-2">
-              {`Move Better, \nLive Freely`}
+            <p className="text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight whitespace-pre-wrap mt-2 ">
+              Move Better{`\n`}
+              <span>Live Freely</span>
             </p>
           </div>
 
