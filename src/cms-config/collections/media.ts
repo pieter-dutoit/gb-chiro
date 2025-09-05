@@ -28,6 +28,11 @@ const resizeConfig: Pick<
   },
 };
 
+export const IMAGE_SIZES = [
+  16, 32, 48, 64, 96, 128, 256, 384, 640, 750, 828, 1080, 1200, 1920, 2048,
+  3840,
+];
+
 export const Media: CollectionConfig = {
   slug: "media",
   access: {
@@ -50,18 +55,10 @@ export const Media: CollectionConfig = {
         quality: 75,
       },
     },
-    imageSizes: [
-      { name: "200w", width: 200, ...resizeConfig },
-      { name: "320w", width: 320, ...resizeConfig },
-      { name: "480w", width: 480, ...resizeConfig },
-      { name: "768w", width: 768, ...resizeConfig },
-      { name: "1024w", width: 1024, ...resizeConfig },
-      { name: "1280w", width: 1280, ...resizeConfig },
-      { name: "1536w", width: 1536, ...resizeConfig },
-      { name: "1920w", width: 1920, ...resizeConfig },
-      { name: "2560w", width: 2560, ...resizeConfig },
-      { name: "3200w", width: 3200, ...resizeConfig },
-      { name: "3840w", width: 3840, ...resizeConfig },
-    ],
+    imageSizes: IMAGE_SIZES.map((size) => ({
+      name: `${size}w`,
+      width: size,
+      ...resizeConfig,
+    })),
   },
 };

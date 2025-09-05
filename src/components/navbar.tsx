@@ -1,79 +1,38 @@
 import Link from "next/link";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
+import { NavigationMenu } from "@/components/ui/navigation-menu";
 
-import type { Media } from "@/payload-types";
+import CMSImage from "./cms-image";
 
-import { Button } from "./ui/button";
-import Image from "next/image";
+import MobileNav from "./mobile-nav";
+import { getBusinessDetails, getGraphics } from "@/lib/data";
+import NavMenu from "./nav-menu";
 
-const NAV_LINKS = [
-  {
-    name: "Home",
-    path: "/",
-  },
-  {
-    name: "Meet the Chiro",
-    path: "/meet-the-chiropractor",
-  },
-  {
-    name: "Practice",
-    path: "/practice",
-  },
-  {
-    name: "Testimonials",
-    path: "/testimonials",
-  },
-  {
-    name: "Contact Us",
-    path: "/contact-us",
-  },
-];
-
-type NavbarProps = {
-  logo: Media | number;
-  bookingLink: string;
-};
-
-export default function Navbar({ logo, bookingLink }: NavbarProps) {
+export default async function Navbar() {
+  const { horizontalLogo } = await getGraphics();
+  const { bookingLink } = await getBusinessDetails();
   return (
-    <NavigationMenu className="bg-white min-w-full">
-      <div className="mx-auto container flex flex-row w-full items-center justify-between h-16">
+    <NavigationMenu className="bg-white min-w-full z-[90]">
+      <div className="container mx-auto px-4 md:px-12 flex flex-row w-full items-center justify-between h-20">
         {/* Left: Logo */}
-        <Link href="/" className="font-bold h-14 w-36 relative">
-          {typeof logo !== "number" && (
-            <Image
-              fill
-              src={logo.sizes?.["480w"]?.url ?? ""}
-              alt="logo"
-              className="object-contain object-left"
-            />
-          )}
+        <Link href="/" className="font-bold h-12 w-50 max-w-[80vw] relative">
+          <CMSImage
+            priority
+            media={horizontalLogo}
+            fill
+            className="object-contain object-left"
+            sizes="9rem"
+          />
         </Link>
 
         {/* Right: Nav links */}
-        <NavigationMenuList className="flex items-center gap-6">
-          {NAV_LINKS.map(({ name, path }, index) => {
-            return (
-              <NavigationMenuItem key={path + index}>
-                <NavigationMenuLink asChild className="text-md font-semibold">
-                  <Link href={path}>{name}</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            );
-          })}
-          <NavigationMenuItem>
-            <Button asChild className="text-md font-semibold ">
-              <Link href={bookingLink} rel="noopener noreferrer">
-                Book an Appointment
-              </Link>
-            </Button>
-          </NavigationMenuItem>
-        </NavigationMenuList>
+        <div>
+          {/* Mobile nav */}
+          <MobileNav>
+            <NavMenu bookingLink={bookingLink} className="lg:hidden" />
+          </MobileNav>
+          {/* Desktop nav */}
+          <NavMenu bookingLink={bookingLink} className="hidden lg:flex" />
+        </div>
       </div>
     </NavigationMenu>
   );

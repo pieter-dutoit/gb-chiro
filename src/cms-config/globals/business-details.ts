@@ -1,6 +1,6 @@
 import { EmailField, GlobalConfig, TextField } from "payload";
-import { isLoggedInOrIsPublished } from "../access/logged-in-or-published";
 
+import { isLoggedInOrIsPublished } from "../access/logged-in-or-published";
 import { OpeningHoursField } from "../fields/opening-hours";
 import { AddressField } from "../fields/address";
 

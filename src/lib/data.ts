@@ -4,11 +4,11 @@ import { unstable_cache } from "next/cache";
 
 const payload = await getPayload({ config });
 
-export const getLogo = unstable_cache(
-  async () => payload.findGlobal({ slug: "logo", depth: 1 }),
+export const getGraphics = unstable_cache(
+  async () => payload.findGlobal({ slug: "graphics", depth: 1 }),
   undefined,
   {
-    tags: ["payload", "logo"],
+    tags: ["payload", "graphics"],
     revalidate: false,
   }
 );

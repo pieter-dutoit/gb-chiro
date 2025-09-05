@@ -86,11 +86,11 @@ export interface Config {
   };
   globals: {
     'business-details': BusinessDetail;
-    logo: Logo;
+    graphics: Graphic;
   };
   globalsSelect: {
     'business-details': BusinessDetailsSelect<false> | BusinessDetailsSelect<true>;
-    logo: LogoSelect<false> | LogoSelect<true>;
+    graphics: GraphicsSelect<false> | GraphicsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -139,7 +139,7 @@ export interface Media {
   focalX?: number | null;
   focalY?: number | null;
   sizes?: {
-    '200w'?: {
+    '16w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -147,7 +147,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    '320w'?: {
+    '32w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -155,7 +155,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    '480w'?: {
+    '48w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -163,7 +163,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    '768w'?: {
+    '64w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -171,7 +171,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    '1024w'?: {
+    '96w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -179,7 +179,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    '1280w'?: {
+    '128w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -187,7 +187,55 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    '1536w'?: {
+    '256w'?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    '384w'?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    '640w'?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    '750w'?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    '828w'?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    '1080w'?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    '1200w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -203,15 +251,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    '2560w'?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    '3200w'?: {
+    '2048w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -331,7 +371,7 @@ export interface MediaSelect<T extends boolean = true> {
   sizes?:
     | T
     | {
-        '200w'?:
+        '16w'?:
           | T
           | {
               url?: T;
@@ -341,7 +381,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        '320w'?:
+        '32w'?:
           | T
           | {
               url?: T;
@@ -351,7 +391,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        '480w'?:
+        '48w'?:
           | T
           | {
               url?: T;
@@ -361,7 +401,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        '768w'?:
+        '64w'?:
           | T
           | {
               url?: T;
@@ -371,7 +411,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        '1024w'?:
+        '96w'?:
           | T
           | {
               url?: T;
@@ -381,7 +421,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        '1280w'?:
+        '128w'?:
           | T
           | {
               url?: T;
@@ -391,7 +431,67 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        '1536w'?:
+        '256w'?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        '384w'?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        '640w'?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        '750w'?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        '828w'?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        '1080w'?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        '1200w'?:
           | T
           | {
               url?: T;
@@ -411,17 +511,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        '2560w'?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        '3200w'?:
+        '2048w'?:
           | T
           | {
               url?: T;
@@ -545,11 +635,13 @@ export interface BusinessDetail {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "logo".
+ * via the `definition` "graphics".
  */
-export interface Logo {
+export interface Graphic {
   id: number;
   logo: number | Media;
+  horizontalLogo: number | Media;
+  heroBackground: number | Media;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -593,10 +685,12 @@ export interface BusinessDetailsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "logo_select".
+ * via the `definition` "graphics_select".
  */
-export interface LogoSelect<T extends boolean = true> {
+export interface GraphicsSelect<T extends boolean = true> {
   logo?: T;
+  horizontalLogo?: T;
+  heroBackground?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
