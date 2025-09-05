@@ -21,3 +21,12 @@ export const getBusinessDetails = unstable_cache(
     revalidate: false,
   }
 );
+
+export const getAboutUs = unstable_cache(
+  async () => payload.findGlobal({ slug: "about-us", depth: 1 }),
+  undefined,
+  {
+    tags: ["payload", "about-us"],
+    revalidate: false,
+  }
+);

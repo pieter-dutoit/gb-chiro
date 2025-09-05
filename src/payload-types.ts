@@ -85,10 +85,12 @@ export interface Config {
     defaultIDType: number;
   };
   globals: {
+    'about-us': AboutUs;
     'business-details': BusinessDetail;
     graphics: Graphic;
   };
   globalsSelect: {
+    'about-us': AboutUsSelect<false> | AboutUsSelect<true>;
     'business-details': BusinessDetailsSelect<false> | BusinessDetailsSelect<true>;
     graphics: GraphicsSelect<false> | GraphicsSelect<true>;
   };
@@ -589,6 +591,21 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-us".
+ */
+export interface AboutUs {
+  id: number;
+  /**
+   * First image on About Us page.
+   */
+  welcomeImage: number | Media;
+  meetTheChiroImage: number | Media;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "business-details".
  */
 export interface BusinessDetail {
@@ -645,6 +662,18 @@ export interface Graphic {
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-us_select".
+ */
+export interface AboutUsSelect<T extends boolean = true> {
+  welcomeImage?: T;
+  meetTheChiroImage?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

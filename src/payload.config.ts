@@ -10,13 +10,14 @@ import path from "path";
 import { Media } from "./cms-config/collections/media";
 import { BusinessDetailsGlobal } from "./cms-config/globals/business-details";
 import { Graphics } from "./cms-config/globals/graphics";
+import { AboutUs } from "./cms-config/globals/about-us";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
   editor: lexicalEditor(),
-  globals: [BusinessDetailsGlobal, Graphics],
+  globals: [AboutUs, BusinessDetailsGlobal, Graphics],
   collections: [Media],
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({

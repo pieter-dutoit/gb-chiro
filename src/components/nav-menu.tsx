@@ -22,8 +22,8 @@ const NAV_LINKS = [
     path: "/",
   },
   {
-    name: "Meet the Chiro",
-    path: "/meet-the-chiropractor",
+    name: "About us",
+    path: "/about-us",
   },
   {
     name: "Practice",
@@ -34,7 +34,7 @@ const NAV_LINKS = [
     path: "/testimonials",
   },
   {
-    name: "Contact Us",
+    name: "Contact us",
     path: "/contact-us",
   },
 ];
@@ -44,7 +44,7 @@ export default function NavMenu({ bookingLink, className }: NavMenuProps) {
   return (
     <NavigationMenuList
       className={twMerge(
-        "flex flex-col items-baseline md:items-center py-6 pl-4 gap-4 lg:pl-0 lg:py-0 lg:gap-3 lg:flex-row lg:items-center xl:gap-6",
+        "flex flex-col items-baseline md:items-center py-6 px-4 gap-4 lg:px-0 lg:py-0 lg:gap-3 lg:flex-row lg:items-center xl:gap-6",
         className
       )}
     >
@@ -52,7 +52,7 @@ export default function NavMenu({ bookingLink, className }: NavMenuProps) {
         const isActive =
           path === "/" ? pathname === "/" : pathname.startsWith(path);
         return (
-          <NavigationMenuItem key={path + index}>
+          <NavigationMenuItem key={path + index} className="w-full lg:w-auto">
             <NavigationMenuLink
               asChild
               className={twMerge(
@@ -70,7 +70,7 @@ export default function NavMenu({ bookingLink, className }: NavMenuProps) {
       <NavigationMenuItem>
         <Button
           asChild
-          className="text-lg lg:text-sm xl:text-lg font-semibold bg-blue-600 hover:bg-blue-800"
+          className="text-lg lg:text-sm xl:text-lg font-semibold bg-yellow-600 hover:bg-yellow-700"
         >
           <Link href={bookingLink} rel="noopener noreferrer">
             Book an Appointment
