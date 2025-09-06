@@ -1,5 +1,7 @@
 import { getAboutUsPageData } from "@/lib/data";
+
 import CMSImage from "./cms-image";
+import { Typography } from "./ui/typography";
 
 export default async function MeetTheChiro() {
   const { meetTheChiroImage } = await getAboutUsPageData();
@@ -8,11 +10,11 @@ export default async function MeetTheChiro() {
       <div className="flex flex-col container mx-auto px-4 md:px-12 py-16 lg:py-24 xl:py-30 gap-20 lg:gap-30 relative">
         <div className="flex flex-col-reverse gap-12 lg:flex-row-reverse justify-between items-center">
           <div className="flex flex-col gap-8 w-full lg:w-6/12">
-            <h2 className="text font-light text-center lg:text-left text-3xl xl:text-4xl">
+            <Typography variant="sectionTitle">
               Meet the Chiropractor
-            </h2>
+            </Typography>
             {/* About paragraphs */}
-            <div className="flex flex-col gap-4 text-base leading-6 xl:text-lg xl:leading-8 tracking-[0.005em] text-center lg:text-start [text-wrap:balance]">
+            <Typography variant="paragraphs">
               <p>
                 Hi, I’m Dr Garret, your local chiropractor here in Griffith.
                 I’ve always been passionate about helping people feel their
@@ -37,13 +39,13 @@ export default async function MeetTheChiro() {
                 because life’s simply better when you can move well and feel
                 great.
               </p>
-            </div>
+            </Typography>
           </div>
           {/* Image */}
           <div className="relative w-full lg:w-6/12 aspect-[4/3] rounded-lg overflow-hidden shadow-lg">
             <CMSImage
               media={meetTheChiroImage}
-              sizes=""
+              sizes="(min-width: 1540px) 696px, (min-width: 1280px) 570px, (min-width: 1024px) 440px, (min-width: 770px) 670px, 80vw"
               className="object-cover"
             />
           </div>

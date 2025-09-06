@@ -1,6 +1,7 @@
 import About from "@/components/about";
 import CMSImage from "@/components/cms-image";
 import MeetTheChiro from "@/components/meet-the-chiro";
+import Practice from "@/components/practice";
 import { getGraphics } from "@/lib/data";
 
 export default async function AboutUsPage() {
@@ -10,6 +11,7 @@ export default async function AboutUsPage() {
       {/* Page content */}
       <About />
       <MeetTheChiro />
+      <Practice />
 
       {/* Graphics */}
       <div className="absolute overflow-hidden inset-0 -z-10" tabIndex={-1}>

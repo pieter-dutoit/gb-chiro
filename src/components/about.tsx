@@ -1,5 +1,6 @@
 import { getAboutUsPageData } from "@/lib/data";
 import CMSImage from "./cms-image";
+import { Typography } from "./ui/typography";
 
 export default async function About() {
   const { welcomeImage } = await getAboutUsPageData();
@@ -7,17 +8,19 @@ export default async function About() {
   return (
     <section className="flex flex-col container mx-auto px-4 md:px-12 py-16 lg:py-24 xl:py-30 gap-20 lg:gap-30 relative">
       {/* Header */}
-      <h1 className="whitespace-pre text-center text-4xl md:text-5xl lg:text-6xl font-extrabold leading-snug text-primary">
-        Welcome to {`\n`}GB Chiropractic
-      </h1>
+      <Typography as="h1" variant="pageTitle" tone="primary">
+        Welcome to <br />
+        GB Chiropractic
+      </Typography>
 
       <div className="flex flex-col-reverse gap-12 lg:flex-row justify-between items-center">
         <div className="flex flex-col gap-8 w-full lg:w-6/12">
-          <h2 className="text font-light text-center lg:text-left text-3xl xl:text-4xl">
+          <Typography as="h2" variant="sectionTitle">
             Your Partner in Better Health
-          </h2>
+          </Typography>
+
           {/* About paragraphs */}
-          <div className="flex flex-col gap-4 text-base leading-6 xl:text-lg xl:leading-8 tracking-[0.005em] text-center lg:text-start [text-wrap:balance]">
+          <Typography variant="paragraphs">
             <p>
               At GB Chiropractic in Griffith, we are passionate about helping
               our community live healthier, more active, and pain-free lives.
@@ -39,11 +42,16 @@ export default async function About() {
               your health journey, so you can get back to doing what you love,
               feeling your best every step of the way.
             </p>
-          </div>
+          </Typography>
         </div>
         {/* Image */}
         <div className="relative w-full lg:w-6/12 aspect-[4/3] rounded-lg overflow-hidden shadow-lg">
-          <CMSImage media={welcomeImage} sizes="" className="object-cover" />
+          <CMSImage
+            media={welcomeImage}
+            className="object-cover"
+            priority
+            sizes="(min-width: 1540px) 696px, (min-width: 1280px) 570px, (min-width: 1024px) 440px, (min-width: 770px) 670px, 80vw"
+          />
         </div>
       </div>
     </section>

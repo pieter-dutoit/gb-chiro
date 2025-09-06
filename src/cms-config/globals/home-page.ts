@@ -1,6 +1,7 @@
 import type { GlobalConfig } from "payload";
 
 import { isLoggedInOrIsPublished } from "../access/logged-in-or-published";
+import revalidateCache from "../hooks/revalidate-cache";
 
 export const HomePage: GlobalConfig = {
   slug: "home-page",
@@ -9,6 +10,9 @@ export const HomePage: GlobalConfig = {
   },
   access: {
     read: isLoggedInOrIsPublished,
+  },
+  hooks: {
+    afterChange: [revalidateCache("home-page")],
   },
   fields: [
     {

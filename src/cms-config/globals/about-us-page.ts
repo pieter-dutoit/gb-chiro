@@ -1,6 +1,7 @@
 import type { GlobalConfig } from "payload";
 
 import { isLoggedInOrIsPublished } from "../access/logged-in-or-published";
+import revalidateCache from "../hooks/revalidate-cache";
 
 export const AboutUsPage: GlobalConfig = {
   slug: "about-us-page",
@@ -9,6 +10,9 @@ export const AboutUsPage: GlobalConfig = {
   },
   access: {
     read: isLoggedInOrIsPublished,
+  },
+  hooks: {
+    afterChange: [revalidateCache("about-us-page")],
   },
   fields: [
     {
@@ -29,6 +33,18 @@ export const AboutUsPage: GlobalConfig = {
       relationTo: "media",
       hasMany: false,
       required: true,
+    },
+    {
+      name: "practiceImages",
+      label: "Practice Images",
+      admin: {
+        description: "Requires 4 images",
+      },
+      type: "upload",
+      relationTo: "media",
+      hasMany: true,
+      required: true,
+      maxRows: 4,
     },
   ],
 };

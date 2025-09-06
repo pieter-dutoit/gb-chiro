@@ -70,7 +70,7 @@ export default function NavMenu({ bookingLink, className }: NavMenuProps) {
       <NavigationMenuItem>
         <Button
           asChild
-          className="text-lg lg:text-sm xl:text-lg font-semibold bg-yellow-600 hover:bg-yellow-700"
+          className="text-lg lg:text-sm xl:text-lg font-semibold bg-blue-600"
         >
           <Link href={bookingLink} rel="noopener noreferrer">
             Book an Appointment

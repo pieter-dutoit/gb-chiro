@@ -675,6 +675,10 @@ export interface AboutUsPage {
    */
   welcomeImage: number | Media;
   meetTheChiroImage: number | Media;
+  /**
+   * Requires 4 images
+   */
+  practiceImages: (number | Media)[];
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -747,6 +751,7 @@ export interface HomePageSelect<T extends boolean = true> {
 export interface AboutUsPageSelect<T extends boolean = true> {
   welcomeImage?: T;
   meetTheChiroImage?: T;
+  practiceImages?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;

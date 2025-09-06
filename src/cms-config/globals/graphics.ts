@@ -1,6 +1,7 @@
 import type { GlobalConfig } from "payload";
 
 import { isLoggedInOrIsPublished } from "../access/logged-in-or-published";
+import revalidateCache from "../hooks/revalidate-cache";
 
 export const Graphics: GlobalConfig = {
   slug: "graphics",
@@ -9,6 +10,9 @@ export const Graphics: GlobalConfig = {
   },
   access: {
     read: isLoggedInOrIsPublished,
+  },
+  hooks: {
+    afterChange: [revalidateCache("graphics")],
   },
   fields: [
     {

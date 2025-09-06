@@ -17,7 +17,7 @@ const ICON_MAP = {
 };
 
 const VARIANTS = {
-  default: "bg-yellow-600",
+  default: "bg-white text-black",
   outline: "bg-transparent",
 };
 

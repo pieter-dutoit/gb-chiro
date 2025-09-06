@@ -1,34 +1,37 @@
 import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { CalendarClock, MapPin } from "lucide-react";
 import { parsePhoneNumber } from "libphonenumber-js/min";
 
 import { getBusinessDetails, getHomePageData } from "@/lib/data";
+import { formatOperatingHours } from "@/lib/utils";
 
 import CMSImage from "./cms-image";
 import OversizedLink from "./oversized-link";
 
 export default async function Hero() {
-  const { phone, email, address, bookingLink } = await getBusinessDetails();
+  const { phone, email, address, bookingLink, operatingHours } =
+    await getBusinessDetails();
   const { landingImage } = await getHomePageData();
 
   const number = parsePhoneNumber(phone, "AU");
 
   return (
-    <section className="w-screen py-16 lg:py-24 xl:py-30 flex items-center relative">
+    <section className="w-screen py-16 lg:py-24 xl:py-32 flex items-center relative">
       {/* Graphics */}
-      <div className="absolute w-full h-full overflow-hidden -z-10">
+      <div className=" absolute w-full h-full overflow-hidden -z-10">
         <CMSImage
+          priority
           media={landingImage}
-          sizes=""
-          className="object-cover object-center md:object-contain md:object-top-right"
+          sizes="70vw"
+          className="object-cover w-[70vw]  ml-auto"
         />
-        <div className="absolute inset-0 size-full bg-gradient-to-r from-[#023b2e] via-[#023b2e] via-[30%] to-[#023b2e]/90 sm:to-primary/60" />
+        <div className="absolute inset-0 size-full bg-gradient-to-r from-[#014335] sm:from-[#00271e] via-[#014335]  via-[30%] to-[#014335]/90 sm:to-[#000000]/0" />
       </div>
 
       {/* Container */}
       <div className="container mx-auto px-4 md:px-12 z-10">
         {/* Left */}
-        <div className="flex flex-col gap-6 lg:gap-10 text-white w-full lg:w-4/6 max-w-[45rem] items-baseline">
+        <div className="flex flex-col gap-8 lg:gap-12 xl:gap-16 text-white w-full items-baseline">
           <div>
             <h1 className="opacity-80 text-lg lg:text-xl font-bold ">
               Chiropractor in Griffith
@@ -41,27 +44,14 @@ export default async function Hero() {
           </div>
 
           {/* Overview */}
-          <p className="text-lg xl:text-2xl">
-            Relief for back, neck and joint pain — right here in Griffith.
+          <p className="text-lg xl:text-2xl max-w-[50ch]">
+            Relief for back, neck and joint pain — right here in Griffith.{" "}
+            <br />
             Evidence-based care and a clear plan to help you move well again.
           </p>
 
-          {/* Address */}
-          <Link
-            href={address.mapsLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm px-2 py-1 rounded-full text-white bg-white/5 hover:bg-white/10 ring-1 ring-white/25 hover:ring-white/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/90"
-          >
-            <MapPin className="size-5" />
-            <span className="font-semibold xl:text-lg">
-              {address.street}, {address.suburb}, {address.state.toUpperCase()},{" "}
-              {address.code}
-            </span>
-          </Link>
-
           {/* CTAs */}
-          <div className="flex flex-row flex-wrap items-center gap-3 lg:gap-6">
+          <div className="flex flex-row flex-wrap items-center gap-3 lg:gap-4">
             {/* Booking Link */}
             <OversizedLink label="Book an Appointment" href={bookingLink} />
             {/* Phone Link */}
@@ -79,6 +69,33 @@ export default async function Hero() {
               iconType="email"
               variant="outline"
             />
+          </div>
+
+          {/* Address & Hours */}
+          <div className="flex flex-col gap-2">
+            {/* Operating Hours */}
+            <div className="flex flex-row gap-2 items-center">
+              <CalendarClock size={20} />
+              <ul>
+                {formatOperatingHours(operatingHours).map((hrs) => (
+                  <li key={hrs}>{hrs}</li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Maps link */}
+            <Link
+              className="flex flex-row items-center gap-2 underline underline-offset-2"
+              href={address.mapsLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MapPin size={20} />
+              <span>
+                {address.street}, {address.suburb},{" "}
+                {address.state.toUpperCase()}, {address.code}
+              </span>
+            </Link>
           </div>
         </div>
       </div>
