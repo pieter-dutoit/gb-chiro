@@ -5,9 +5,6 @@ const nextConfig: NextConfig = {
   experimental: {
     reactCompiler: false,
   },
-  images: {
-    remotePatterns: [],
-  },
 };
 
 export default withPayload(nextConfig);
