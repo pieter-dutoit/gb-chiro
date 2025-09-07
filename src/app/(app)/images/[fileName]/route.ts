@@ -1,11 +1,18 @@
 export const dynamic = "force-static";
 
-const originFromEnv = () => {
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
+export function getBaseUrl(): string {
+  const env = process.env.VERCEL_ENV || "";
+
+  if (env === "production") {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
   }
+
+  if (["development", "preview"].includes(env)) {
+    return `https://${process.env.VERCEL_URL || process.env.VERCEL_BRANCH_URL}`;
+  }
+
   return "http://localhost:3000";
-};
+}
 
 export async function GET(
   _request: Request,
@@ -16,7 +23,7 @@ export async function GET(
     console.log("1");
     const { fileName } = await params;
     console.log("2");
-    const origin = originFromEnv();
+    const origin = getBaseUrl();
     console.log("3");
 
     const upstreamUrl = `${origin}/api/media/file/${encodeURIComponent(fileName)}`;
