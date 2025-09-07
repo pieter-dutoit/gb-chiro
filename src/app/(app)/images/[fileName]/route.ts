@@ -26,6 +26,7 @@ export async function GET(
       cache: "force-cache",
     });
     console.log("5");
+    console.log("upstream res: ", upstream);
 
     if (!upstream.ok) {
       console.log("6");
