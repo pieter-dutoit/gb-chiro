@@ -1,85 +1,101 @@
-import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Phone } from "lucide-react";
+import { CalendarClock, MapPin } from "lucide-react";
 import { parsePhoneNumber } from "libphonenumber-js/min";
 
-import { getBusinessDetails } from "@/lib/data";
+import { getBusinessDetails, getHomePageData } from "@/lib/data";
+import { formatOperatingHours } from "@/lib/utils";
 
-import { Button } from "./ui/button";
+import CMSImage from "./cms-image";
+import OversizedLink from "./oversized-link";
 
 export default async function Hero() {
-  const { phone, address, bookingLink } = await getBusinessDetails();
+  const { phone, email, address, bookingLink, operatingHours } =
+    await getBusinessDetails();
+  const { landingImage } = await getHomePageData();
 
   const number = parsePhoneNumber(phone, "AU");
 
   return (
-    <section className="w-screen h-[80vh] flex items-center relative bg-primary">
+    <section className="w-screen py-16 lg:py-24 xl:py-32 flex items-center relative">
       {/* Graphics */}
-      <div className="absolute w-full h-full opacity-10 overflow-hidden">
-        <Image
-          unoptimized
-          src="/api/media/file/spine-background.svg"
-          alt="bg"
-          fill
-          className="scale-200 -z-0 translate-x-1/3"
+      <div className=" absolute w-full h-full overflow-hidden -z-10">
+        <CMSImage
+          priority
+          media={landingImage}
+          sizes="70vw"
+          className="object-cover w-[70vw]  ml-auto"
         />
+        <div className="absolute inset-0 size-full bg-gradient-to-r from-[#014335] sm:from-[#00271e] via-[#014335]  via-[30%] to-[#014335]/90 sm:to-[#000000]/0" />
       </div>
 
       {/* Container */}
-      <div className="container mx-auto z-10">
+      <div className="container mx-auto px-4 md:px-12 z-10">
         {/* Left */}
-        <div className="flex flex-col gap-10 text-white w-4/6 max-w-[50rem] items-baseline">
+        <div className="flex flex-col gap-8 lg:gap-12 xl:gap-16 text-white w-full items-baseline">
           <div>
-            <h1 className="opacity-80 text-lg font-bold">
+            <h1 className="opacity-80 text-lg lg:text-xl font-bold ">
               Chiropractor in Griffith
             </h1>
             {/* Title */}
-            <p className="text-8xl font-bold tracking-tight whitespace-pre-wrap">
-              {`Move Better, \nFeel Better`}
+            <p className="text-5xl md:text-6xl xl:text-8xl font-bold tracking-tight whitespace-pre-wrap mt-2 ">
+              Move Better{`\n`}
+              <span>Live Freely</span>
             </p>
           </div>
 
-          {/* Address */}
-          <Link
-            href={address.mapsLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 rounded-full px-4 py-2 text-white bg-white/10 hover:bg-white/14 ring-1 ring-white/25 hover:ring-white/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/90"
-          >
-            <MapPin className="size-5" />
-            <span className="font-semibold">
-              {address.street}, {address.suburb}, {address.state.toUpperCase()},{" "}
-              {address.code}
-            </span>
-          </Link>
-
           {/* Overview */}
-          <p className="text-2xl whitespace-pre-wrap">
-            {`Relief for back, neck and joint pain — right here in Griffith. \nEvidence-based care and a clear plan to help you move well again.`}
+          <p className="text-lg xl:text-2xl max-w-[50ch]">
+            Relief for back, neck and joint pain — right here in Griffith.{" "}
+            <br />
+            Evidence-based care and a clear plan to help you move well again.
           </p>
+
           {/* CTAs */}
-          <div className="flex flex-row items-center gap-6">
+          <div className="flex flex-row flex-wrap items-center gap-3 lg:gap-4">
             {/* Booking Link */}
-            <Button
-              asChild
-              variant="outline"
-              className="w-60 h-14 text-primary text-xl"
-            >
-              <Link href={bookingLink} rel="noopener noreferrer">
-                Book an Appointment
-              </Link>
-            </Button>
+            <OversizedLink label="Book an Appointment" href={bookingLink} />
             {/* Phone Link */}
-            <Button
-              asChild
+            <OversizedLink
+              label={number.formatNational()}
+              href={`tel:${number.number}`}
+              iconType="phone"
               variant="outline"
-              className="w-60 h-14  text-xl bg-transparent text-white gap-4"
+            />
+
+            {/* Email Link */}
+            <OversizedLink
+              label={email}
+              href={`mailto:${email}`}
+              iconType="email"
+              variant="outline"
+            />
+          </div>
+
+          {/* Address & Hours */}
+          <div className="flex flex-col gap-2">
+            {/* Operating Hours */}
+            <div className="flex flex-row gap-2 items-center">
+              <CalendarClock size={20} />
+              <ul>
+                {formatOperatingHours(operatingHours).map((hrs) => (
+                  <li key={hrs}>{hrs}</li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Maps link */}
+            <Link
+              className="flex flex-row items-center gap-2 underline underline-offset-2"
+              href={address.mapsLink}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <Link href={`tel:${number.number}`}>
-                <Phone className="size-6" />
-                {number.formatNational()}
-              </Link>
-            </Button>
+              <MapPin size={20} />
+              <span>
+                {address.street}, {address.suburb},{" "}
+                {address.state.toUpperCase()}, {address.code}
+              </span>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,19 +1,26 @@
 import type { GlobalConfig } from "payload";
 
 import { isLoggedInOrIsPublished } from "../access/logged-in-or-published";
+import revalidateCache from "../hooks/revalidate-cache";
 
-export const Logo: GlobalConfig = {
-  slug: "logo",
+export const HomePage: GlobalConfig = {
+  slug: "home-page",
   versions: {
     drafts: true,
   },
   access: {
     read: isLoggedInOrIsPublished,
   },
+  hooks: {
+    afterChange: [revalidateCache("home-page")],
+  },
   fields: [
     {
-      name: "logo",
-      label: "Logo",
+      name: "landingImage",
+      label: "Landing Image",
+      admin: {
+        description: "First image on Home page.",
+      },
       type: "upload",
       relationTo: "media",
       hasMany: false,

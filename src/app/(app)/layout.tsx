@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-
 import localFont from "next/font/local";
 
 import Navbar from "@/components/navbar";
-import { getBusinessDetails, getLogo } from "@/lib/data";
 
 import "./globals.css";
 
@@ -23,14 +21,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const logo = await getLogo();
-  const businessDetails = await getBusinessDetails();
-
   return (
     <html lang="en" className={Font.variable}>
       <body className="antialiased">
         <header>
-          <Navbar logo={logo.logo} bookingLink={businessDetails.bookingLink} />
+          <Navbar />
         </header>
 
         <main>{children}</main>

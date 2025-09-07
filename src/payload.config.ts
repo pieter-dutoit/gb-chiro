@@ -9,15 +9,18 @@ import path from "path";
 
 import { Media } from "./cms-config/collections/media";
 import { BusinessDetailsGlobal } from "./cms-config/globals/business-details";
-import { Logo } from "./cms-config/globals/logo";
+import { Graphics } from "./cms-config/globals/graphics";
+import { AboutUsPage } from "./cms-config/globals/about-us-page";
+import { HomePage } from "./cms-config/globals/home-page";
+import { Services } from "./cms-config/collections/services";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
   editor: lexicalEditor(),
-  globals: [BusinessDetailsGlobal, Logo],
-  collections: [Media],
+  globals: [BusinessDetailsGlobal, Graphics, HomePage, AboutUsPage],
+  collections: [Media, Services],
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({
     pool: {

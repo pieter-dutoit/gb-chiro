@@ -1,8 +1,9 @@
 import { EmailField, GlobalConfig, TextField } from "payload";
-import { isLoggedInOrIsPublished } from "../access/logged-in-or-published";
 
+import { isLoggedInOrIsPublished } from "../access/logged-in-or-published";
 import { OpeningHoursField } from "../fields/opening-hours";
 import { AddressField } from "../fields/address";
+import revalidateCache from "../hooks/revalidate-cache";
 
 export const EmailInputField: EmailField = {
   type: "email",
@@ -29,6 +30,9 @@ export const BusinessDetailsGlobal: GlobalConfig = {
   slug: "business-details",
   access: {
     read: isLoggedInOrIsPublished,
+  },
+  hooks: {
+    afterChange: [revalidateCache("business-details")],
   },
   versions: {
     drafts: {

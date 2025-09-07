@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     media: Media;
+    services: Service;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -76,6 +77,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -86,11 +88,15 @@ export interface Config {
   };
   globals: {
     'business-details': BusinessDetail;
-    logo: Logo;
+    graphics: Graphic;
+    'home-page': HomePage;
+    'about-us-page': AboutUsPage;
   };
   globalsSelect: {
     'business-details': BusinessDetailsSelect<false> | BusinessDetailsSelect<true>;
-    logo: LogoSelect<false> | LogoSelect<true>;
+    graphics: GraphicsSelect<false> | GraphicsSelect<true>;
+    'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>;
   };
   locale: null;
   user: User & {
@@ -139,7 +145,7 @@ export interface Media {
   focalX?: number | null;
   focalY?: number | null;
   sizes?: {
-    '200w'?: {
+    '16w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -147,7 +153,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    '320w'?: {
+    '32w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -155,7 +161,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    '480w'?: {
+    '48w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -163,7 +169,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    '768w'?: {
+    '64w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -171,7 +177,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    '1024w'?: {
+    '96w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -179,7 +185,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    '1280w'?: {
+    '128w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -187,7 +193,55 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    '1536w'?: {
+    '256w'?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    '384w'?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    '640w'?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    '750w'?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    '828w'?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    '1080w'?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    '1200w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -203,15 +257,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    '2560w'?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    '3200w'?: {
+    '2048w'?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -228,6 +274,19 @@ export interface Media {
       filename?: string | null;
     };
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  slug?: string | null;
+  name: string;
+  description: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -263,6 +322,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
       } | null)
     | ({
         relationTo: 'users';
@@ -331,7 +394,7 @@ export interface MediaSelect<T extends boolean = true> {
   sizes?:
     | T
     | {
-        '200w'?:
+        '16w'?:
           | T
           | {
               url?: T;
@@ -341,7 +404,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        '320w'?:
+        '32w'?:
           | T
           | {
               url?: T;
@@ -351,7 +414,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        '480w'?:
+        '48w'?:
           | T
           | {
               url?: T;
@@ -361,7 +424,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        '768w'?:
+        '64w'?:
           | T
           | {
               url?: T;
@@ -371,7 +434,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        '1024w'?:
+        '96w'?:
           | T
           | {
               url?: T;
@@ -381,7 +444,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        '1280w'?:
+        '128w'?:
           | T
           | {
               url?: T;
@@ -391,7 +454,67 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        '1536w'?:
+        '256w'?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        '384w'?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        '640w'?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        '750w'?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        '828w'?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        '1080w'?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        '1200w'?:
           | T
           | {
               url?: T;
@@ -411,17 +534,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        '2560w'?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        '3200w'?:
+        '2048w'?:
           | T
           | {
               url?: T;
@@ -442,6 +555,18 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  slug?: T;
+  name?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -545,11 +670,46 @@ export interface BusinessDetail {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "logo".
+ * via the `definition` "graphics".
  */
-export interface Logo {
+export interface Graphic {
   id: number;
   logo: number | Media;
+  horizontalLogo: number | Media;
+  backgroundGraphic: number | Media;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page".
+ */
+export interface HomePage {
+  id: number;
+  /**
+   * First image on Home page.
+   */
+  landingImage: number | Media;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-us-page".
+ */
+export interface AboutUsPage {
+  id: number;
+  /**
+   * First image on About Us page.
+   */
+  welcomeImage: number | Media;
+  meetTheChiroImage: number | Media;
+  /**
+   * Requires 4 images
+   */
+  practiceImages: (number | Media)[];
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -593,10 +753,36 @@ export interface BusinessDetailsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "logo_select".
+ * via the `definition` "graphics_select".
  */
-export interface LogoSelect<T extends boolean = true> {
+export interface GraphicsSelect<T extends boolean = true> {
   logo?: T;
+  horizontalLogo?: T;
+  backgroundGraphic?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  landingImage?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-us-page_select".
+ */
+export interface AboutUsPageSelect<T extends boolean = true> {
+  welcomeImage?: T;
+  meetTheChiroImage?: T;
+  practiceImages?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
