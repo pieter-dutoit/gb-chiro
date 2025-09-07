@@ -12,6 +12,7 @@ import { BusinessDetailsGlobal } from "./cms-config/globals/business-details";
 import { Graphics } from "./cms-config/globals/graphics";
 import { AboutUsPage } from "./cms-config/globals/about-us-page";
 import { HomePage } from "./cms-config/globals/home-page";
+import { Services } from "./cms-config/collections/services";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -19,7 +20,7 @@ const dirname = path.dirname(filename);
 export default buildConfig({
   editor: lexicalEditor(),
   globals: [BusinessDetailsGlobal, Graphics, HomePage, AboutUsPage],
-  collections: [Media],
+  collections: [Media, Services],
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({
     pool: {

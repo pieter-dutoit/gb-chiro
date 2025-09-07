@@ -101,3 +101,13 @@ export function formatOperatingHours(
 
   return result;
 }
+
+export function stringToSlug(item: string): string {
+  return item
+    .toLowerCase()
+    .replace(/&/g, " and ") // turn & into "and"
+    .replace(/\s+/g, "-") // spaces/tabs -> hyphen
+    .replace(/[^a-z0-9-]/g, "") // drop anything not a-z, 0-9, or -
+    .replace(/-+/g, "-") // collapse multiple hyphens
+    .replace(/^-|-$/g, ""); // trim leading/trailing hyphens
+}

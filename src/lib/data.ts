@@ -39,3 +39,30 @@ export const getAboutUsPageData = unstable_cache(
     revalidate: false,
   }
 );
+
+export const getServicesData = unstable_cache(
+  async () => {
+    const res = await payload.find({
+      draft: false,
+      collection: "services",
+      depth: 1,
+      pagination: false,
+      sort: "-name",
+      where: {
+        _status: {
+          equals: "published",
+        },
+      },
+    });
+    if (!res) {
+      throw new Error("Failed to fetch services data");
+    }
+
+    return res.docs;
+  },
+  undefined,
+  {
+    tags: ["payload", "services"],
+    revalidate: false,
+  }
+);

@@ -22,17 +22,14 @@ const NAV_LINKS = [
     path: "/",
   },
   {
+    name: "Treatments & Care",
+    path: "/treatments",
+  },
+  {
     name: "About us",
     path: "/about-us",
   },
-  {
-    name: "Practice",
-    path: "/practice",
-  },
-  {
-    name: "Testimonials",
-    path: "/testimonials",
-  },
+
   {
     name: "Contact us",
     path: "/contact-us",
