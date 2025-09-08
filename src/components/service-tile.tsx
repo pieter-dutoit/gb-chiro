@@ -1,6 +1,6 @@
+import { twMerge } from "tailwind-merge";
 import { Service } from "@/payload-types";
 import CMSImage from "./cms-image";
-import { twMerge } from "tailwind-merge";
 
 type ServiceTileProps = {
   service: Service;
