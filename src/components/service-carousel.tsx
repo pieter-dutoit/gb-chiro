@@ -74,7 +74,7 @@ export default async function ServicesCarousel() {
               >
                 <Link
                   href={`/treatments#${slug}`}
-                  className="relative flex items-center justify-center h-11/12 w-11/12 border-2 border-primary rounded-2xl bg-white hover:scale-105 transition-transform"
+                  className="relative flex items-center justify-center h-11/12 w-11/12 border-2 border-primary rounded-2xl bg-white hover:scale-105 transition-transform overflow-hidden"
                 >
                   <div className="bg-gradient-to-br from-primary/15 to-primary/8 size-full px-2 py-4 pb-12 lg:px-4 lg:pt-6 lg:pb-14">
                     {/* Title */}

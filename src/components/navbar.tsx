@@ -20,7 +20,7 @@ export default async function Navbar() {
             media={horizontalLogo}
             fill
             className="object-contain object-left"
-            sizes="9rem"
+            sizes="12.5rem"
           />
         </Link>
 
