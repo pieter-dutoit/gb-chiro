@@ -1,6 +1,5 @@
-import { getAboutUsPageData, getServicesData } from "@/lib/data";
+import { getServicesData } from "@/lib/data";
 
-import CMSImage from "./cms-image";
 import { Typography } from "./ui/typography";
 import ServiceTile from "./service-tile";
 

@@ -13,6 +13,7 @@ import { getGraphics, getServicesData } from "@/lib/data";
 import { Typography } from "./ui/typography";
 import { Button } from "./ui/button";
 import CMSImage from "./cms-image";
+import ServiceTile from "./service-tile";
 
 export default async function ServicesCarousel() {
   const services = await getServicesData();
@@ -20,7 +21,6 @@ export default async function ServicesCarousel() {
   return (
     <div className="flex flex-col items-center container mx-auto px-0 md:px-12 py-16 lg:py-24 xl:py-30 gap-12 lg:gap-20 relative">
       {/* Graphic */}
-
       <div
         className="absolute inset-0 overflow-hidden pointer-events-none"
         tabIndex={-1}
@@ -66,44 +66,18 @@ export default async function ServicesCarousel() {
         }}
       >
         <CarouselPrevious className="hidden md:flex" />
-        <CarouselContent className="lg:-ml-2">
-          {services.map(({ id, slug, name, thumbnail }) => {
+        <CarouselContent className="lg:-ml-4">
+          {services.map((service, index) => {
             return (
               <CarouselItem
-                key={id}
-                className="lg:pl-2 basis-1/2 sm:basis-1/3 lg:basis-1/4 xl:basis-1/5 flex items-center justify-center"
+                key={service.id}
+                className="lg:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4"
               >
-                {/* Card */}
-                <Link
-                  href={`/treatment-and-care#${slug}`}
-                  className="focus:scale-110 relative flex items-center justify-center h-11/12 w-11/12 border-2 border-primary rounded-2xl overflow-hidden bg-white hover:scale-105 transition-transform"
-                >
-                  {/* Background */}
-                  <CMSImage
-                    media={thumbnail}
-                    sizes="(min-width: 640px) 192px, (min-width: 1540px) 250px, 40vw"
-                    className="pointer-events-auto -z-0 object-cover blur-[0.1em] opacity-80"
-                    tabIndex={-1}
-                  />
-
-                  {/* Card content */}
-                  <div className="relative size-full bg-primary/80 px-2 py-4 pb-12 lg:px-4 lg:pt-6 lg:pb-14">
-                    {/* Title */}
-                    <Typography className="text-lg xl:text-xl leading-tight font-bold text-center line-clamp-2 text-white">
-                      {name}
-                    </Typography>
-
-                    {/* Read more overlay */}
-                    <Button
-                      size="sm"
-                      variant="link"
-                      className="absolute bottom-1 left-1/2 -translate-x-1/2 text-white/70"
-                      asChild
-                    >
-                      <span>Read more</span>
-                    </Button>
-                  </div>
-                </Link>
+                <ServiceTile
+                  variant="carousel"
+                  service={service}
+                  index={index}
+                />
               </CarouselItem>
             );
           })}

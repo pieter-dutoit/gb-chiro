@@ -6,9 +6,11 @@ type ServiceTileProps = {
   service: Service;
   index: number;
   className?: string;
+  variant?: "default" | "carousel";
 };
 
 export default function ServiceTile({
+  variant = "default",
   service: { slug, id, name, thumbnail, description },
   className,
   index,
@@ -23,7 +25,12 @@ export default function ServiceTile({
       )}
     >
       {/* Thumbnail */}
-      <div className="relative h-full w-1/3">
+      <div
+        className={twMerge(
+          "relative w-1/3",
+          variant === "default" ? "h-full" : "h-30"
+        )}
+      >
         <CMSImage
           priority={index < 6}
           media={thumbnail}
@@ -32,10 +39,21 @@ export default function ServiceTile({
         />
       </div>
       <div className="flex flex-1 h-full flex-col justify-start p-2 gap-2 lg:p-4 lg:gap-4">
-        <h3 className="font-bold text-base lg:text-lg">{name}</h3>
-        <p className="[text-wrap:balance] text-sm lg:text-base">
-          {description}
-        </p>
+        <h3
+          className={twMerge(
+            "font-bold",
+            variant === "default"
+              ? "text-start text-base lg:text-lg"
+              : "text-center line-clamp-3 lg:text-lg"
+          )}
+        >
+          {name}
+        </h3>
+        {variant === "default" && (
+          <p className="[text-wrap:balance] text-sm lg:text-base">
+            {description}
+          </p>
+        )}
       </div>
     </li>
   );
