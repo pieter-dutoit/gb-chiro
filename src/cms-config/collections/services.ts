@@ -27,6 +27,14 @@ export const Services: CollectionConfig = {
       },
     },
     {
+      name: "thumbnail",
+      label: "Thumbnail",
+      type: "upload",
+      relationTo: "media",
+      hasMany: false,
+      required: true,
+    },
+    {
       name: "name",
       type: "text",
       label: "Service Name",

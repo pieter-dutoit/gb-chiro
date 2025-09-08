@@ -52,7 +52,7 @@ export default async function ServicesCarousel() {
         className="font-bold shadow-lg"
         asChild
       >
-        <Link href="/treatments">
+        <Link href="/treatment-and-care">
           View all services
           <ArrowRight />
         </Link>
@@ -65,20 +65,31 @@ export default async function ServicesCarousel() {
           loop: true,
         }}
       >
+        <CarouselPrevious className="hidden md:flex" />
         <CarouselContent className="lg:-ml-2">
-          {services.map(({ id, name, slug }) => {
+          {services.map(({ id, slug, name, thumbnail }) => {
             return (
               <CarouselItem
                 key={id}
                 className="lg:pl-2 basis-1/2 sm:basis-1/3 lg:basis-1/4 xl:basis-1/5 flex items-center justify-center"
               >
+                {/* Card */}
                 <Link
-                  href={`/treatments#${slug}`}
-                  className="relative flex items-center justify-center h-11/12 w-11/12 border-2 border-primary rounded-2xl bg-white hover:scale-105 transition-transform"
+                  href={`/treatment-and-care#${slug}`}
+                  className="focus:scale-110 relative flex items-center justify-center h-11/12 w-11/12 border-2 border-primary rounded-2xl overflow-hidden bg-white hover:scale-105 transition-transform"
                 >
-                  <div className="bg-gradient-to-br from-primary/15 to-primary/8 size-full px-2 py-4 pb-12 lg:px-4 lg:pt-6 lg:pb-14">
+                  {/* Background */}
+                  <CMSImage
+                    media={thumbnail}
+                    sizes="(min-width: 640px) 192px, (min-width: 1540px) 250px, 40vw"
+                    className="pointer-events-auto -z-0 object-cover blur-[0.1em] opacity-80"
+                    tabIndex={-1}
+                  />
+
+                  {/* Card content */}
+                  <div className="relative size-full bg-primary/80 px-2 py-4 pb-12 lg:px-4 lg:pt-6 lg:pb-14">
                     {/* Title */}
-                    <Typography className="text-lg xl:text-xl leading-tight font-bold text-center line-clamp-2">
+                    <Typography className="text-lg xl:text-xl leading-tight font-bold text-center line-clamp-2 text-white">
                       {name}
                     </Typography>
 
@@ -86,9 +97,10 @@ export default async function ServicesCarousel() {
                     <Button
                       size="sm"
                       variant="link"
-                      className="absolute bottom-1 left-1/2 -translate-x-1/2"
+                      className="absolute bottom-1 left-1/2 -translate-x-1/2 text-white/70"
+                      asChild
                     >
-                      Read more
+                      <span>Read more</span>
                     </Button>
                   </div>
                 </Link>
@@ -96,8 +108,8 @@ export default async function ServicesCarousel() {
             );
           })}
         </CarouselContent>
-        <CarouselPrevious className="hidden sm:flex" />
-        <CarouselNext className="hidden sm:flex" />
+
+        <CarouselNext className="hidden md:flex" />
       </Carousel>
     </div>
   );

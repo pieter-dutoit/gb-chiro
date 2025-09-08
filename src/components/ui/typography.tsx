@@ -9,7 +9,7 @@ export const typographyVariants = cva("", {
     variant: {
       default: "text-base",
       pageTitle:
-        "text-center text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-extrabold leading-snug [text-wrap:balance]",
+        "leading-tight text-center text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-extrabold [text-wrap:balance]",
       sectionTitle: "font-light text-center lg:text-left text-3xl xl:text-5xl",
       paragraphs:
         "flex flex-col gap-4 text-base leading-6 xl:text-lg xl:leading-8 tracking-[0.005em] text-center lg:text-start [text-wrap:balance]",
