@@ -6,6 +6,20 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function getBaseUrl(): string {
+  const env = process.env.VERCEL_ENV || "";
+
+  if (env === "production") {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+
+  if (["development", "preview"].includes(env)) {
+    return `https://${process.env.VERCEL_URL || process.env.VERCEL_BRANCH_URL}`;
+  }
+
+  return "http://localhost:3000";
+}
+
 type DayKey =
   | "Monday"
   | "Tuesday"

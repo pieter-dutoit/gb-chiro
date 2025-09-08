@@ -1,11 +1,6 @@
 export const dynamic = "force-static";
 
-const originFromEnv = () => {
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
-  return "http://localhost:3000";
-};
+import { getBaseUrl } from "@/lib/utils";
 
 export async function GET(
   _request: Request,
@@ -13,7 +8,7 @@ export async function GET(
 ) {
   try {
     const { fileName } = await params;
-    const origin = originFromEnv();
+    const origin = getBaseUrl();
 
     const upstreamUrl = `${origin}/api/media/file/${encodeURIComponent(fileName)}`;
     const upstream = await fetch(upstreamUrl, {
@@ -26,7 +21,6 @@ export async function GET(
         { status: upstream.status }
       );
     }
-
     const contentType = upstream.headers.get("Content-Type") || "";
     if (!contentType.startsWith("image/")) {
       throw new Error(`Invalid image content type: ${contentType}`);
@@ -35,7 +29,6 @@ export async function GET(
     const headers = new Headers();
     headers.set("Content-Type", contentType);
     headers.set("Cache-Control", "public, max-age=31536000, immutable");
-
     return new Response(upstream.body, {
       status: upstream.status,
       statusText: upstream.statusText,
