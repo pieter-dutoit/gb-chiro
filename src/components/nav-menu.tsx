@@ -22,8 +22,8 @@ const NAV_LINKS = [
     path: "/",
   },
   {
-    name: "Treatments & Care",
-    path: "/treatments",
+    name: "Treatment & Care",
+    path: "/treatment-and-care",
   },
   {
     name: "About us",

@@ -13,6 +13,7 @@ import { getGraphics, getServicesData } from "@/lib/data";
 import { Typography } from "./ui/typography";
 import { Button } from "./ui/button";
 import CMSImage from "./cms-image";
+import ServiceTile from "./service-tile";
 
 export default async function ServicesCarousel() {
   const services = await getServicesData();
@@ -20,7 +21,6 @@ export default async function ServicesCarousel() {
   return (
     <div className="flex flex-col items-center container mx-auto px-0 md:px-12 py-16 lg:py-24 xl:py-30 gap-12 lg:gap-20 relative">
       {/* Graphic */}
-
       <div
         className="absolute inset-0 overflow-hidden pointer-events-none"
         tabIndex={-1}
@@ -52,7 +52,7 @@ export default async function ServicesCarousel() {
         className="font-bold shadow-lg"
         asChild
       >
-        <Link href="/treatments">
+        <Link href="/treatment-and-care">
           View all services
           <ArrowRight />
         </Link>
@@ -65,39 +65,25 @@ export default async function ServicesCarousel() {
           loop: true,
         }}
       >
-        <CarouselContent className="lg:-ml-2">
-          {services.map(({ id, name, slug }) => {
+        <CarouselPrevious className="hidden md:flex" />
+        <CarouselContent className="lg:-ml-4">
+          {services.map((service, index) => {
             return (
               <CarouselItem
-                key={id}
-                className="lg:pl-2 basis-1/2 sm:basis-1/3 lg:basis-1/4 xl:basis-1/5 flex items-center justify-center"
+                key={service.id}
+                className="lg:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4"
               >
-                <Link
-                  href={`/treatments#${slug}`}
-                  className="relative flex items-center justify-center h-11/12 w-11/12 border-2 border-primary rounded-2xl bg-white hover:scale-105 transition-transform overflow-hidden"
-                >
-                  <div className="bg-gradient-to-br from-primary/15 to-primary/8 size-full px-2 py-4 pb-12 lg:px-4 lg:pt-6 lg:pb-14">
-                    {/* Title */}
-                    <Typography className="text-lg xl:text-xl leading-tight font-bold text-center line-clamp-2">
-                      {name}
-                    </Typography>
-
-                    {/* Read more overlay */}
-                    <Button
-                      size="sm"
-                      variant="link"
-                      className="absolute bottom-1 left-1/2 -translate-x-1/2"
-                    >
-                      Read more
-                    </Button>
-                  </div>
-                </Link>
+                <ServiceTile
+                  variant="carousel"
+                  service={service}
+                  index={index}
+                />
               </CarouselItem>
             );
           })}
         </CarouselContent>
-        <CarouselPrevious className="hidden sm:flex" />
-        <CarouselNext className="hidden sm:flex" />
+
+        <CarouselNext className="hidden md:flex" />
       </Carousel>
     </div>
   );
