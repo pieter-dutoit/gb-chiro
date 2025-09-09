@@ -10,31 +10,12 @@ import {
 } from "@/components/ui/navigation-menu";
 
 import { Button } from "./ui/button";
+import { NAV_LINKS } from "@/lib/constants";
 
 type NavMenuProps = {
   bookingLink: string;
   className: string;
 };
-
-const NAV_LINKS = [
-  {
-    name: "Home",
-    path: "/",
-  },
-  {
-    name: "Treatment & Care",
-    path: "/treatment-and-care",
-  },
-  {
-    name: "About us",
-    path: "/about-us",
-  },
-
-  {
-    name: "Contact us",
-    path: "/contact-us",
-  },
-];
 
 export default function NavMenu({ bookingLink, className }: NavMenuProps) {
   const pathname = usePathname();
