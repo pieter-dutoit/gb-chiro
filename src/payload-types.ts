@@ -693,6 +693,7 @@ export interface HomePage {
    * First image on Home page.
    */
   landingImage: number | Media;
+  whatToExpectImage: number | Media;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -772,6 +773,7 @@ export interface GraphicsSelect<T extends boolean = true> {
  */
 export interface HomePageSelect<T extends boolean = true> {
   landingImage?: T;
+  whatToExpectImage?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;

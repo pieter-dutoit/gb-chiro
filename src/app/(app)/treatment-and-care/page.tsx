@@ -9,7 +9,7 @@ export default async function TreatmentAndCarePage() {
       <Services />
       <CallToAction
         heading="Need help with something specific?"
-        description="Reach out and we’ll recommend the best next step"
+        description="Reach out and we’ll recommend the best next step."
         ctas={[
           {
             label: "Contact us",

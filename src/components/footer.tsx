@@ -19,64 +19,65 @@ export default async function Footer() {
   const number = parsePhoneNumber(phone, "AU");
 
   return (
-    <footer className="bg-black/95 text-white flex flex-col gap-10 py-8">
+    <footer className="bg-black/95 text-white flex flex-col gap-10 py-10 sm:py-16 xl:py-18">
       <ul className="container mx-auto px-4 md:px-12 gap-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {/* Col 1: Business details */}
-        <li>
-          <div className="flex flex-col gap-4">
-            {/* Logo */}
-            <h3 className="font-semibold text-2xl">
-              GB Chiropractic <span className="sr-only">in Griffith</span>
-            </h3>
+        <li className="flex flex-col gap-4">
+          {/* Logo */}
+          <h3 className="font-semibold text-2xl">
+            GB Chiropractic <span className="sr-only">in Griffith</span>
+          </h3>
 
-            {/* Contact details */}
-            <h4 className="sr-only">Contact details</h4>
-            <ul className="flex flex-col gap-2 font-light opacity-70">
-              <li>
-                <Link
-                  href={`tel:${number.number}`}
-                  className="flex items-center gap-2"
-                >
-                  <Phone className="size-4" />
-                  {number.formatNational()}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={`mail:${email}`}
-                  className="flex items-center gap-2"
-                >
-                  <Mail className="size-4" />
-                  {email}
-                </Link>
-              </li>
+          {/* Contact details */}
+          <h4 className="sr-only">Contact details</h4>
+          <ul className="flex flex-col gap-2 font-light opacity-70">
+            <li>
+              <Link
+                href={`tel:${number.number}`}
+                className="flex items-center gap-2 hover:underline underline-offset-2"
+              >
+                <Phone className="size-4" />
+                {number.formatNational()}
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`mail:${email}`}
+                className="flex items-center gap-2 hover:underline underline-offset-2"
+              >
+                <Mail className="size-4" />
+                {email}
+              </Link>
+            </li>
+          </ul>
+
+          {/* Address */}
+          <h4 className="sr-only">Address</h4>
+          <ul className="flex flex-col gap-2 font-light opacity-70">
+            <li>
+              <p className="font-light">
+                {street}, {suburb}, {state.toUpperCase()}, {code}
+              </p>
+            </li>
+            <li>
+              <Link
+                href={mapsLink}
+                className="flex items-center gap-2 hover:underline underline-offset-2"
+              >
+                <MapPin className="size-4" />
+                Get Directions
+              </Link>
+            </li>
+          </ul>
+
+          {/* Hours */}
+          <div className="flex flex-col gap-2">
+            <h4 className="font-semibold">Operating Hours</h4>
+            <ul className="opacity-70 font-light">
+              {formatOperatingHours(operatingHours).map((hrs) => (
+                <li key={hrs}>{hrs}</li>
+              ))}
             </ul>
-
-            {/* Address */}
-            <h4 className="sr-only">Address</h4>
-            <ul className="flex flex-col gap-2 font-light opacity-70">
-              <li>
-                <p className="font-light">
-                  {street}, {suburb}, {state.toUpperCase()}, {code}
-                </p>
-              </li>
-              <li>
-                <Link href={mapsLink} className="flex items-center gap-2">
-                  <MapPin className="size-4 underline underline-offset-2" />
-                  Get Directions
-                </Link>
-              </li>
-            </ul>
-
-            {/* Hours */}
-            <div className="flex flex-col gap-2">
-              <h4 className="font-semibold">Operating Hours</h4>
-              <ul className="opacity-70 font-light">
-                {formatOperatingHours(operatingHours).map((hrs) => (
-                  <li key={hrs}>{hrs}</li>
-                ))}
-              </ul>
-            </div>
           </div>
         </li>
 

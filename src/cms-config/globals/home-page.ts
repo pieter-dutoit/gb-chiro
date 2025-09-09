@@ -17,10 +17,18 @@ export const HomePage: GlobalConfig = {
   fields: [
     {
       name: "landingImage",
-      label: "Landing Image",
+      label: "Landing image",
       admin: {
         description: "First image on Home page.",
       },
+      type: "upload",
+      relationTo: "media",
+      hasMany: false,
+      required: true,
+    },
+    {
+      name: "whatToExpectImage",
+      label: "'What to Expect' section image",
       type: "upload",
       relationTo: "media",
       hasMany: false,
