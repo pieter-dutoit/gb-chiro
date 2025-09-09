@@ -31,7 +31,7 @@ export default async function Footer() {
 
             {/* Contact details */}
             <h4 className="sr-only">Contact details</h4>
-            <ul className="flex flex-col gap-1 font-light opacity-70">
+            <ul className="flex flex-col gap-2 font-light opacity-70">
               <li>
                 <Link
                   href={`tel:${number.number}`}
@@ -54,7 +54,7 @@ export default async function Footer() {
 
             {/* Address */}
             <h4 className="sr-only">Address</h4>
-            <ul className="flex flex-col gap-1 font-light opacity-70">
+            <ul className="flex flex-col gap-2 font-light opacity-70">
               <li>
                 <p className="font-light">
                   {street}, {suburb}, {state.toUpperCase()}, {code}
@@ -69,7 +69,7 @@ export default async function Footer() {
             </ul>
 
             {/* Hours */}
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2">
               <h4 className="font-semibold">Operating Hours</h4>
               <ul className="opacity-70 font-light">
                 {formatOperatingHours(operatingHours).map((hrs) => (
@@ -85,7 +85,7 @@ export default async function Footer() {
           <div className="font-semibold text-2xl">Make an Appointment</div>
           <ul className="flex flex-col gap-1 ">
             <li>
-              <Button asChild className="bg-blue-600">
+              <Button asChild className="bg-blue-600 xl:text-lg">
                 <Link href={bookingLink}>Book Online</Link>
               </Button>
             </li>
@@ -99,11 +99,14 @@ export default async function Footer() {
           {/* Logo */}
           <div className="font-semibold text-2xl">Links</div>
 
-          <ul className="flex flex-col gap-1 opacity-70 font-light">
+          <ul className="flex flex-col gap-3 opacity-70 font-light">
             {NAV_LINKS.map(({ name, path }) => {
               return (
                 <li key={path}>
-                  <Link href={path} className="flex items-center gap-2">
+                  <Link
+                    href={path}
+                    className="flex items-center gap-2 hover:underline underline-offset-2"
+                  >
                     {name}
                   </Link>
                 </li>
