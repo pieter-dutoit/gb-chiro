@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import Navbar from "@/components/navbar";
 
 import "./globals.css";
+import Footer from "@/components/footer";
 
 const Font = localFont({
   src: "../../assets/fonts/NunitoSans-VariableFont.ttf",
@@ -29,6 +30,7 @@ export default async function RootLayout({
         </header>
 
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
