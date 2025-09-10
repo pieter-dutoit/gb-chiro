@@ -40,6 +40,15 @@ export const getAboutUsPageData = unstable_cache(
   }
 );
 
+export const getWhatToExpectPageData = unstable_cache(
+  async () => payload.findGlobal({ slug: "what-to-expect-page", depth: 2 }),
+  undefined,
+  {
+    tags: ["payload", "what-to-expect"],
+    revalidate: false,
+  }
+);
+
 export const getServicesData = unstable_cache(
   async () => {
     const res = await payload.find({

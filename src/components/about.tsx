@@ -15,7 +15,7 @@ export default async function About() {
 
       <div className="flex flex-col-reverse gap-12 lg:flex-row justify-between items-center">
         <div className="flex flex-col gap-8 w-full lg:w-6/12">
-          <Typography as="h2" variant="sectionTitle">
+          <Typography as="h2" variant="sectionTitle" className="font-bold">
             Your Partner in Better Health
           </Typography>
 

@@ -13,14 +13,22 @@ import { Graphics } from "./cms-config/globals/graphics";
 import { AboutUsPage } from "./cms-config/globals/about-us-page";
 import { HomePage } from "./cms-config/globals/home-page";
 import { Services } from "./cms-config/collections/services";
+import { NewPatientSteps } from "./cms-config/collections/new-patient-steps";
+import { WhatToExpectPage } from "./cms-config/globals/what-to-expect-page";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
-  editor: lexicalEditor(),
-  globals: [BusinessDetailsGlobal, Graphics, HomePage, AboutUsPage],
-  collections: [Media, Services],
+  editor: lexicalEditor({}),
+  globals: [
+    BusinessDetailsGlobal,
+    Graphics,
+    HomePage,
+    AboutUsPage,
+    WhatToExpectPage,
+  ],
+  collections: [Media, Services, NewPatientSteps],
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({
     pool: {

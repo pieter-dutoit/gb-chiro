@@ -12,9 +12,11 @@ export default async function Practice() {
   const { operatingHours, address } = await getBusinessDetails();
 
   return (
-    <section className="bg-gradient-to-b from-primary/20 to-white">
+    <section className="bg-gradient-to-b to-primary/20 from-white">
       <div className="flex flex-col items-center container mx-auto px-4 md:px-12 py-16 lg:py-24 xl:py-30 gap-10">
-        <Typography variant="sectionTitle">Practice</Typography>
+        <Typography as="h2" variant="sectionTitle" className="font-bold">
+          Practice
+        </Typography>
         {/* About paragraphs */}
         <Typography variant="paragraphs">
           <p className="text-center">
@@ -27,8 +29,11 @@ export default async function Practice() {
         <div className="flex flex-col gap-8 items-center">
           {/* Operating Hours */}
           <div className="flex flex-col gap-1 items-center">
-            <CalendarClock size={20} />
-            <ul className="flex flex-col items-center">
+            <div className="flex items-center gap-2">
+              <CalendarClock size={20} />{" "}
+              <h3 className="font-bold">Operating Hours</h3>
+            </div>
+            <ul className="flex flex-col items-center opacity-80">
               {formatOperatingHours(operatingHours).map((hrs) => (
                 <li key={hrs}>{hrs}</li>
               ))}
@@ -37,8 +42,11 @@ export default async function Practice() {
 
           {/* Maps link */}
           <Typography className="flex flex-col items-center gap-1 text-center">
-            <Home size={20} />
-            <span>
+            <div className="flex items-center gap-2">
+              <Home size={20} />
+              <h3 className="font-bold">Address</h3>
+            </div>
+            <span className="opacity-80">
               {address.street}, {address.suburb}, {address.state.toUpperCase()},{" "}
               {address.code}
             </span>

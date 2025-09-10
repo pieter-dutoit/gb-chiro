@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     media: Media;
     services: Service;
+    'new-patient-steps': NewPatientStep;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +79,7 @@ export interface Config {
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
+    'new-patient-steps': NewPatientStepsSelect<false> | NewPatientStepsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -91,12 +93,14 @@ export interface Config {
     graphics: Graphic;
     'home-page': HomePage;
     'about-us-page': AboutUsPage;
+    'what-to-expect-page': WhatToExpectPage;
   };
   globalsSelect: {
     'business-details': BusinessDetailsSelect<false> | BusinessDetailsSelect<true>;
     graphics: GraphicsSelect<false> | GraphicsSelect<true>;
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
     'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>;
+    'what-to-expect-page': WhatToExpectPageSelect<false> | WhatToExpectPageSelect<true>;
   };
   locale: null;
   user: User & {
@@ -291,6 +295,48 @@ export interface Service {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "new-patient-steps".
+ */
+export interface NewPatientStep {
+  id: number;
+  icon: number | Media;
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  overview: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -327,6 +373,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'services';
         value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'new-patient-steps';
+        value: number | NewPatientStep;
       } | null)
     | ({
         relationTo: 'users';
@@ -572,6 +622,19 @@ export interface ServicesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "new-patient-steps_select".
+ */
+export interface NewPatientStepsSelect<T extends boolean = true> {
+  icon?: T;
+  title?: T;
+  overview?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -719,6 +782,17 @@ export interface AboutUsPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "what-to-expect-page".
+ */
+export interface WhatToExpectPage {
+  id: number;
+  steps?: (number | NewPatientStep)[] | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "business-details_select".
  */
 export interface BusinessDetailsSelect<T extends boolean = true> {
@@ -787,6 +861,17 @@ export interface AboutUsPageSelect<T extends boolean = true> {
   welcomeImage?: T;
   meetTheChiroImage?: T;
   practiceImages?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "what-to-expect-page_select".
+ */
+export interface WhatToExpectPageSelect<T extends boolean = true> {
+  steps?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;

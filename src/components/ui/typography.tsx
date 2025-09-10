@@ -1,4 +1,3 @@
-import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
@@ -31,23 +30,21 @@ type TypographyProps<E extends ElementTag = "div"> = {
 } & Omit<React.ComponentPropsWithoutRef<E>, "as" | "className"> &
   VariantProps<typeof typographyVariants>;
 
-export const Typography = React.forwardRef(
-  <E extends ElementTag = "div">({
-    as,
-    variant,
-    tone,
-    className,
-    ...props
-  }: TypographyProps<E>) => {
-    const Comp = (as ?? "div") as ElementTag;
-    return (
-      <Comp
-        data-slot="typography"
-        className={cn(typographyVariants({ variant, tone }), className)}
-        {...props}
-      />
-    );
-  }
-);
+export const Typography = <E extends ElementTag = "div">({
+  as,
+  variant,
+  tone,
+  className,
+  ...props
+}: TypographyProps<E>) => {
+  const Comp = (as ?? "div") as ElementTag;
+  return (
+    <Comp
+      data-slot="typography"
+      className={cn(typographyVariants({ variant, tone }), className)}
+      {...props}
+    />
+  );
+};
 
 Typography.displayName = "Typography";

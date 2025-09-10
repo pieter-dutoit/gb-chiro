@@ -1,26 +1,17 @@
-import {
-  ArrowRight,
-  CalendarCheck,
-  ClipboardList,
-  FileText,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
-import { WHAT_TO_EXPECT_STEPS } from "@/lib/constants";
-import { getHomePageData } from "@/lib/data";
+import { getHomePageData, getWhatToExpectPageData } from "@/lib/data";
 
 import CMSImage from "./cms-image";
 import { Typography } from "./ui/typography";
-import Link from "next/link";
 import { Button } from "./ui/button";
-
-const ICON_MAP = {
-  clipboard: ClipboardList,
-  calender: CalendarCheck,
-  filetext: FileText,
-};
+import { RichText } from "./rich-text";
 
 export default async function NewPatients() {
   const { whatToExpectImage } = await getHomePageData();
+  const { steps } = await getWhatToExpectPageData();
+
   return (
     <section className="flex flex-col items-center relative bg-emerald-900/5 overflow-hidden">
       {/* Container */}
@@ -47,18 +38,26 @@ export default async function NewPatients() {
           </div>
           {/* Steps */}
           <ul className="grid gap-8 flex-col items-center ">
-            {WHAT_TO_EXPECT_STEPS.map(({ icon, heading, tldr }) => {
-              const Icon = ICON_MAP[icon];
+            {steps?.map((step) => {
+              if (typeof step === "number") return null;
+              const { icon, title, overview } = step;
+
               return (
-                <li key={heading} className="flex flex-col items-center gap-2">
+                <li key={overview} className="flex flex-col items-center gap-2">
                   <span className="mt-1">
-                    <Icon className="size-5 text-primary" />
+                    <div className="size-5 relative">
+                      <CMSImage
+                        media={icon}
+                        sizes=""
+                        className="object-center object-contain"
+                      />
+                    </div>
                   </span>
 
-                  <h3 className="font-extrabold text-lg text-center">
-                    {heading}
-                  </h3>
-                  <p className="text-center">{tldr}</p>
+                  <div className="font-extrabold text-lg text-center">
+                    <RichText data={title} />
+                  </div>
+                  <p className="text-center max-w-[30ch]">{overview}</p>
                 </li>
               );
             })}
@@ -84,8 +83,8 @@ export default async function NewPatients() {
         >
           <CMSImage
             media={whatToExpectImage}
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-center object-cover opacity-90 -z-0 "
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="absolute min-w-[100vw] left-1/2 -translate-x-1/2 md:-translate-x-0 object-center object-cover opacity-90 -z-0 md:absolute md:left-0 md:top-0 md:bottom-0 md:min-w-[50vw] 3xl:block 3xl:min-w-auto"
           />
         </div>
       </div>
