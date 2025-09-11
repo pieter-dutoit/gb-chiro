@@ -34,7 +34,7 @@ export default async function WhatToExpect() {
             >
               <div className="flex flex-col gap-1 relative text-xl sm:text-2xl lg:text-3xl">
                 {/* Ghost text */}
-                <div className="text-[3em] text-primary/5 font-extrabold leading-[1] absolute -left-[0.2ch] lg:-left-[2.5ch] -top-[1.1ch] lg:-top-[0.3ch]">
+                <div className="text-[3em] text-primary/5 lg:text-primary/15 font-extrabold leading-[1] absolute -left-[0.2ch] lg:-left-[2.5ch] -top-[1.1ch] lg:-top-[0.3ch]">
                   0{index + 1}
                 </div>
                 {/* Title */}

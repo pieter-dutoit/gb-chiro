@@ -93,6 +93,7 @@ export interface Config {
     graphics: Graphic;
     'home-page': HomePage;
     'about-us-page': AboutUsPage;
+    'treatment-and-care-page': TreatmentAndCarePage;
     'what-to-expect-page': WhatToExpectPage;
   };
   globalsSelect: {
@@ -100,6 +101,7 @@ export interface Config {
     graphics: GraphicsSelect<false> | GraphicsSelect<true>;
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
     'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>;
+    'treatment-and-care-page': TreatmentAndCarePageSelect<false> | TreatmentAndCarePageSelect<true>;
     'what-to-expect-page': WhatToExpectPageSelect<false> | WhatToExpectPageSelect<true>;
   };
   locale: null;
@@ -727,6 +729,7 @@ export interface BusinessDetail {
     Friday?: boolean | null;
     Saturday?: boolean | null;
     Sunday?: boolean | null;
+    note?: string | null;
     id?: string | null;
   }[];
   _status?: ('draft' | 'published') | null;
@@ -782,6 +785,17 @@ export interface AboutUsPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "treatment-and-care-page".
+ */
+export interface TreatmentAndCarePage {
+  id: number;
+  services?: (number | Service)[] | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "what-to-expect-page".
  */
 export interface WhatToExpectPage {
@@ -821,6 +835,7 @@ export interface BusinessDetailsSelect<T extends boolean = true> {
         Friday?: T;
         Saturday?: T;
         Sunday?: T;
+        note?: T;
         id?: T;
       };
   _status?: T;
@@ -861,6 +876,17 @@ export interface AboutUsPageSelect<T extends boolean = true> {
   welcomeImage?: T;
   meetTheChiroImage?: T;
   practiceImages?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "treatment-and-care-page_select".
+ */
+export interface TreatmentAndCarePageSelect<T extends boolean = true> {
+  services?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -74,5 +74,11 @@ export const OpeningHoursField: ArrayField = {
         type: "checkbox",
       })),
     },
+    {
+      type: "text",
+      name: "note",
+      label: "Note (Optional)",
+      maxLength: 1000,
+    },
   ],
 };

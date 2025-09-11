@@ -42,7 +42,7 @@ export default async function Footer() {
             </li>
             <li>
               <Link
-                href={`mail:${email}`}
+                href={`mailto:${email}`}
                 className="flex items-center gap-2 hover:underline underline-offset-2"
               >
                 <Mail className="size-4" />
@@ -74,9 +74,26 @@ export default async function Footer() {
           <div className="flex flex-col gap-2">
             <h4 className="font-semibold">Operating Hours</h4>
             <ul className="opacity-70 font-light">
-              {formatOperatingHours(operatingHours).map((hrs) => (
-                <li key={hrs}>{hrs}</li>
-              ))}
+              {formatOperatingHours(operatingHours).map((hrs, index) => {
+                const note = operatingHours[index]?.note ?? null;
+
+                return (
+                  <li key={hrs}>
+                    {hrs}
+                    {note && <sup>*</sup>}
+                  </li>
+                );
+              })}
+            </ul>
+            <ul className="mt-2 text-sm opacity-60">
+              {operatingHours
+                .filter(({ note }) => Boolean(note))
+                .map(({ note }) => (
+                  <li key={note}>
+                    <sup>*</sup>
+                    {note}
+                  </li>
+                ))}
             </ul>
           </div>
         </li>

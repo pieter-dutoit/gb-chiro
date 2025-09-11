@@ -1,10 +1,10 @@
-import { getServicesData } from "@/lib/data";
+import { getTreatmentAndCareData } from "@/lib/data";
 
 import { Typography } from "./ui/typography";
 import ServiceTile from "./service-tile";
 
 export default async function Services() {
-  const services = await getServicesData();
+  const { services } = await getTreatmentAndCareData();
 
   return (
     <section className="flex flex-col items-center container mx-auto px-4 md:px-12 py-16 lg:py-24 xl:py-30 gap-20 lg:gap-30 relative">
@@ -23,7 +23,8 @@ export default async function Services() {
       </div>
 
       <ul className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 lg:grid-cols-3 lg:gap-6">
-        {services.map((service, index) => {
+        {services?.map((service, index) => {
+          if (typeof service === "number") return null;
           return (
             <ServiceTile key={service.id} index={index} service={service} />
           );

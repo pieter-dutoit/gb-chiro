@@ -15,6 +15,7 @@ import { HomePage } from "./cms-config/globals/home-page";
 import { Services } from "./cms-config/collections/services";
 import { NewPatientSteps } from "./cms-config/collections/new-patient-steps";
 import { WhatToExpectPage } from "./cms-config/globals/what-to-expect-page";
+import { TreatmentAndCarePage } from "./cms-config/globals/treatment-and-care-page";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -26,6 +27,7 @@ export default buildConfig({
     Graphics,
     HomePage,
     AboutUsPage,
+    TreatmentAndCarePage,
     WhatToExpectPage,
   ],
   collections: [Media, Services, NewPatientSteps],

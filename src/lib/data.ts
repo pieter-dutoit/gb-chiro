@@ -49,26 +49,8 @@ export const getWhatToExpectPageData = unstable_cache(
   }
 );
 
-export const getServicesData = unstable_cache(
-  async () => {
-    const res = await payload.find({
-      draft: false,
-      collection: "services",
-      depth: 1,
-      pagination: false,
-      sort: "-name",
-      where: {
-        _status: {
-          equals: "published",
-        },
-      },
-    });
-    if (!res) {
-      throw new Error("Failed to fetch services data");
-    }
-
-    return res.docs;
-  },
+export const getTreatmentAndCareData = unstable_cache(
+  async () => payload.findGlobal({ slug: "treatment-and-care-page", depth: 2 }),
   undefined,
   {
     tags: ["payload", "services"],
