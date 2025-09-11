@@ -16,3 +16,12 @@ const revalidateCollection =
   };
 
 export default revalidateCollection;
+
+export const revalidateCollectionByField =
+  (fieldName: string): CollectionAfterChangeHook =>
+  async ({ doc }) => {
+    if (!doc[fieldName])
+      throw new Error("Field does not exist in collection document");
+    revalidateTag(doc[fieldName]);
+    return doc;
+  };

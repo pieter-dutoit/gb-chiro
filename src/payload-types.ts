@@ -70,6 +70,7 @@ export interface Config {
     media: Media;
     services: Service;
     'new-patient-steps': NewPatientStep;
+    articles: Article;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
     'new-patient-steps': NewPatientStepsSelect<false> | NewPatientStepsSelect<true>;
+    articles: ArticlesSelect<false> | ArticlesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -291,6 +293,39 @@ export interface Service {
   thumbnail: number | Media;
   name: string;
   description: string;
+  /**
+   * Optionally link this service to a detailed article.
+   */
+  article?: (number | null) | Article;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articles".
+ */
+export interface Article {
+  id: number;
+  slug?: string | null;
+  author: string;
+  thumbnail?: (number | null) | Media;
+  title: string;
+  body: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -379,6 +414,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'new-patient-steps';
         value: number | NewPatientStep;
+      } | null)
+    | ({
+        relationTo: 'articles';
+        value: number | Article;
       } | null)
     | ({
         relationTo: 'users';
@@ -618,6 +657,7 @@ export interface ServicesSelect<T extends boolean = true> {
   thumbnail?: T;
   name?: T;
   description?: T;
+  article?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -631,6 +671,20 @@ export interface NewPatientStepsSelect<T extends boolean = true> {
   title?: T;
   overview?: T;
   description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articles_select".
+ */
+export interface ArticlesSelect<T extends boolean = true> {
+  slug?: T;
+  author?: T;
+  thumbnail?: T;
+  title?: T;
+  body?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

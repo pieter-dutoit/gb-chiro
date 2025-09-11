@@ -1,6 +1,14 @@
 import { DefaultNodeTypes } from "@payloadcms/richtext-lexical";
 import { JSXConvertersFunction } from "@payloadcms/richtext-lexical/react";
-// import { headingConverter } from "./heading-converter";
+
+import {
+  headingConverter,
+  linkConverter,
+  listConverter,
+  listItemConverter,
+  paragraphConverter,
+  uploadConverter,
+} from "./custom-converters";
 
 type NodeTypes = DefaultNodeTypes;
 
@@ -8,5 +16,16 @@ export const jsxConverter: JSXConvertersFunction<NodeTypes> = ({
   defaultConverters,
 }) => ({
   ...defaultConverters,
-  // ...headingConverter,
+});
+
+export const styledJsxConverter: JSXConvertersFunction<NodeTypes> = ({
+  defaultConverters,
+}) => ({
+  ...defaultConverters,
+  ...headingConverter,
+  ...paragraphConverter,
+  ...linkConverter,
+  ...listConverter,
+  ...listItemConverter,
+  ...uploadConverter,
 });

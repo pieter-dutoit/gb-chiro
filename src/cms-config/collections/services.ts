@@ -6,7 +6,7 @@ export const Services: CollectionConfig = {
   slug: "services",
   hooks: {
     beforeChange: [createSlug],
-    afterChange: [revalidateCollection("services")],
+    afterChange: [revalidateCollection("services", true)],
   },
   admin: {
     useAsTitle: "name",
@@ -49,6 +49,17 @@ export const Services: CollectionConfig = {
       required: true,
       minLength: 1,
       maxLength: 1000,
+    },
+    {
+      name: "article",
+      type: "relationship",
+      relationTo: "articles",
+      hasMany: false,
+      required: false,
+      label: "Related Article",
+      admin: {
+        description: "Optionally link this service to a detailed article.",
+      },
     },
   ],
 };

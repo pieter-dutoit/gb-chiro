@@ -4,7 +4,7 @@ import revalidateCollection from "../hooks/revalidate-collection";
 export const NewPatientSteps: CollectionConfig = {
   slug: "new-patient-steps",
   hooks: {
-    afterChange: [revalidateCollection("what-to-expect")],
+    afterChange: [revalidateCollection("what-to-expect", true)],
   },
   versions: {
     drafts: true,

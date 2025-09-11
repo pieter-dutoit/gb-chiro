@@ -1,6 +1,8 @@
 import { getPayload } from "payload";
-import config from "@payload-config";
 import { unstable_cache } from "next/cache";
+
+import config from "@payload-config";
+import { Article } from "@/payload-types";
 
 const payload = await getPayload({ config });
 
@@ -56,4 +58,59 @@ export const getTreatmentAndCareData = unstable_cache(
     tags: ["payload", "services"],
     revalidate: false,
   }
+);
+
+export const getArticle = (slug: string) =>
+  unstable_cache(
+    async (): Promise<Article> => {
+      const payload = await getPayload({ config });
+      const res = await payload.find({
+        draft: false,
+        collection: "articles",
+        depth: 2,
+        where: {
+          slug: {
+            equals: slug,
+          },
+          _status: {
+            equals: "published",
+          },
+        },
+      });
+
+      if (!res || res.docs.length < 1) {
+        throw new Error("Failed to find article");
+      }
+
+      return res.docs[0];
+    },
+    [],
+    { revalidate: false, tags: ["payload", "articles", slug] }
+  );
+
+export const getArticles = unstable_cache(
+  async (): Promise<Article[]> => {
+    const payload = await getPayload({ config });
+    const res = await payload.find({
+      draft: false,
+      collection: "articles",
+      depth: 1,
+      pagination: false,
+      sort: "-title",
+      limit: 100,
+      where: {
+        _status: {
+          equals: "published",
+        },
+      },
+    });
+
+    if (!res) {
+      throw new Error("Failed to fetch articles");
+    }
+
+    return res.docs;
+  },
+  [],
+  { revalidate: false, tags: ["payload", "articles"] }
 );
