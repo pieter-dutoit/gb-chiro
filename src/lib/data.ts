@@ -1,5 +1,6 @@
 import { getPayload } from "payload";
 import { unstable_cache } from "next/cache";
+import { notFound } from "next/navigation";
 
 import config from "@payload-config";
 import { Article } from "@/payload-types";
@@ -63,6 +64,7 @@ export const getTreatmentAndCareData = unstable_cache(
 export const getArticle = (slug: string) =>
   unstable_cache(
     async (): Promise<Article> => {
+      console.log("fetch: ", slug);
       const payload = await getPayload({ config });
       const res = await payload.find({
         draft: false,
@@ -79,12 +81,13 @@ export const getArticle = (slug: string) =>
       });
 
       if (!res || res.docs.length < 1) {
-        throw new Error("Failed to find article");
+        console.error(`Article with slug ${slug} not found`);
+        notFound();
       }
 
       return res.docs[0];
     },
-    [],
+    ["articles", slug],
     { revalidate: false, tags: ["payload", "articles", slug] }
   );
 
@@ -106,7 +109,8 @@ export const getArticles = unstable_cache(
     });
 
     if (!res) {
-      throw new Error("Failed to fetch articles");
+      console.error("Failed to fetch articles");
+      notFound();
     }
 
     return res.docs;

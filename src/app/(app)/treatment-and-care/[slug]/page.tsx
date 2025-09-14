@@ -4,6 +4,18 @@ import { Typography } from "@/components/ui/typography";
 import { getArticle, getArticles } from "@/lib/data";
 import { formatDate, getDaysDifference } from "@/lib/utils";
 
+export const dynamicParams = true;
+export const revalidate = false;
+export const dynamic = "force-static";
+
+export async function generateStaticParams() {
+  const articles = await getArticles();
+
+  return articles.map(({ slug }) => ({
+    slug,
+  }));
+}
+
 export default async function ArticlePage({
   params,
 }: {
@@ -28,10 +40,6 @@ export default async function ArticlePage({
       <div className="container max-w-[70ch] mx-auto px-4 md:px-12 py-10 lg:py-16 xl:py-20 space-y-6">
         {/* Header */}
         <div className="flex flex-col items-baseline gap-2">
-          {/* Tag */}
-          <div className="text-xs leading-tight bg-zinc-400 text-white font-extrabold px-2 py-1 rounded-sm">
-            Article
-          </div>
           {/* Title */}
           <Typography as="h1" variant="articleH1">
             {title}
@@ -64,7 +72,7 @@ export default async function ArticlePage({
 
         {/* Thumbnail */}
         {thumbnail && (
-          <div className="relative aspect-video w-full rounded-lg overflow-hidden">
+          <div className="relative aspect-video w-full rounded-lg overflow-hidden bg-primary/10">
             {/* Blur bg */}
             <CMSImage
               priority
@@ -87,12 +95,4 @@ export default async function ArticlePage({
       </div>
     </section>
   );
-}
-
-export async function generateStaticParams() {
-  const articles = await getArticles();
-
-  return articles.map(({ slug }) => ({
-    slug,
-  }));
 }

@@ -22,7 +22,7 @@ export default async function Services() {
         </Typography>
       </div>
 
-      <ul className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 lg:grid-cols-3 lg:gap-6">
+      <ul className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 xl:grid-cols-3 xl:gap-6">
         {services?.map((service, index) => {
           if (typeof service === "number") return null;
           return (

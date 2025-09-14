@@ -1,5 +1,5 @@
 import { revalidateTag } from "next/cache";
-import { CollectionAfterChangeHook } from "payload";
+import { CollectionAfterChangeHook, CollectionAfterDeleteHook } from "payload";
 
 const revalidateCollection =
   (
@@ -19,9 +19,34 @@ export default revalidateCollection;
 
 export const revalidateCollectionByField =
   (fieldName: string): CollectionAfterChangeHook =>
+  async ({ doc, previousDoc }) => {
+    if (previousDoc[fieldName]) {
+      revalidateTag(previousDoc[fieldName]);
+    }
+    if (doc[fieldName]) {
+      revalidateTag(doc[fieldName]);
+    }
+    return doc;
+  };
+
+type AfterDeleteHookProps = {
+  tags?: string[];
+  fieldNames?: string[];
+};
+export const revalidateAfterDelete =
+  ({
+    tags = [],
+    fieldNames = [],
+  }: AfterDeleteHookProps): CollectionAfterDeleteHook =>
   async ({ doc }) => {
-    if (!doc[fieldName])
-      throw new Error("Field does not exist in collection document");
-    revalidateTag(doc[fieldName]);
+    fieldNames.forEach((fieldName) => {
+      if (doc[fieldName]) {
+        revalidateTag(doc[fieldName]);
+      }
+    });
+    tags.forEach((tag) => {
+      revalidateTag(tag);
+    });
+
     return doc;
   };

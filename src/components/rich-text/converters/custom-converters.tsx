@@ -1,6 +1,7 @@
 import { JSXConverters } from "@payloadcms/richtext-lexical/react";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
+import { SquareCheck, SquareX } from "lucide-react";
 
 import type { Media } from "@/payload-types";
 
@@ -75,8 +76,12 @@ export const listConverter: JSXConverters<SerializedListNode> = {
     return (
       <node.tag
         className={twMerge(
-          "flex flex-col gap-2 list-inside mb-6",
-          node.tag === "ol" ? "list-decimal" : "list-disc"
+          "flex flex-col gap-2 list-inside mb-6 ml-2",
+          node.listType === "number"
+            ? "list-decimal"
+            : node.listType === "bullet"
+              ? "list-disc"
+              : "list-none"
         )}
       >
         {children}
@@ -88,8 +93,18 @@ export const listConverter: JSXConverters<SerializedListNode> = {
 export const listItemConverter: JSXConverters<SerializedListItemNode> = {
   listitem: ({ node, nodesToJSX }) => {
     const children = nodesToJSX({ nodes: node.children });
+    const isBullet = typeof node.checked === "boolean";
 
-    return <li className="font-semibold opacity-70 text-sm">{children}</li>;
+    return isBullet ? (
+      <li className="font-semibold opacity-70 text-sm">
+        <span className="inline-block align-middle">
+          {isBullet && (node.checked ? <SquareCheck /> : <SquareX />)}
+        </span>
+        <span className="inline-block align-middle ml-1">{children}</span>
+      </li>
+    ) : (
+      <li className="font-semibold opacity-70 text-sm">{children}</li>
+    );
   },
 };
 
@@ -107,7 +122,7 @@ export const uploadConverter: JSXConverters<SerializedUploadNode> = {
   upload: ({ node }) => {
     if (!isMedia(node.value)) return null;
     return (
-      <div className="relative aspect-video w-full rounded-lg overflow-hidden mb-6">
+      <div className="relative aspect-video w-full rounded-lg overflow-hidden mb-6 bg-primary/10">
         {/* Blur bg */}
         <CMSImage
           media={node.value}

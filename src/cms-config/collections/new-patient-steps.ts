@@ -1,10 +1,13 @@
 import type { CollectionConfig } from "payload";
-import revalidateCollection from "../hooks/revalidate-collection";
+import revalidateCollection, {
+  revalidateAfterDelete,
+} from "../hooks/revalidate-collection";
 
 export const NewPatientSteps: CollectionConfig = {
   slug: "new-patient-steps",
   hooks: {
     afterChange: [revalidateCollection("what-to-expect", true)],
+    afterDelete: [revalidateAfterDelete({ tags: ["what-to-expect"] })],
   },
   versions: {
     drafts: true,

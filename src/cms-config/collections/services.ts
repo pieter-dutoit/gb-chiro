@@ -1,12 +1,13 @@
 import type { CollectionConfig } from "payload";
-import revalidateCollection from "../hooks/revalidate-collection";
-import createSlug from "../hooks/create-slug";
+import revalidateCollection, {
+  revalidateAfterDelete,
+} from "../hooks/revalidate-collection";
 
 export const Services: CollectionConfig = {
   slug: "services",
   hooks: {
-    beforeChange: [createSlug],
     afterChange: [revalidateCollection("services", true)],
+    afterDelete: [revalidateAfterDelete({ tags: ["services"] })],
   },
   admin: {
     useAsTitle: "name",
@@ -15,17 +16,6 @@ export const Services: CollectionConfig = {
     drafts: true,
   },
   fields: [
-    {
-      name: "slug",
-      label: "Page Slug / URL (Auto Generated)",
-      type: "text",
-      unique: true,
-      required: false,
-      admin: {
-        position: "sidebar",
-        readOnly: true,
-      },
-    },
     {
       name: "thumbnail",
       label: "Thumbnail",

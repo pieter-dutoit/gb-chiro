@@ -1,13 +1,22 @@
 import type { CollectionConfig } from "payload";
 
-import { revalidateCollectionByField } from "../hooks/revalidate-collection";
+import revalidateCollection, {
+  revalidateAfterDelete,
+  revalidateCollectionByField,
+} from "../hooks/revalidate-collection";
 import createSlug from "../hooks/create-slug";
 
 export const Article: CollectionConfig = {
   slug: "articles",
   hooks: {
     beforeChange: [createSlug],
-    afterChange: [revalidateCollectionByField("slug")],
+    afterChange: [
+      revalidateCollectionByField("slug"),
+      revalidateCollection("services"),
+    ],
+    afterDelete: [
+      revalidateAfterDelete({ fieldNames: ["slug"], tags: ["services"] }),
+    ],
   },
   admin: {
     useAsTitle: "title",

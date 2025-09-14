@@ -289,7 +289,6 @@ export interface Media {
  */
 export interface Service {
   id: number;
-  slug?: string | null;
   thumbnail: number | Media;
   name: string;
   description: string;
@@ -653,7 +652,6 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "services_select".
  */
 export interface ServicesSelect<T extends boolean = true> {
-  slug?: T;
   thumbnail?: T;
   name?: T;
   description?: T;
