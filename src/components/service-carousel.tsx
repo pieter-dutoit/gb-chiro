@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { getGraphics, getServicesData } from "@/lib/data";
+import { getGraphics, getTreatmentAndCareData } from "@/lib/data";
 
 import { Typography } from "./ui/typography";
 import { Button } from "./ui/button";
@@ -16,10 +16,10 @@ import CMSImage from "./cms-image";
 import ServiceTile from "./service-tile";
 
 export default async function ServicesCarousel() {
-  const services = await getServicesData();
+  const { services } = await getTreatmentAndCareData();
   const { backgroundGraphic } = await getGraphics();
   return (
-    <div className="flex flex-col items-center container mx-auto px-0 md:px-12 py-16 lg:py-24 xl:py-30 gap-12 lg:gap-20 relative">
+    <section className="flex flex-col items-center container mx-auto px-0 md:px-12 py-16 lg:py-24 xl:py-30 gap-12 lg:gap-20 relative">
       {/* Graphic */}
       <div
         className="absolute inset-0 overflow-hidden pointer-events-none"
@@ -52,7 +52,7 @@ export default async function ServicesCarousel() {
         className="font-bold shadow-lg"
         asChild
       >
-        <Link href="/treatment-and-care">
+        <Link href="/treatment-and-care" className="xl:text-lg">
           View all services
           <ArrowRight />
         </Link>
@@ -67,7 +67,8 @@ export default async function ServicesCarousel() {
       >
         <CarouselPrevious className="hidden md:flex" />
         <CarouselContent className="lg:-ml-6">
-          {services.map((service, index) => {
+          {services?.map((service, index) => {
+            if (typeof service === "number") return null;
             return (
               <CarouselItem
                 key={service.id}
@@ -85,6 +86,6 @@ export default async function ServicesCarousel() {
 
         <CarouselNext className="hidden md:flex" />
       </Carousel>
-    </div>
+    </section>
   );
 }

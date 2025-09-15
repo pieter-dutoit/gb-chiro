@@ -1,6 +1,9 @@
 import { getPayload } from "payload";
-import config from "@payload-config";
 import { unstable_cache } from "next/cache";
+import { notFound } from "next/navigation";
+
+import config from "@payload-config";
+import { Article } from "@/payload-types";
 
 const payload = await getPayload({ config });
 
@@ -40,29 +43,78 @@ export const getAboutUsPageData = unstable_cache(
   }
 );
 
-export const getServicesData = unstable_cache(
-  async () => {
+export const getWhatToExpectPageData = unstable_cache(
+  async () => payload.findGlobal({ slug: "what-to-expect-page", depth: 2 }),
+  undefined,
+  {
+    tags: ["payload", "what-to-expect"],
+    revalidate: false,
+  }
+);
+
+export const getTreatmentAndCareData = unstable_cache(
+  async () => payload.findGlobal({ slug: "treatment-and-care-page", depth: 2 }),
+  undefined,
+  {
+    tags: ["payload", "services"],
+    revalidate: false,
+  }
+);
+
+export const getArticle = (slug: string) =>
+  unstable_cache(
+    async (): Promise<Article> => {
+      console.log("fetch: ", slug);
+      const payload = await getPayload({ config });
+      const res = await payload.find({
+        draft: false,
+        collection: "articles",
+        depth: 2,
+        where: {
+          slug: {
+            equals: slug,
+          },
+          _status: {
+            equals: "published",
+          },
+        },
+      });
+
+      if (!res || res.docs.length < 1) {
+        console.error(`Article with slug ${slug} not found`);
+        notFound();
+      }
+
+      return res.docs[0];
+    },
+    ["articles", slug],
+    { revalidate: false, tags: ["payload", "articles", slug] }
+  );
+
+export const getArticles = unstable_cache(
+  async (): Promise<Article[]> => {
+    const payload = await getPayload({ config });
     const res = await payload.find({
       draft: false,
-      collection: "services",
+      collection: "articles",
       depth: 1,
       pagination: false,
-      sort: "-name",
+      sort: "-title",
+      limit: 100,
       where: {
         _status: {
           equals: "published",
         },
       },
     });
+
     if (!res) {
-      throw new Error("Failed to fetch services data");
+      console.error("Failed to fetch articles");
+      notFound();
     }
 
     return res.docs;
   },
-  undefined,
-  {
-    tags: ["payload", "services"],
-    revalidate: false,
-  }
+  [],
+  { revalidate: false, tags: ["payload", "articles"] }
 );

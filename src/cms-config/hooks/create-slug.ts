@@ -4,7 +4,7 @@ import { stringToSlug } from "@/lib/utils";
 const createSlug: CollectionBeforeChangeHook = async ({ data }) => {
   return {
     ...data,
-    slug: stringToSlug(data.name),
+    slug: stringToSlug(data.name || data.title),
   };
 };
 

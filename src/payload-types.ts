@@ -69,6 +69,8 @@ export interface Config {
   collections: {
     media: Media;
     services: Service;
+    'new-patient-steps': NewPatientStep;
+    articles: Article;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +80,8 @@ export interface Config {
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
+    'new-patient-steps': NewPatientStepsSelect<false> | NewPatientStepsSelect<true>;
+    articles: ArticlesSelect<false> | ArticlesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -91,12 +95,16 @@ export interface Config {
     graphics: Graphic;
     'home-page': HomePage;
     'about-us-page': AboutUsPage;
+    'treatment-and-care-page': TreatmentAndCarePage;
+    'what-to-expect-page': WhatToExpectPage;
   };
   globalsSelect: {
     'business-details': BusinessDetailsSelect<false> | BusinessDetailsSelect<true>;
     graphics: GraphicsSelect<false> | GraphicsSelect<true>;
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
     'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>;
+    'treatment-and-care-page': TreatmentAndCarePageSelect<false> | TreatmentAndCarePageSelect<true>;
+    'what-to-expect-page': WhatToExpectPageSelect<false> | WhatToExpectPageSelect<true>;
   };
   locale: null;
   user: User & {
@@ -281,10 +289,84 @@ export interface Media {
  */
 export interface Service {
   id: number;
-  slug?: string | null;
   thumbnail: number | Media;
   name: string;
   description: string;
+  /**
+   * Optionally link this service to a detailed article.
+   */
+  article?: (number | null) | Article;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articles".
+ */
+export interface Article {
+  id: number;
+  slug?: string | null;
+  author: string;
+  thumbnail?: (number | null) | Media;
+  title: string;
+  body: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "new-patient-steps".
+ */
+export interface NewPatientStep {
+  id: number;
+  icon: number | Media;
+  title: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  overview: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -327,6 +409,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'services';
         value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'new-patient-steps';
+        value: number | NewPatientStep;
+      } | null)
+    | ({
+        relationTo: 'articles';
+        value: number | Article;
       } | null)
     | ({
         relationTo: 'users';
@@ -562,10 +652,37 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "services_select".
  */
 export interface ServicesSelect<T extends boolean = true> {
-  slug?: T;
   thumbnail?: T;
   name?: T;
   description?: T;
+  article?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "new-patient-steps_select".
+ */
+export interface NewPatientStepsSelect<T extends boolean = true> {
+  icon?: T;
+  title?: T;
+  overview?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "articles_select".
+ */
+export interface ArticlesSelect<T extends boolean = true> {
+  slug?: T;
+  author?: T;
+  thumbnail?: T;
+  title?: T;
+  body?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -664,6 +781,7 @@ export interface BusinessDetail {
     Friday?: boolean | null;
     Saturday?: boolean | null;
     Sunday?: boolean | null;
+    note?: string | null;
     id?: string | null;
   }[];
   _status?: ('draft' | 'published') | null;
@@ -693,6 +811,7 @@ export interface HomePage {
    * First image on Home page.
    */
   landingImage: number | Media;
+  whatToExpectImage: number | Media;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -712,6 +831,28 @@ export interface AboutUsPage {
    * Requires 4 images
    */
   practiceImages: (number | Media)[];
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "treatment-and-care-page".
+ */
+export interface TreatmentAndCarePage {
+  id: number;
+  services?: (number | Service)[] | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "what-to-expect-page".
+ */
+export interface WhatToExpectPage {
+  id: number;
+  steps?: (number | NewPatientStep)[] | null;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -746,6 +887,7 @@ export interface BusinessDetailsSelect<T extends boolean = true> {
         Friday?: T;
         Saturday?: T;
         Sunday?: T;
+        note?: T;
         id?: T;
       };
   _status?: T;
@@ -772,6 +914,7 @@ export interface GraphicsSelect<T extends boolean = true> {
  */
 export interface HomePageSelect<T extends boolean = true> {
   landingImage?: T;
+  whatToExpectImage?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -785,6 +928,28 @@ export interface AboutUsPageSelect<T extends boolean = true> {
   welcomeImage?: T;
   meetTheChiroImage?: T;
   practiceImages?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "treatment-and-care-page_select".
+ */
+export interface TreatmentAndCarePageSelect<T extends boolean = true> {
+  services?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "what-to-expect-page_select".
+ */
+export interface WhatToExpectPageSelect<T extends boolean = true> {
+  steps?: T;
   _status?: T;
   updatedAt?: T;
   createdAt?: T;

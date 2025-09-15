@@ -125,3 +125,38 @@ export function stringToSlug(item: string): string {
     .replace(/-+/g, "-") // collapse multiple hyphens
     .replace(/^-|-$/g, ""); // trim leading/trailing hyphens
 }
+
+export function formatDate(isoString: string) {
+  const date = new Date(isoString);
+  const dateTime = date.toISOString();
+
+  const humanReadable = date.toLocaleDateString("en-AU", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  return { dateTime, humanReadable };
+}
+
+export function getDaysDifference(created: string, updated: string): number {
+  const createdDate = new Date(created);
+  const updatedDate = new Date(updated);
+
+  // Zero out time part (midnight) to compare only dates
+  const createdMidnight = new Date(
+    createdDate.getFullYear(),
+    createdDate.getMonth(),
+    createdDate.getDate()
+  );
+  const updatedMidnight = new Date(
+    updatedDate.getFullYear(),
+    updatedDate.getMonth(),
+    updatedDate.getDate()
+  );
+
+  const diffMs = updatedMidnight.getTime() - createdMidnight.getTime();
+  const diffDays = diffMs / (1000 * 60 * 60 * 24);
+
+  return diffDays;
+}
