@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { ArrowRight, CalendarClock, Home, MapPin } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-import { getAboutUsPageData, getBusinessDetails } from "@/lib/data";
-import { formatOperatingHours } from "@/lib/utils";
+import { getAboutUsPageData } from "@/lib/data";
 
 import CMSImage from "./cms-image";
 import { Typography } from "./ui/typography";
