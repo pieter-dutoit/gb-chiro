@@ -1,3 +1,4 @@
+import Breadcrumbs from "@/components/breadcrumbs";
 import CallToAction from "@/components/call-to-action";
 import WhatToExpect from "@/components/what-to-expect";
 
@@ -8,6 +9,9 @@ export default async function WhatToExpectPage() {
 
   return (
     <>
+      <Breadcrumbs
+        crumbs={[{ name: "What to Expect", item: "/what-to-expect" }]}
+      />
       <WhatToExpect />
       <CallToAction
         heading="Ready for your first visit?"

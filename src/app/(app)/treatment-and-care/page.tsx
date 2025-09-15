@@ -1,3 +1,4 @@
+import Breadcrumbs from "@/components/breadcrumbs";
 import CallToAction from "@/components/call-to-action";
 import Services from "@/components/services";
 import { getBusinessDetails } from "@/lib/data";
@@ -6,6 +7,9 @@ export default async function TreatmentAndCarePage() {
   const { bookingLink } = await getBusinessDetails();
   return (
     <>
+      <Breadcrumbs
+        crumbs={[{ name: "Treatment & Care", item: "/treatment-and-care" }]}
+      />
       <Services />
       <CallToAction
         heading="Need help with something specific?"

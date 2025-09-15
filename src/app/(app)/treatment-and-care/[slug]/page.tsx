@@ -1,3 +1,4 @@
+import Breadcrumbs from "@/components/breadcrumbs";
 import CMSImage from "@/components/cms-image";
 import { ArticleRichText } from "@/components/rich-text";
 import { Typography } from "@/components/ui/typography";
@@ -35,64 +36,75 @@ export default async function ArticlePage({
     updatedAt?.length && getDaysDifference(createdAt, updatedAt) >= 1;
 
   return (
-    <section className="relative">
-      {/* Container */}
-      <div className="container max-w-[70ch] mx-auto px-4 md:px-12 py-10 lg:py-16 xl:py-20 space-y-6">
-        {/* Header */}
-        <div className="flex flex-col items-baseline gap-2">
-          {/* Title */}
-          <Typography as="h1" variant="articleH1">
-            {title}
-          </Typography>
+    <>
+      <Breadcrumbs
+        crumbs={[
+          { name: "Treatment & Care", item: "/treatment-and-care" },
+          {
+            name: title,
+            item: `/treatment-and-care/${slug}`,
+          },
+        ]}
+      />
+      <section className="relative">
+        {/* Container */}
+        <div className="container max-w-[70ch] mx-auto px-4 md:px-12 py-16 lg:py-20 xl:py-24 space-y-6">
+          {/* Header */}
+          <div className="flex flex-col items-baseline gap-2">
+            {/* Title */}
+            <Typography as="h1" variant="articleH1">
+              {title}
+            </Typography>
 
-          {/* Author & Publish date */}
-          <div className="space-y-1 text-xs font-semibold opacity-70">
-            <p>
-              <strong>{author}</strong>
-            </p>
-            <p>
-              Published on{" "}
-              <time dateTime={createdDate.dateTime}>
-                {createdDate.humanReadable}
-              </time>{" "}
-              {updatedDate && showUpdatedAt && (
-                <>
-                  <br />
+            {/* Author & Publish date */}
+            <div className="space-y-1 text-xs font-semibold opacity-70">
+              <p>
+                <strong>{author}</strong>
+              </p>
+              <p>
+                Published on{" "}
+                <time dateTime={createdDate.dateTime}>
+                  {createdDate.humanReadable}
+                </time>{" "}
+                {updatedDate && showUpdatedAt && (
                   <>
-                    Updated on{" "}
-                    <time dateTime={updatedDate.dateTime}>
-                      {updatedDate.humanReadable}
-                    </time>
+                    <br />
+                    <>
+                      Updated on{" "}
+                      <time dateTime={updatedDate.dateTime}>
+                        {updatedDate.humanReadable}
+                      </time>
+                    </>
                   </>
-                </>
-              )}
-            </p>
+                )}
+              </p>
+            </div>
           </div>
+
+          {/* Thumbnail */}
+          {thumbnail && (
+            <div className="relative aspect-video w-full rounded-lg overflow-hidden bg-primary/10">
+              {/* Blur bg */}
+              <CMSImage
+                priority
+                media={thumbnail}
+                sizes="(min-width: 660px) 576px, 90vw"
+                className="object-cover object-center -z-0 blur-xl scale-125"
+              />
+
+              <CMSImage
+                priority
+                media={thumbnail}
+                sizes="(min-width: 660px) 576px, 90vw"
+                className="object-contain object-center z-10"
+              />
+            </div>
+          )}
+
+          {/* Content */}
+          <ArticleRichText data={body} />
         </div>
-
-        {/* Thumbnail */}
-        {thumbnail && (
-          <div className="relative aspect-video w-full rounded-lg overflow-hidden bg-primary/10">
-            {/* Blur bg */}
-            <CMSImage
-              priority
-              media={thumbnail}
-              sizes="(min-width: 660px) 576px, 90vw"
-              className="object-cover object-center -z-0 blur-xl scale-125"
-            />
-
-            <CMSImage
-              priority
-              media={thumbnail}
-              sizes="(min-width: 660px) 576px, 90vw"
-              className="object-contain object-center z-10"
-            />
-          </div>
-        )}
-
-        {/* Content */}
-        <ArticleRichText data={body} />
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

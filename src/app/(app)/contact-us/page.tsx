@@ -1,3 +1,4 @@
+import Breadcrumbs from "@/components/breadcrumbs";
 import CallToAction from "@/components/call-to-action";
 import ContactDetails from "@/components/contact-details";
 import { getBusinessDetails } from "@/lib/data";
@@ -9,6 +10,7 @@ export default async function ContactUs() {
 
   return (
     <>
+      <Breadcrumbs crumbs={[{ name: "Contact us", item: "/contact-us" }]} />
       <ContactDetails />
       <CallToAction
         heading="Have a question? Reach out."
