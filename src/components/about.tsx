@@ -18,7 +18,7 @@ export default async function About() {
           <Typography
             as="h2"
             variant="sectionTitle"
-            className="font-bold max-w-[15ch]"
+            className="font-bold max-w-[15ch] mx-auto lg:mx-0"
           >
             Your Partner in Better Health
           </Typography>

@@ -69,7 +69,7 @@ export default async function NewPatients() {
             className="font-bold shadow-lg"
             asChild
           >
-            <Link href="/what-to-expect" className="lg:text-lg">
+            <Link href="/what-to-expect" className="xl:text-lg">
               Read the full guide
               <ArrowRight />
             </Link>
