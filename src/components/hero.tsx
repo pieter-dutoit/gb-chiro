@@ -22,7 +22,7 @@ export default async function Hero() {
         <CMSImage
           priority
           media={landingImage}
-          sizes="70vw"
+          sizes="(min-width: 768px) 40vw, 70vw"
           className="object-cover w-[70vw]  ml-auto"
         />
         <div className="absolute inset-0 size-full bg-gradient-to-r from-[#014335] sm:from-[#00271e] via-[#014335]  via-[30%] to-[#014335]/90 sm:to-[#000000]/0" />

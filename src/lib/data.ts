@@ -3,7 +3,7 @@ import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 
 import config from "@payload-config";
-import { Article } from "@/payload-types";
+import { Article, Service, SocialMediaPlatform } from "@/payload-types";
 
 const payload = await getPayload({ config });
 
@@ -64,7 +64,6 @@ export const getTreatmentAndCareData = unstable_cache(
 export const getArticle = (slug: string) =>
   unstable_cache(
     async (): Promise<Article> => {
-      console.log("fetch: ", slug);
       const payload = await getPayload({ config });
       const res = await payload.find({
         draft: false,
@@ -91,15 +90,14 @@ export const getArticle = (slug: string) =>
     { revalidate: false, tags: ["payload", "articles", slug] }
   );
 
-export const getArticles = unstable_cache(
-  async (): Promise<Article[]> => {
+export const getServices = unstable_cache(
+  async (): Promise<Service[]> => {
     const payload = await getPayload({ config });
     const res = await payload.find({
       draft: false,
-      collection: "articles",
+      collection: "services",
       depth: 1,
       pagination: false,
-      sort: "-title",
       limit: 100,
       where: {
         _status: {
@@ -117,4 +115,31 @@ export const getArticles = unstable_cache(
   },
   [],
   { revalidate: false, tags: ["payload", "articles"] }
+);
+
+export const getSocials = unstable_cache(
+  async (): Promise<SocialMediaPlatform[]> => {
+    const payload = await getPayload({ config });
+    const res = await payload.find({
+      draft: false,
+      collection: "social-media-platforms",
+      depth: 1,
+      pagination: false,
+      limit: 100,
+      where: {
+        _status: {
+          equals: "published",
+        },
+      },
+    });
+
+    if (!res) {
+      console.error("Failed to fetch articles");
+      notFound();
+    }
+
+    return res.docs;
+  },
+  [],
+  { revalidate: false, tags: ["payload", "social-media-platforms"] }
 );

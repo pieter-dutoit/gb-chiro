@@ -2,10 +2,11 @@ import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { parsePhoneNumber } from "libphonenumber-js/min";
 
-import { getBusinessDetails } from "@/lib/data";
+import { getBusinessDetails, getSocials } from "@/lib/data";
 import { formatOperatingHours } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/constants";
 import { Button } from "./ui/button";
+import SocialLink from "./social-link";
 
 export default async function Footer() {
   const {
@@ -15,6 +16,8 @@ export default async function Footer() {
     operatingHours,
     bookingLink,
   } = await getBusinessDetails();
+
+  const socials = await getSocials();
 
   const number = parsePhoneNumber(phone, "AU");
 
@@ -107,6 +110,17 @@ export default async function Footer() {
                 <Link href={bookingLink}>Book Online</Link>
               </Button>
             </li>
+          </ul>
+
+          <div className="font-semibold text-2xl">Follow Us</div>
+          <ul className="flex flex-col gap-1 ">
+            {socials.map((platform) => {
+              return (
+                <li key={platform.id}>
+                  <SocialLink {...platform} />
+                </li>
+              );
+            })}
           </ul>
         </li>
 

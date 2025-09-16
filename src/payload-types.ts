@@ -71,6 +71,7 @@ export interface Config {
     services: Service;
     'new-patient-steps': NewPatientStep;
     articles: Article;
+    'social-media-platforms': SocialMediaPlatform;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +83,7 @@ export interface Config {
     services: ServicesSelect<false> | ServicesSelect<true>;
     'new-patient-steps': NewPatientStepsSelect<false> | NewPatientStepsSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
+    'social-media-platforms': SocialMediaPlatformsSelect<false> | SocialMediaPlatformsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -373,6 +375,31 @@ export interface NewPatientStep {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-media-platforms".
+ */
+export interface SocialMediaPlatform {
+  id: number;
+  name:
+    | 'facebook'
+    | 'instagram'
+    | 'x'
+    | 'linkedin'
+    | 'youtube'
+    | 'tiktok'
+    | 'snapchat'
+    | 'reddit'
+    | 'threads'
+    | 'twitch'
+    | 'telegram'
+    | 'whatsapp'
+    | 'weChat';
+  link: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -417,6 +444,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'articles';
         value: number | Article;
+      } | null)
+    | ({
+        relationTo: 'social-media-platforms';
+        value: number | SocialMediaPlatform;
       } | null)
     | ({
         relationTo: 'users';
@@ -683,6 +714,17 @@ export interface ArticlesSelect<T extends boolean = true> {
   thumbnail?: T;
   title?: T;
   body?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-media-platforms_select".
+ */
+export interface SocialMediaPlatformsSelect<T extends boolean = true> {
+  name?: T;
+  link?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

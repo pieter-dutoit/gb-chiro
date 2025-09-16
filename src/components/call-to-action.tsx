@@ -54,11 +54,11 @@ export default async function CallToAction({
             <Typography
               as="h3"
               variant="sectionTitle"
-              className="font-bold lg:text-center"
+              className="font-bold lg:text-center px-4"
             >
               {heading}
             </Typography>
-            <p className="text-lg md:text-xl lg:text-2xl">{description}</p>
+            <p className="text-lg md:text-xl lg:text-2xl px-4">{description}</p>
           </div>
 
           {/* Links and buttons */}
@@ -87,7 +87,7 @@ export default async function CallToAction({
               height="400"
               style={{ border: 0 }}
               allowFullScreen={false}
-              loading="eager"
+              loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               className="h-full w-full rounded-md md:min-h-80"
             />

@@ -1,18 +1,24 @@
 import Breadcrumbs from "@/components/breadcrumbs";
 import CMSImage from "@/components/cms-image";
+import MoreArticlesCarousel from "@/components/more-articles";
 import { ArticleRichText } from "@/components/rich-text";
 import { Typography } from "@/components/ui/typography";
-import { getArticle, getArticles } from "@/lib/data";
+import { getArticle, getServices } from "@/lib/data";
 import { formatDate, getDaysDifference } from "@/lib/utils";
+import { Article } from "@/payload-types";
 
 export const dynamicParams = true;
 export const revalidate = false;
 export const dynamic = "force-static";
 
 export async function generateStaticParams() {
-  const articles = await getArticles();
+  const services = await getServices();
 
-  return articles.map(({ slug }) => ({
+  const withArticles: Article[] = services
+    .filter((service) => service.article && typeof service.article !== "number")
+    .map(({ article }) => article as Article);
+
+  return withArticles.map(({ slug }) => ({
     slug,
   }));
 }
@@ -105,6 +111,8 @@ export default async function ArticlePage({
           <ArticleRichText data={body} />
         </div>
       </section>
+
+      <MoreArticlesCarousel slugToExclude={slug} />
     </>
   );
 }

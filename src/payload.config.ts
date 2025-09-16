@@ -16,7 +16,8 @@ import { Services } from "./cms-config/collections/services";
 import { NewPatientSteps } from "./cms-config/collections/new-patient-steps";
 import { WhatToExpectPage } from "./cms-config/globals/what-to-expect-page";
 import { TreatmentAndCarePage } from "./cms-config/globals/treatment-and-care-page";
-import { Article } from "./cms-config/collections/article";
+import { Article } from "./cms-config/collections/articles";
+import { SocialMediaPlatforms } from "./cms-config/collections/social-media-platforms";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -31,7 +32,13 @@ export default buildConfig({
     TreatmentAndCarePage,
     WhatToExpectPage,
   ],
-  collections: [Media, Services, NewPatientSteps, Article],
+  collections: [
+    Media,
+    Services,
+    NewPatientSteps,
+    Article,
+    SocialMediaPlatforms,
+  ],
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({
     pool: {

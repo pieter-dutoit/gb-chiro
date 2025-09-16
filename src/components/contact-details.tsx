@@ -1,11 +1,12 @@
-import { getBusinessDetails } from "@/lib/data";
 import { Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import { parsePhoneNumber } from "libphonenumber-js/min";
 
 import { formatOperatingHours } from "@/lib/utils";
+import { getBusinessDetails, getSocials } from "@/lib/data";
 
 import { Typography } from "./ui/typography";
-import { parsePhoneNumber } from "libphonenumber-js/min";
+import SocialLink from "./social-link";
 
 export default async function ContactDetails() {
   const {
@@ -14,6 +15,8 @@ export default async function ContactDetails() {
     operatingHours,
     address: { street, suburb, state, code, mapsLink },
   } = await getBusinessDetails();
+
+  const socials = await getSocials();
 
   const number = parsePhoneNumber(phone, "AU");
 
@@ -31,7 +34,7 @@ export default async function ContactDetails() {
               <h3 className="text-xl font-semibold text-primary">
                 Contact Information
               </h3>
-              <div key={email} className="mt-2 space-y-2">
+              <div className="mt-2 space-y-2">
                 <Link
                   href={`mailto:${email}`}
                   className="flex items-center gap-2 hover:underline underline-offset-2"
@@ -47,6 +50,15 @@ export default async function ContactDetails() {
                   <span>{number.formatNational()}</span>
                 </Link>
               </div>
+
+              <h4 className="font-bold mt-4 text-primary">Follow us</h4>
+              <ul className="mt-2 space-y-2">
+                {socials.map((platform) => (
+                  <li key={platform.id}>
+                    <SocialLink {...platform} />
+                  </li>
+                ))}
+              </ul>
             </div>
 
             {/* Address */}
@@ -54,10 +66,7 @@ export default async function ContactDetails() {
               <h3 className="text-xl font-semibold text-primary">Address</h3>
               <div className="mt-2 flex flex-col gap-4">
                 <p>
-                  {street}
-                  <br /> {suburb}
-                  <br /> {state.toUpperCase()}
-                  <br /> {code}
+                  {street}, {suburb}, {state.toUpperCase()}, {code}
                 </p>
                 <Link
                   href={mapsLink}
@@ -101,7 +110,7 @@ export default async function ContactDetails() {
           {/* Maps Card */}
           <div className="rounded-lg bg-white p-6 shadow-md">
             <h3 className="text-xl font-semibold text-primary">Location</h3>
-            <div className="w-full h-[26rem] mt-4">
+            <div className="w-full h-[28rem] mt-4">
               <iframe
                 title="Map Location"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3298.597713281765!2d146.0460939757263!3d-34.281409573071585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b1fae72bfdebe37%3A0xdeaaad55252d45cf!2s2%20Noorebar%20Ave%2C%20Griffith%20NSW%202680!5e0!3m2!1sen!2sau!4v1757483283999!5m2!1sen!2sau"
