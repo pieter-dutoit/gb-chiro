@@ -1,22 +1,10 @@
-import { Metadata } from "next";
-
 import CallToAction from "@/components/call-to-action";
 import Hero from "@/components/hero";
 import HomeAbout from "@/components/home-about";
 import NewPatients from "@/components/new-patients";
 import ServicesCarousel from "@/components/service-carousel";
 
-import { getBusinessDetails, getHomePageData } from "@/lib/data";
-import { extractMediaUrls } from "@/lib/utils";
-
-export async function generateMetadata(): Promise<Metadata> {
-  const { landingImage, whatToExpectImage } = await getHomePageData();
-  return {
-    openGraph: {
-      images: extractMediaUrls([landingImage, whatToExpectImage]),
-    },
-  };
-}
+import { getBusinessDetails } from "@/lib/data";
 
 export default async function Home() {
   const { bookingLink } = await getBusinessDetails();

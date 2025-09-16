@@ -11,6 +11,7 @@ interface SEO {
 
 export default function createMetadataConfig(seo: SEO): Metadata {
   const { meta, open_graph } = seo;
+  console.log({ seo });
 
   const ogImages = open_graph.image.filter(
     (item) => !!item && typeof item !== "number"

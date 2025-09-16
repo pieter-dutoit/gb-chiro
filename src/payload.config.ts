@@ -61,6 +61,9 @@ export default buildConfig({
         media: {
           prefix: "media",
         },
+        "seo-media": {
+          prefix: "media/seo",
+        },
       },
       bucket: process.env.S3_BUCKET!,
       config: {

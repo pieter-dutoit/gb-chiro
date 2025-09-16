@@ -294,6 +294,7 @@ export interface Media {
 export interface SeoMedia {
   id: number;
   alt: string;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -719,6 +720,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface SeoMediaSelect<T extends boolean = true> {
   alt?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

@@ -57,7 +57,7 @@ const OpenGraphField: GroupField = {
     },
     {
       name: "image",
-      label: "Image (Automatically cropped to 1200 x 630 pixels)",
+      label: "Image",
       type: "upload",
       hasMany: true,
       relationTo: "seo-media",
