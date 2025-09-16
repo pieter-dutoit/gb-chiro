@@ -973,6 +973,11 @@ export interface AboutUsPage {
    * Requires 4 images
    */
   practiceImages: (number | Media)[];
+  seo: {
+    meta: MetadataField;
+    open_graph: OpenGraphField;
+    twitter?: TwitterField;
+  };
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1103,6 +1108,13 @@ export interface AboutUsPageSelect<T extends boolean = true> {
   welcomeImage?: T;
   meetTheChiroImage?: T;
   practiceImages?: T;
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>;
+        open_graph?: T | OpenGraphFieldSelect<T>;
+        twitter?: T | TwitterFieldSelect<T>;
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;

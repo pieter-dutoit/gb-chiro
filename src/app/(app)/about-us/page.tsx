@@ -1,10 +1,24 @@
+import { Metadata } from "next";
+
 import About from "@/components/about";
 import Breadcrumbs from "@/components/breadcrumbs";
 import CallToAction from "@/components/call-to-action";
 import CMSImage from "@/components/cms-image";
 import MeetTheChiro from "@/components/meet-the-chiro";
 import Practice from "@/components/practice";
-import { getBusinessDetails, getGraphics } from "@/lib/data";
+
+import {
+  getAboutUsPageData,
+  getBusinessDetails,
+  getGraphics,
+} from "@/lib/data";
+import createMetadataConfig from "@/lib/utils/generate-metadata";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { seo } = await getAboutUsPageData();
+  if (!seo) return {};
+  return createMetadataConfig(seo);
+}
 
 export default async function AboutUsPage() {
   const { backgroundGraphic } = await getGraphics();
