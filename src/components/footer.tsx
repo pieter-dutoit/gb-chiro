@@ -33,7 +33,7 @@ export default async function Footer() {
 
           {/* Contact details */}
           <h4 className="sr-only">Contact details</h4>
-          <ul className="flex flex-col gap-2 font-light opacity-70">
+          <ul className="flex flex-col gap-2 font-light opacity-80">
             <li>
               <Link
                 href={`tel:${number.number}`}
@@ -56,7 +56,7 @@ export default async function Footer() {
 
           {/* Address */}
           <h4 className="sr-only">Address</h4>
-          <ul className="flex flex-col gap-2 font-light opacity-70">
+          <ul className="flex flex-col gap-2 font-light opacity-80">
             <li>
               <p className="font-light">
                 {street}, {suburb}, {state.toUpperCase()}, {code}
@@ -76,7 +76,7 @@ export default async function Footer() {
           {/* Hours */}
           <div className="flex flex-col gap-2">
             <h4 className="font-semibold">Operating Hours</h4>
-            <ul className="opacity-70 font-light">
+            <ul className="opacity-80 font-light">
               {formatOperatingHours(operatingHours).map((hrs, index) => {
                 const note = operatingHours[index]?.note ?? null;
 
@@ -88,7 +88,7 @@ export default async function Footer() {
                 );
               })}
             </ul>
-            <ul className="mt-2 text-sm opacity-60">
+            <ul className="mt-2 text-sm opacity-80">
               {operatingHours
                 .filter(({ note }) => Boolean(note))
                 .map(({ note }) => (
@@ -131,7 +131,7 @@ export default async function Footer() {
           {/* Logo */}
           <div className="font-semibold text-2xl">Links</div>
 
-          <ul className="flex flex-col gap-3 opacity-70 font-light">
+          <ul className="flex flex-col gap-3 opacity-80 font-light">
             {NAV_LINKS.map(({ name, path }) => {
               return (
                 <li key={path}>

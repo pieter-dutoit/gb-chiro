@@ -12,13 +12,13 @@ export const revalidate = false;
 export const dynamic = "force-static";
 
 export async function generateStaticParams() {
-  const services = await getServices();
+  const services = await getServices({ article: { exists: true } });
 
-  const withArticles: Article[] = services
+  const articles: Article[] = services
     .filter((service) => service.article && typeof service.article !== "number")
     .map(({ article }) => article as Article);
 
-  return withArticles.map(({ slug }) => ({
+  return articles.map(({ slug }) => ({
     slug,
   }));
 }

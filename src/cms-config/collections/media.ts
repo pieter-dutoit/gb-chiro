@@ -3,6 +3,7 @@ import type {
   ImageSize,
   ImageUploadFormatOptions,
 } from "payload";
+import prewarmImages from "../hooks/prewarm-images";
 
 const webpFormat: ImageUploadFormatOptions = {
   format: "webp",
@@ -37,6 +38,9 @@ export const Media: CollectionConfig = {
   slug: "media",
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [prewarmImages],
   },
   fields: [
     {

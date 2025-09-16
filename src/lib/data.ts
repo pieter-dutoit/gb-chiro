@@ -1,4 +1,4 @@
-import { getPayload } from "payload";
+import { getPayload, Where } from "payload";
 import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 
@@ -91,7 +91,7 @@ export const getArticle = (slug: string) =>
   );
 
 export const getServices = unstable_cache(
-  async (): Promise<Service[]> => {
+  async (where?: Where): Promise<Service[]> => {
     const payload = await getPayload({ config });
     const res = await payload.find({
       draft: false,
@@ -100,6 +100,7 @@ export const getServices = unstable_cache(
       pagination: false,
       limit: 100,
       where: {
+        ...where,
         _status: {
           equals: "published",
         },
@@ -114,7 +115,7 @@ export const getServices = unstable_cache(
     return res.docs;
   },
   [],
-  { revalidate: false, tags: ["payload", "articles"] }
+  { revalidate: false, tags: ["payload", "services"] }
 );
 
 export const getSocials = unstable_cache(
