@@ -102,15 +102,18 @@ export default async function Footer() {
         </li>
 
         {/* Col 3: CTAs */}
-        <li className="flex flex-col gap-4">
+        <li className="flex flex-col gap-4 items-start">
           <div className="font-semibold text-2xl">Make an Appointment</div>
-          <ul className="flex flex-col gap-1 ">
-            <li>
-              <Button asChild className="bg-blue-600 xl:text-lg">
-                <Link href={bookingLink}>Book Online</Link>
-              </Button>
-            </li>
-          </ul>
+
+          <Button asChild className="bg-blue-600 xl:text-lg">
+            <Link href={bookingLink}>Book Online</Link>
+          </Button>
+
+          <p className="text-sm opacity-80 italic max-w-[40ch]">
+            Once appointment is booked online an email will be sent to you with
+            a link to complete your online profile. (This must be done before
+            your appointment)
+          </p>
 
           <div className="font-semibold text-2xl">Follow Us</div>
           <ul className="flex flex-col gap-1 ">

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
-import { getBaseUrl } from "@/lib/utils";
+import { Article } from "@/payload-types";
+import { extractMediaUrls, getBaseUrl } from "@/lib/utils";
 import {
   getAboutUsPageData,
   getArticle,
@@ -12,16 +13,6 @@ import {
   getTreatmentAndCareData,
   getWhatToExpectPageData,
 } from "@/lib/data";
-import { Article, Media } from "@/payload-types";
-
-function extractMediaUrls(media: (Media | number)[]): string[] {
-  return media
-    .filter((item): item is Media => typeof item !== "number" && "url" in item)
-    .map(
-      (item) =>
-        `${getBaseUrl()}/api/images/${encodeURIComponent(item.filename ?? "")}`
-    );
-}
 
 async function getLastModified(
   fetchers: Array<() => Promise<unknown>>
@@ -34,13 +25,14 @@ async function getLastModified(
       )
       .map((s) => s.value);
 
-    const items = values.flatMap((v: any) => {
+    const items = values.flatMap((v: unknown) => {
       if (!v) return [];
       if (Array.isArray(v)) return v;
       return [v];
     });
 
     const dates = items
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((i: any) => i?.updatedAt ?? i?.createdAt)
       .map((d: unknown) =>
         typeof d === "string" || d instanceof Date ? new Date(d) : undefined
@@ -77,6 +69,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: baseURL,
       lastModified: await getLastModified([
         getBusinessDetails,
+        getHomePageData,
         getTreatmentAndCareData,
         getWhatToExpectPageData,
         getSocials,
@@ -126,11 +119,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Contact page
     {
       url: baseURL + "/contact-us",
-      lastModified: await getLastModified([
-        // async () => getSEOConfig("contact-us"),
-        getBusinessDetails,
-        getSocials,
-      ]),
+      lastModified: await getLastModified([getBusinessDetails, getSocials]),
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },

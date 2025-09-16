@@ -18,6 +18,7 @@ import { WhatToExpectPage } from "./cms-config/globals/what-to-expect-page";
 import { TreatmentAndCarePage } from "./cms-config/globals/treatment-and-care-page";
 import { Article } from "./cms-config/collections/articles";
 import { SocialMediaPlatforms } from "./cms-config/collections/social-media-platforms";
+import { SEOMedia } from "./cms-config/collections/seo-media";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -34,6 +35,7 @@ export default buildConfig({
   ],
   collections: [
     Media,
+    SEOMedia,
     Services,
     NewPatientSteps,
     Article,

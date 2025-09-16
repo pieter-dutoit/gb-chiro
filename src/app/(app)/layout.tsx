@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 
 import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
+
+import { getHomePageData } from "@/lib/data";
+import createMetadataConfig from "@/lib/utils/generate-metadata";
 
 import "./globals.css";
-import Footer from "@/components/footer";
 
 const Font = localFont({
   src: "../../assets/fonts/NunitoSans-VariableFont.ttf",
@@ -13,9 +16,11 @@ const Font = localFont({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "GB Chiropractic",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { seo } = await getHomePageData();
+  if (!seo) return {};
+  return createMetadataConfig(seo);
+}
 
 export default async function RootLayout({
   children,
