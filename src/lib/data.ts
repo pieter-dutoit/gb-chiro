@@ -95,7 +95,7 @@ export const getArticle = (slug: string) =>
 
       return res.docs[0];
     },
-    ["articles", slug],
+    ["payload", "articles", slug],
     { revalidate: false, tags: ["payload", "articles", slug] }
   );
 

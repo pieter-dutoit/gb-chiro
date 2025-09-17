@@ -10,7 +10,6 @@ import createMetadataConfig from "@/lib/utils/generate-metadata";
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getWhatToExpectPageData();
   if (!seo) return {};
-  console.log(createMetadataConfig(seo));
   return createMetadataConfig(seo);
 }
 
