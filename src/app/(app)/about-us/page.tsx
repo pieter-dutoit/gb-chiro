@@ -32,6 +32,7 @@ export default async function AboutUsPage() {
         <MeetTheChiro />
         <Practice />
         <CallToAction
+          miniHeading="Personalised Chiropractic Care"
           heading="Personalised care you can trust"
           description="Learn more about the care we provide."
           ctas={[

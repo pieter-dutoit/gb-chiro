@@ -2,6 +2,7 @@ import type { GlobalConfig } from "payload";
 
 import { isLoggedInOrIsPublished } from "../access/logged-in-or-published";
 import revalidateCache from "../hooks/revalidate-cache";
+import SEOFields from "../fields/seo";
 
 export const WhatToExpectPage: GlobalConfig = {
   slug: "what-to-expect-page",
@@ -16,11 +17,26 @@ export const WhatToExpectPage: GlobalConfig = {
   },
   fields: [
     {
-      type: "relationship",
-      label: "New patient steps",
-      relationTo: "new-patient-steps",
-      name: "steps",
-      hasMany: true,
+      type: "tabs",
+      tabs: [
+        {
+          label: "Page Content",
+          fields: [
+            {
+              type: "relationship",
+              label: "New patient steps",
+              relationTo: "new-patient-steps",
+              name: "steps",
+              hasMany: true,
+            },
+          ],
+        },
+        {
+          name: "seo",
+          label: "SEO",
+          fields: SEOFields,
+        },
+      ],
     },
   ],
 };

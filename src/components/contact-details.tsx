@@ -23,17 +23,22 @@ export default async function ContactDetails() {
   return (
     <section className="bg-gradient-to-b from-primary/10 to-white">
       <div className="container flex flex-col mx-auto px-4 md:px-12 py-16 lg:py-24 xl:py-30 gap-20 lg:gap-30 relative">
-        <Typography as="h1" variant="pageTitle" tone="primary">
-          How To Reach Us
-        </Typography>
+        <p className="flex flex-col items-center gap-4">
+          <Typography as="h1" variant="miniHeading" tone="light">
+            Contact GB Chiropractic in Griffith
+          </Typography>
+          <Typography as="p" variant="pageTitle">
+            How To Reach Us
+          </Typography>
+        </p>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* Email & Phone Card */}
           <div className="rounded-lg bg-white p-6 shadow-md flex flex-col gap-10">
             <div>
-              <h3 className="text-xl font-semibold text-primary">
+              <h2 className="text-xl font-semibold text-primary">
                 Contact Information
-              </h3>
+              </h2>
               <div className="mt-2 space-y-2">
                 <Link
                   href={`mailto:${email}`}
@@ -51,7 +56,7 @@ export default async function ContactDetails() {
                 </Link>
               </div>
 
-              <h4 className="font-bold mt-4 text-primary">Follow us</h4>
+              <h3 className="font-bold mt-4 text-primary">Follow us</h3>
               <ul className="mt-2 space-y-2">
                 {socials.map((platform) => (
                   <li key={platform.id}>
@@ -109,7 +114,9 @@ export default async function ContactDetails() {
 
           {/* Maps Card */}
           <div className="rounded-lg bg-white p-6 shadow-md">
-            <h3 className="text-xl font-semibold text-primary">Location</h3>
+            <h2 className="text-xl font-semibold text-primary">
+              Our Location in Griffith
+            </h2>
             <div className="w-full h-[28rem] mt-4">
               <iframe
                 title="Map Location"

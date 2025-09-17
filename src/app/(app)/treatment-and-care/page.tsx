@@ -1,7 +1,16 @@
+import { Metadata } from "next";
+
 import Breadcrumbs from "@/components/breadcrumbs";
 import CallToAction from "@/components/call-to-action";
 import Services from "@/components/services";
-import { getBusinessDetails } from "@/lib/data";
+import { getBusinessDetails, getTreatmentAndCareData } from "@/lib/data";
+import createMetadataConfig from "@/lib/utils/generate-metadata";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { seo } = await getTreatmentAndCareData();
+  if (!seo) return {};
+  return createMetadataConfig(seo);
+}
 
 export default async function TreatmentAndCarePage() {
   const { bookingLink } = await getBusinessDetails();
@@ -12,7 +21,8 @@ export default async function TreatmentAndCarePage() {
       />
       <Services />
       <CallToAction
-        heading="Need help with something specific?"
+        miniHeading="Chiropractic Services Griffith"
+        heading="Need Help Choosing the Right Chiropractic Care?"
         description="Reach out and we’ll recommend the best next step."
         ctas={[
           {

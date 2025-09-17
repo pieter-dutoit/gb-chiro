@@ -30,7 +30,7 @@ export default function createMetadataConfig(seo: SEO): Metadata {
     // Meta:
     title: {
       default: meta.title,
-      template: "%s | GB Chiropractic",
+      template: "%s",
     },
     description: meta.description,
     // OpenGraph:

@@ -9,6 +9,7 @@ import { twMerge } from "tailwind-merge";
 
 type CallToActionProps = {
   withMap?: boolean;
+  miniHeading: string;
   heading: string;
   description: string;
   ctas: {
@@ -20,6 +21,7 @@ type CallToActionProps = {
 
 export default async function CallToAction({
   withMap = false,
+  miniHeading,
   heading,
   description,
   ctas,
@@ -51,6 +53,9 @@ export default async function CallToAction({
         <div className="flex flex-col container mx-auto px-4 md:px-12 py-16 lg:py-24 xl:py-30 gap-8 lg:gap-12 relative">
           {/* Heading */}
           <div className="flex flex-col items-center text-center gap-4">
+            <Typography as="h2" variant="miniHeading" tone="light">
+              {miniHeading}
+            </Typography>
             <Typography
               as="h3"
               variant="sectionTitle"

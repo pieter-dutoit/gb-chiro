@@ -26,7 +26,7 @@ export default async function NewPatients() {
               className="font-extrabold text-center lg:text-center"
             >
               What to expect at <br />
-              your first visit
+              your first <span className="sr-only">Chiropractic</span> visit
             </Typography>
             <Typography
               as="p"

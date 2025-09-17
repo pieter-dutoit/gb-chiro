@@ -61,6 +61,15 @@ export const getTreatmentAndCareData = unstable_cache(
   }
 );
 
+export const getContactUsPageData = unstable_cache(
+  async () => payload.findGlobal({ slug: "contact-us-page", depth: 1 }),
+  undefined,
+  {
+    tags: ["payload", "contact-us-page"],
+    revalidate: false,
+  }
+);
+
 export const getArticle = (slug: string) =>
   unstable_cache(
     async (): Promise<Article> => {

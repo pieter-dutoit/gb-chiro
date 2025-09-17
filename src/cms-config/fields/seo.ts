@@ -11,7 +11,7 @@ const MetadataField: GroupField = {
       label: "Page Title (Up to 70 characters)",
       type: "text",
       minLength: 5,
-      maxLength: 70,
+      maxLength: 120,
       required: true,
     },
     {
@@ -20,7 +20,7 @@ const MetadataField: GroupField = {
       type: "textarea",
       required: true,
       minLength: 70,
-      maxLength: 200,
+      maxLength: 500,
     },
   ],
 };
@@ -33,18 +33,18 @@ const OpenGraphField: GroupField = {
   fields: [
     {
       name: "site_name",
-      label: "Site Name (Up to 200 characters)",
+      label: "Site Name (Ideally up to 200 characters)",
       type: "text",
       minLength: 5,
-      maxLength: 200,
+      maxLength: 500,
       required: true,
     },
     {
       name: "title",
-      label: "Title (Up to 70 characters)",
+      label: "Title (Ideally up to 70 characters)",
       type: "text",
       minLength: 5,
-      maxLength: 70,
+      maxLength: 200,
       required: true,
     },
     {
@@ -52,8 +52,8 @@ const OpenGraphField: GroupField = {
       label: "Description (Ideally 100 to 200 characters)",
       type: "textarea",
       required: true,
-      minLength: 70,
-      maxLength: 200,
+      minLength: 50,
+      maxLength: 500,
     },
     {
       name: "image",
@@ -78,14 +78,14 @@ const TwitterField: GroupField = {
       label: "Twitter / X Username (e.g. @username) (Optional)",
       type: "text",
       minLength: 1,
-      maxLength: 200,
+      maxLength: 500,
     },
     {
       name: "creatorId",
       label: "Twitter / X ID (Optional)",
       type: "text",
       minLength: 5,
-      maxLength: 200,
+      maxLength: 500,
     },
   ],
 };

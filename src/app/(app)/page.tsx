@@ -16,6 +16,7 @@ export default async function Home() {
       <HomeAbout />
       <CallToAction
         withMap
+        miniHeading="Find Our Chiropractic Clinic in Griffith"
         heading="Local Care, Easy To Reach"
         description="Find our clinic in Griffith with ease — or book your appointment in just a few clicks."
         ctas={[

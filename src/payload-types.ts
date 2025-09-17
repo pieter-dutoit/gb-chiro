@@ -101,6 +101,7 @@ export interface Config {
     'about-us-page': AboutUsPage;
     'treatment-and-care-page': TreatmentAndCarePage;
     'what-to-expect-page': WhatToExpectPage;
+    'contact-us-page': ContactUsPage;
   };
   globalsSelect: {
     'business-details': BusinessDetailsSelect<false> | BusinessDetailsSelect<true>;
@@ -109,6 +110,7 @@ export interface Config {
     'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>;
     'treatment-and-care-page': TreatmentAndCarePageSelect<false> | TreatmentAndCarePageSelect<true>;
     'what-to-expect-page': WhatToExpectPageSelect<false> | WhatToExpectPageSelect<true>;
+    'contact-us-page': ContactUsPageSelect<false> | ContactUsPageSelect<true>;
   };
   locale: null;
   user: User & {
@@ -989,6 +991,11 @@ export interface AboutUsPage {
 export interface TreatmentAndCarePage {
   id: number;
   services?: (number | Service)[] | null;
+  seo: {
+    meta: MetadataField;
+    open_graph: OpenGraphField;
+    twitter?: TwitterField;
+  };
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1000,6 +1007,26 @@ export interface TreatmentAndCarePage {
 export interface WhatToExpectPage {
   id: number;
   steps?: (number | NewPatientStep)[] | null;
+  seo: {
+    meta: MetadataField;
+    open_graph: OpenGraphField;
+    twitter?: TwitterField;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-us-page".
+ */
+export interface ContactUsPage {
+  id: number;
+  seo: {
+    meta: MetadataField;
+    open_graph: OpenGraphField;
+    twitter?: TwitterField;
+  };
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1126,6 +1153,13 @@ export interface AboutUsPageSelect<T extends boolean = true> {
  */
 export interface TreatmentAndCarePageSelect<T extends boolean = true> {
   services?: T;
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>;
+        open_graph?: T | OpenGraphFieldSelect<T>;
+        twitter?: T | TwitterFieldSelect<T>;
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1137,6 +1171,30 @@ export interface TreatmentAndCarePageSelect<T extends boolean = true> {
  */
 export interface WhatToExpectPageSelect<T extends boolean = true> {
   steps?: T;
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>;
+        open_graph?: T | OpenGraphFieldSelect<T>;
+        twitter?: T | TwitterFieldSelect<T>;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-us-page_select".
+ */
+export interface ContactUsPageSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>;
+        open_graph?: T | OpenGraphFieldSelect<T>;
+        twitter?: T | TwitterFieldSelect<T>;
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;

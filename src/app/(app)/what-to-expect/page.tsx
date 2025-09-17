@@ -1,8 +1,17 @@
+import { Metadata } from "next";
+
 import Breadcrumbs from "@/components/breadcrumbs";
 import CallToAction from "@/components/call-to-action";
 import WhatToExpect from "@/components/what-to-expect";
 
-import { getBusinessDetails } from "@/lib/data";
+import { getBusinessDetails, getWhatToExpectPageData } from "@/lib/data";
+import createMetadataConfig from "@/lib/utils/generate-metadata";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { seo } = await getWhatToExpectPageData();
+  if (!seo) return {};
+  return createMetadataConfig(seo);
+}
 
 export default async function WhatToExpectPage() {
   const { bookingLink } = await getBusinessDetails();
