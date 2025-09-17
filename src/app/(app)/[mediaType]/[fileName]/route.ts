@@ -1,23 +1,30 @@
 export const dynamic = "force-static";
 
 import { getBaseUrl } from "@/lib/utils";
+import { NextRequest } from "next/server";
 
 const MEDIA_TYPE_MAP = {
   images: "media",
   "seo-images": "seo-media",
-};
+} as const;
+
+type MediaType = keyof typeof MEDIA_TYPE_MAP;
+
+function isMediaType(v: string): v is MediaType {
+  return v in MEDIA_TYPE_MAP;
+}
 
 export async function GET(
-  _request: Request,
-  {
-    params,
-  }: {
-    params: Promise<{ fileName: string; mediaType: "images" | "seo-images" }>;
-  }
+  _req: NextRequest,
+  ctx: RouteContext<"/[mediaType]/[fileName]">
 ) {
   try {
-    const { fileName, mediaType } = await params;
+    const { mediaType, fileName } = await ctx.params;
     const origin = getBaseUrl();
+
+    if (!isMediaType(mediaType)) {
+      return new Response("Unsupported media type", { status: 400 });
+    }
 
     const prefix = MEDIA_TYPE_MAP[mediaType];
 

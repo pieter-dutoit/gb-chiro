@@ -40,7 +40,7 @@ export function generateArticleMetadata(
   let ogUrl: string | undefined;
   let ogWidth: number | undefined;
   let ogHeight: number | undefined;
-  let ogAlt: string | undefined =
+  const ogAlt: string | undefined =
     (thumbnail && thumbnail?.alt) || title || undefined;
 
   if (thumbnail && thumbnail?.sizes) {
