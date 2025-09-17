@@ -2,15 +2,26 @@ export const dynamic = "force-static";
 
 import { getBaseUrl } from "@/lib/utils";
 
+const MEDIA_TYPE_MAP = {
+  images: "media",
+  "seo-images": "seo-media",
+};
+
 export async function GET(
   _request: Request,
-  { params }: { params: Promise<{ fileName: string }> }
+  {
+    params,
+  }: {
+    params: Promise<{ fileName: string; mediaType: "images" | "seo-images" }>;
+  }
 ) {
   try {
-    const { fileName } = await params;
+    const { fileName, mediaType } = await params;
     const origin = getBaseUrl();
 
-    const upstreamUrl = `${origin}/api/media/file/${encodeURIComponent(fileName)}`;
+    const prefix = MEDIA_TYPE_MAP[mediaType];
+
+    const upstreamUrl = `${origin}/api/${prefix}/file/${encodeURIComponent(fileName)}`;
     const upstream = await fetch(upstreamUrl, {
       cache: "force-cache",
     });

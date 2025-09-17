@@ -13,7 +13,7 @@ const prewarmImages: CollectionAfterChangeHook = async ({ doc }) => {
     const all = [...new Set([...main, ...sizes])]; // unique
 
     const urls = all.map(
-      (filename) => `${baseURL}/api/images/${encodeURIComponent(filename)}`
+      (filename) => `${baseURL}/images/${encodeURIComponent(filename)}`
     );
 
     await Promise.allSettled(

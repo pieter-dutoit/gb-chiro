@@ -23,14 +23,14 @@ export default async function ContactDetails() {
   return (
     <section className="bg-gradient-to-b from-primary/10 to-white">
       <div className="container flex flex-col mx-auto px-4 md:px-12 py-16 lg:py-24 xl:py-30 gap-20 lg:gap-30 relative">
-        <p className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-4">
           <Typography as="h1" variant="miniHeading" tone="light">
             Contact GB Chiropractic in Griffith
           </Typography>
           <Typography as="p" variant="pageTitle">
             How To Reach Us
           </Typography>
-        </p>
+        </div>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {/* Email & Phone Card */}

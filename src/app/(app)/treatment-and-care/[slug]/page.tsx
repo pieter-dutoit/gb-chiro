@@ -1,11 +1,15 @@
+import { Metadata } from "next";
+
 import Breadcrumbs from "@/components/breadcrumbs";
 import CMSImage from "@/components/cms-image";
 import MoreArticlesCarousel from "@/components/more-articles";
 import { ArticleRichText } from "@/components/rich-text";
 import { Typography } from "@/components/ui/typography";
+
 import { getArticle, getServices } from "@/lib/data";
 import { formatDate, getDaysDifference } from "@/lib/utils";
 import { Article } from "@/payload-types";
+import { generateArticleMetadata } from "@/lib/utils/generate-article-metadata";
 
 export const dynamicParams = true;
 export const revalidate = false;
@@ -23,11 +27,18 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ArticlePage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+type Props = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+
+  const article = await getArticle(slug)();
+  if (!article) return {};
+
+  return generateArticleMetadata(article);
+}
+
+export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
 
   const article = await getArticle(slug)();

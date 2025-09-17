@@ -166,6 +166,6 @@ export function extractMediaUrls(media: (Media | number)[]): string[] {
     .filter((item): item is Media => typeof item !== "number" && "url" in item)
     .map(
       (item) =>
-        `${getBaseUrl()}/api/images/${encodeURIComponent(item.filename ?? "")}`
+        `${getBaseUrl()}/images/${encodeURIComponent(item.filename ?? "")}`
     );
 }

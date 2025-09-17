@@ -16,9 +16,11 @@ export default function createMetadataConfig(seo: SEO): Metadata {
     (item) => !!item && typeof item !== "number"
   );
 
+  const baseUrl = getBaseUrl();
+
   return {
     // Basic fields:
-    metadataBase: new URL(getBaseUrl()),
+    metadataBase: new URL("", baseUrl),
     generator: "Next.js",
     applicationName: "GB Chiropractic",
     referrer: "strict-origin-when-cross-origin",
@@ -39,8 +41,8 @@ export default function createMetadataConfig(seo: SEO): Metadata {
       description: open_graph.description,
       siteName: open_graph.site_name,
       type: "website",
-      images: ogImages.map(({ url, alt, height, width }) => ({
-        url: url ?? "",
+      images: ogImages.map(({ filename, alt, height, width }) => ({
+        url: filename ? `${baseUrl}/seo-images/${filename}` : "",
         alt,
         height: height ?? 0,
         width: width ?? 0,
