@@ -34,11 +34,8 @@ export default async function ServicesCarousel() {
 
       {/* Main content */}
       <div className="flex flex-col gap-4 items-center px-4">
-        <Typography as="h2" variant="miniHeading" tone="light">
-          Chiropractic Services in Griffith
-        </Typography>
         <Typography
-          as="p"
+          as="h2"
           variant="sectionTitle"
           className="font-extrabold text-center"
         >

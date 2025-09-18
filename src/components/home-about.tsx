@@ -27,18 +27,13 @@ export default async function HomeAbout() {
           {/* Right content */}
           <div className="size-full flex flex-col items-center justify-center gap-8 lg:gap-12 xl:gap-16">
             {/* Heading */}
-            <div className="w-full flex flex-col items-center gap-4">
-              <Typography as="h2" tone="light" variant="miniHeading">
-                Griffith Chiropractor
-              </Typography>
-              <Typography
-                as="h3"
-                variant="sectionTitle"
-                className="font-extrabold text-center max-w-[20ch] lg:text-center"
-              >
-                At GB Chiropractic, your wellbeing is our priority.
-              </Typography>
-            </div>
+            <Typography
+              as="h2"
+              variant="sectionTitle"
+              className="font-extrabold text-center max-w-[20ch] lg:text-center"
+            >
+              At GB Chiropractic, your wellbeing is our priority.
+            </Typography>
 
             <Typography variant="paragraphs">
               <p className="text-center lg:text-lg xl:text-xl max-w-[50ch]">

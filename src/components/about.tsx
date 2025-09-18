@@ -8,15 +8,11 @@ export default async function About() {
   return (
     <section className="flex flex-col container mx-auto px-4 md:px-12 py-16 lg:py-24 xl:py-30 gap-20 lg:gap-30 relative">
       {/* Header */}
-      <div className="flex flex-col items-center text-center gap-4">
-        <Typography as="h1" variant="miniHeading" tone="light">
-          About GB Chiropractic in Griffith
-        </Typography>
-        <Typography as="p" variant="pageTitle">
-          Welcome to <br />
-          GB Chiropractic
-        </Typography>
-      </div>
+
+      <Typography as="h1" variant="pageTitle" className="mt-6">
+        Welcome to <br />
+        GB Chiropractic
+      </Typography>
 
       <div className="flex flex-col-reverse gap-12 lg:flex-row justify-between items-center">
         <div className="flex flex-col gap-8 w-full lg:w-6/12">

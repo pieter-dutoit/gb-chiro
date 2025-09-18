@@ -27,12 +27,10 @@ export default async function Footer() {
         {/* Col 1: Business details */}
         <li className="flex flex-col gap-4">
           {/* Logo */}
-          <h3 className="font-semibold text-2xl">
-            GB Chiropractic <span className="sr-only">in Griffith</span>
-          </h3>
+          <h3 className="font-semibold text-2xl">GB Chiropractic</h3>
 
           {/* Contact details */}
-          <h4 className="sr-only">Contact details</h4>
+          <h4 className="font-semibold">Contact details</h4>
           <ul className="flex flex-col gap-2 font-light opacity-80">
             <li>
               <Link
@@ -55,7 +53,7 @@ export default async function Footer() {
           </ul>
 
           {/* Address */}
-          <h4 className="sr-only">Address</h4>
+          <h4 className="font-semibold">Address</h4>
           <ul className="flex flex-col gap-2 font-light opacity-80">
             <li>
               <p className="font-light">

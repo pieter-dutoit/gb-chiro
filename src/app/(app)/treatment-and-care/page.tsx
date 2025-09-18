@@ -49,7 +49,7 @@ export default async function TreatmentAndCarePage() {
       />
       <Services />
       <CallToAction
-        miniHeading="Chiropractic Services Griffith"
+        miniHeading="Chiropractic Services"
         heading="Need Help Choosing the Right Chiropractic Care?"
         description="Reach out and we’ll recommend the best next step."
         ctas={[

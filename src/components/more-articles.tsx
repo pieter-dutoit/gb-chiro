@@ -49,7 +49,7 @@ export default async function MoreArticlesCarousel({
           asChild
         >
           <Link href="/treatment-and-care" className="xl:text-lg">
-            View all <span className="sr-only">services</span>
+            View all services
             <ArrowRight />
           </Link>
         </Button>

@@ -111,7 +111,7 @@ export default async function ArticlePage({ params }: Props) {
           {/* Header */}
           <div className="flex flex-col items-baseline gap-2">
             {/* Title */}
-            <Typography as="h1" variant="articleH1">
+            <Typography as="h1" variant="articleH1" className="mt-2">
               {title}
             </Typography>
 

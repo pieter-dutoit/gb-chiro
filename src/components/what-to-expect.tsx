@@ -9,14 +9,9 @@ export default async function WhatToExpect() {
     <section className="flex flex-col items-center container mx-auto px-4 md:px-12 py-16 lg:py-24 xl:py-30 gap-20 lg:gap-30 relative overflow-hidden">
       <div className="flex flex-col items-center gap-4 lg:gap-12">
         {/* Heading */}
-        <div className="flex flex-col items-center gap-4 text-center">
-          <Typography as="h1" variant="miniHeading" tone="light">
-            What to Expect At GB Chiropractic
-          </Typography>
-          <Typography as="p" variant="pageTitle">
-            Our Care Process
-          </Typography>
-        </div>
+        <Typography as="h1" variant="pageTitle" className="mt-6">
+          Our Care Process
+        </Typography>
 
         {/* Main content */}
         <Typography
