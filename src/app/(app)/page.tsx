@@ -4,12 +4,27 @@ import HomeAbout from "@/components/home-about";
 import NewPatients from "@/components/new-patients";
 import ServicesCarousel from "@/components/service-carousel";
 
-import { getBusinessDetails } from "@/lib/data";
+import { getBusinessDetails, getHomePageData } from "@/lib/data";
+import { createStructuredData } from "@/lib/utils/create-structured-data";
 
 export default async function Home() {
   const { bookingLink } = await getBusinessDetails();
+  const { landingImage, whatToExpectImage } = await getHomePageData();
+
+  const jsonLd = await createStructuredData({
+    identifier: "home",
+    slug: "",
+    primaryImage: landingImage,
+    otherImages: [whatToExpectImage],
+    crumbs: [{ name: "Home", slug: "" }],
+  });
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Hero />
       <ServicesCarousel />
       <NewPatients />

@@ -6,6 +6,7 @@ import WhatToExpect from "@/components/what-to-expect";
 
 import { getBusinessDetails, getWhatToExpectPageData } from "@/lib/data";
 import createMetadataConfig from "@/lib/utils/generate-metadata";
+import { createStructuredData } from "@/lib/utils/create-structured-data";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getWhatToExpectPageData();
@@ -16,8 +17,22 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function WhatToExpectPage() {
   const { bookingLink } = await getBusinessDetails();
 
+  const jsonLd = await createStructuredData({
+    identifier: "what-to-expect",
+    slug: "/what-to-expect",
+    name: "What to Expect",
+    crumbs: [
+      { name: "Home", slug: "" },
+      { name: "What to Expect", slug: "/what-to-expect" },
+    ],
+  });
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Breadcrumbs
         crumbs={[{ name: "What to Expect", item: "/what-to-expect" }]}
       />

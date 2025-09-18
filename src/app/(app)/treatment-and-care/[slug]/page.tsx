@@ -6,10 +6,16 @@ import MoreArticlesCarousel from "@/components/more-articles";
 import { ArticleRichText } from "@/components/rich-text";
 import { Typography } from "@/components/ui/typography";
 
-import { getArticle, getServices } from "@/lib/data";
-import { formatDate, getDaysDifference } from "@/lib/utils";
 import { Article } from "@/payload-types";
+
 import { generateArticleMetadata } from "@/lib/utils/generate-article-metadata";
+import { getArticle, getServices } from "@/lib/data";
+import { formatDate, getBaseUrl, getDaysDifference } from "@/lib/utils";
+
+import {
+  createStructuredData,
+  getImageObject,
+} from "@/lib/utils/create-structured-data";
 
 export const dynamicParams = true;
 export const revalidate = false;
@@ -40,20 +46,56 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
-
   const article = await getArticle(slug)();
-
   if (!article) return null;
 
   const { title, thumbnail, body, author, createdAt, updatedAt } = article;
-  const createdDate = formatDate(createdAt);
 
-  const updatedDate = updatedAt?.length && formatDate(updatedAt);
+  const createdDate = formatDate(createdAt);
+  const updatedDate = updatedAt?.length > 0 && formatDate(updatedAt);
+
   const showUpdatedAt =
-    updatedAt?.length && getDaysDifference(createdAt, updatedAt) >= 1;
+    !!updatedDate && getDaysDifference(createdAt, updatedAt) >= 1;
+
+  const jsonLd = await createStructuredData({
+    type: "MedicalWebPage",
+    identifier: `/treatment-and-care/${slug}`,
+    slug: `/treatment-and-care/${slug}`,
+    name: title,
+    crumbs: [
+      { name: "Home", slug: "" },
+      { name: "Treatment & Care", slug: "/treatment-and-care" },
+      { name: title, slug: `/treatment-and-care/${slug}` },
+    ],
+    additionalData: {
+      mainEntity: {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        url: `${getBaseUrl()}/treatment-and-care/${slug}`,
+        headline: title,
+        ...(thumbnail && {
+          image: getImageObject(thumbnail),
+        }),
+        datePublished: createdDate.dateTime,
+        ...(showUpdatedAt && {
+          dateModified: updatedDate.dateTime,
+        }),
+        author: {
+          "@type": "Organization",
+          name: "GB Chiropractic",
+          url: getBaseUrl(),
+        },
+        publisher: { "@id": `${getBaseUrl()}#gb-chiropractic` },
+      },
+    },
+  });
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Breadcrumbs
         crumbs={[
           { name: "Treatment & Care", item: "/treatment-and-care" },

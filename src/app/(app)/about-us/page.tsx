@@ -13,6 +13,7 @@ import {
   getGraphics,
 } from "@/lib/data";
 import createMetadataConfig from "@/lib/utils/generate-metadata";
+import { createStructuredData } from "@/lib/utils/create-structured-data";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getAboutUsPageData();
@@ -23,8 +24,28 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function AboutUsPage() {
   const { backgroundGraphic } = await getGraphics();
   const { bookingLink } = await getBusinessDetails();
+  const { welcomeImage, meetTheChiroImage, practiceImages } =
+    await getAboutUsPageData();
+
+  const jsonLd = await createStructuredData({
+    type: "AboutPage",
+    identifier: "about-us",
+    name: "About Us",
+    slug: "/about-us",
+    primaryImage: welcomeImage,
+    otherImages: [...practiceImages, meetTheChiroImage],
+    crumbs: [
+      { name: "Home", slug: "" },
+      { name: "About us", slug: "/about-us" },
+    ],
+  });
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Breadcrumbs crumbs={[{ name: "About us", item: "/about-us" }]} />
       <div className="relative">
         {/* Page content */}

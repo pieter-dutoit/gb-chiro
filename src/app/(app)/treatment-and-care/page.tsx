@@ -3,8 +3,16 @@ import { Metadata } from "next";
 import Breadcrumbs from "@/components/breadcrumbs";
 import CallToAction from "@/components/call-to-action";
 import Services from "@/components/services";
-import { getBusinessDetails, getTreatmentAndCareData } from "@/lib/data";
+import {
+  getBusinessDetails,
+  getServices,
+  getTreatmentAndCareData,
+} from "@/lib/data";
 import createMetadataConfig from "@/lib/utils/generate-metadata";
+import {
+  createStructuredData,
+  createTreatmentEntity,
+} from "@/lib/utils/create-structured-data";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { seo } = await getTreatmentAndCareData();
@@ -14,8 +22,28 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function TreatmentAndCarePage() {
   const { bookingLink } = await getBusinessDetails();
+  const services = await getServices();
+
+  const jsonLd = await createStructuredData({
+    type: "MedicalWebPage",
+    identifier: "treatment-and-care",
+    slug: "/treatment-and-care",
+    name: "Our Services",
+    crumbs: [
+      { name: "Home", slug: "" },
+      { name: "Treatment & Care", slug: "/treatment-and-care" },
+    ],
+    additionalData: {
+      mainEntity: services.map(createTreatmentEntity),
+    },
+  });
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Breadcrumbs
         crumbs={[{ name: "Treatment & Care", item: "/treatment-and-care" }]}
       />
