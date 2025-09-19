@@ -39,9 +39,6 @@ export const Media: CollectionConfig = {
   access: {
     read: () => true,
   },
-  hooks: {
-    afterChange: [prewarmImages],
-  },
   fields: [
     {
       name: "alt",
