@@ -59,7 +59,7 @@ export default async function ArticlePage({ params }: Props) {
 
   const jsonLd = await createStructuredData({
     type: "MedicalWebPage",
-    identifier: `/treatment-and-care/${slug}`,
+    identifier: `treatment-and-care/${slug}`,
     slug: `/treatment-and-care/${slug}`,
     name: title,
     crumbs: [

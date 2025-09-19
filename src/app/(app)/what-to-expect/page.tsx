@@ -38,7 +38,7 @@ export default async function WhatToExpectPage() {
       />
       <WhatToExpect />
       <CallToAction
-        miniHeading="Visit GB Chiropractic in Griffith"
+        miniHeading="Visit GB Chiropractic"
         heading="Ready for your first visit?"
         description="Start with an Initial Consult. If you’ve got a question first, we’re here to help."
         ctas={[

@@ -285,7 +285,7 @@ export async function createStructuredData({
         "@id": businessID,
         // Business
         name: "GB Chiropractic",
-        slogan: "Move better. Live Freely",
+        slogan: "Move Better. Live Freely",
         description:
           "Family-friendly chiropractic clinic in Griffith, NSW providing evidence-based care for back, neck and joint pain, sports injuries, pregnancy and paediatric needs.",
         url: baseUrl,
