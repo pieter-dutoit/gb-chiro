@@ -16,6 +16,7 @@ export const SEOMedia: CollectionConfig = {
     },
   ],
   upload: {
+    disableLocalStorage: true,
     staticDir: "seo-media",
     mimeTypes: ["image/*"],
     formatOptions: {
