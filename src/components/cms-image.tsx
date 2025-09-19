@@ -4,7 +4,7 @@ import { Media } from "@/payload-types";
 import { ImageProps } from "next/image";
 import { twMerge } from "tailwind-merge";
 
-const BASE_URL = "/api/images";
+const BASE_URL = "/images";
 
 type CMSImageProps = Omit<ImageProps, "src" | "alt"> & {
   media: Media | number;

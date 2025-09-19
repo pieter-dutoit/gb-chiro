@@ -7,16 +7,21 @@ import { postgresAdapter } from "@payloadcms/db-postgres";
 import { fileURLToPath } from "url";
 import path from "path";
 
-import { Media } from "./cms-config/collections/media";
 import { BusinessDetailsGlobal } from "./cms-config/globals/business-details";
-import { Graphics } from "./cms-config/globals/graphics";
-import { AboutUsPage } from "./cms-config/globals/about-us-page";
 import { HomePage } from "./cms-config/globals/home-page";
+import { AboutUsPage } from "./cms-config/globals/about-us-page";
+import { TreatmentAndCarePage } from "./cms-config/globals/treatment-and-care-page";
+import { WhatToExpectPage } from "./cms-config/globals/what-to-expect-page";
+import { ContactUsPage } from "./cms-config/globals/contact-us-page";
+
+import { Media } from "./cms-config/collections/media";
+import { SEOMedia } from "./cms-config/collections/seo-media";
+
+import { Graphics } from "./cms-config/globals/graphics";
 import { Services } from "./cms-config/collections/services";
 import { NewPatientSteps } from "./cms-config/collections/new-patient-steps";
-import { WhatToExpectPage } from "./cms-config/globals/what-to-expect-page";
-import { TreatmentAndCarePage } from "./cms-config/globals/treatment-and-care-page";
-import { Article } from "./cms-config/collections/article";
+import { Article } from "./cms-config/collections/articles";
+import { SocialMediaPlatforms } from "./cms-config/collections/social-media-platforms";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -30,8 +35,16 @@ export default buildConfig({
     AboutUsPage,
     TreatmentAndCarePage,
     WhatToExpectPage,
+    ContactUsPage,
   ],
-  collections: [Media, Services, NewPatientSteps, Article],
+  collections: [
+    Media,
+    SEOMedia,
+    Services,
+    NewPatientSteps,
+    Article,
+    SocialMediaPlatforms,
+  ],
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({
     pool: {
@@ -51,6 +64,9 @@ export default buildConfig({
       collections: {
         media: {
           prefix: "media",
+        },
+        "seo-media": {
+          prefix: "media/seo",
         },
       },
       bucket: process.env.S3_BUCKET!,

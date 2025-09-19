@@ -1,4 +1,4 @@
-import { BusinessDetail } from "@/payload-types";
+import { BusinessDetail, Media } from "@/payload-types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -20,7 +20,7 @@ export function getBaseUrl(): string {
   return "http://localhost:3000";
 }
 
-type DayKey =
+export type DayKey =
   | "Monday"
   | "Tuesday"
   | "Wednesday"
@@ -29,7 +29,7 @@ type DayKey =
   | "Saturday"
   | "Sunday";
 
-const DAY_KEYS = [
+export const DAY_KEYS = [
   "Monday",
   "Tuesday",
   "Wednesday",
@@ -159,4 +159,17 @@ export function getDaysDifference(created: string, updated: string): number {
   const diffDays = diffMs / (1000 * 60 * 60 * 24);
 
   return diffDays;
+}
+
+export function extractMediaUrl(
+  media: Media | number | null | undefined | false
+): string {
+  if (!media || typeof media === "number") return "";
+  return `${getBaseUrl()}/images/${encodeURIComponent(media.filename ?? "")}`;
+}
+
+export function extractMediaUrls(media: (Media | number)[]): string[] {
+  return media
+    .filter((item): item is Media => typeof item !== "number" && "url" in item)
+    .map(extractMediaUrl);
 }

@@ -1,9 +1,9 @@
-import { getPayload } from "payload";
+import { getPayload, Where } from "payload";
 import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 
 import config from "@payload-config";
-import { Article } from "@/payload-types";
+import { Article, Service, SocialMediaPlatform } from "@/payload-types";
 
 const payload = await getPayload({ config });
 
@@ -61,10 +61,18 @@ export const getTreatmentAndCareData = unstable_cache(
   }
 );
 
+export const getContactUsPageData = unstable_cache(
+  async () => payload.findGlobal({ slug: "contact-us-page", depth: 1 }),
+  undefined,
+  {
+    tags: ["payload", "contact-us-page"],
+    revalidate: false,
+  }
+);
+
 export const getArticle = (slug: string) =>
   unstable_cache(
     async (): Promise<Article> => {
-      console.log("fetch: ", slug);
       const payload = await getPayload({ config });
       const res = await payload.find({
         draft: false,
@@ -87,19 +95,46 @@ export const getArticle = (slug: string) =>
 
       return res.docs[0];
     },
-    ["articles", slug],
+    ["payload", "articles", slug],
     { revalidate: false, tags: ["payload", "articles", slug] }
   );
 
-export const getArticles = unstable_cache(
-  async (): Promise<Article[]> => {
+export const getServices = unstable_cache(
+  async (where?: Where): Promise<Service[]> => {
     const payload = await getPayload({ config });
     const res = await payload.find({
       draft: false,
-      collection: "articles",
+      collection: "services",
       depth: 1,
       pagination: false,
-      sort: "-title",
+      limit: 100,
+      where: {
+        ...where,
+        _status: {
+          equals: "published",
+        },
+      },
+    });
+
+    if (!res) {
+      console.error("Failed to fetch articles");
+      notFound();
+    }
+
+    return res.docs;
+  },
+  [],
+  { revalidate: false, tags: ["payload", "services"] }
+);
+
+export const getSocials = unstable_cache(
+  async (): Promise<SocialMediaPlatform[]> => {
+    const payload = await getPayload({ config });
+    const res = await payload.find({
+      draft: false,
+      collection: "social-media-platforms",
+      depth: 1,
+      pagination: false,
       limit: 100,
       where: {
         _status: {
@@ -116,5 +151,5 @@ export const getArticles = unstable_cache(
     return res.docs;
   },
   [],
-  { revalidate: false, tags: ["payload", "articles"] }
+  { revalidate: false, tags: ["payload", "social-media-platforms"] }
 );

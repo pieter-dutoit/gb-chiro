@@ -1,16 +1,34 @@
 export const dynamic = "force-static";
 
 import { getBaseUrl } from "@/lib/utils";
+import { NextRequest } from "next/server";
+
+const MEDIA_TYPE_MAP = {
+  images: "media",
+  "seo-images": "seo-media",
+} as const;
+
+type MediaType = keyof typeof MEDIA_TYPE_MAP;
+
+function isMediaType(v: string): v is MediaType {
+  return v in MEDIA_TYPE_MAP;
+}
 
 export async function GET(
-  _request: Request,
-  { params }: { params: Promise<{ fileName: string }> }
+  _req: NextRequest,
+  ctx: RouteContext<"/[mediaType]/[fileName]">
 ) {
   try {
-    const { fileName } = await params;
+    const { mediaType, fileName } = await ctx.params;
     const origin = getBaseUrl();
 
-    const upstreamUrl = `${origin}/api/media/file/${encodeURIComponent(fileName)}`;
+    if (!isMediaType(mediaType)) {
+      return new Response("Unsupported media type", { status: 400 });
+    }
+
+    const prefix = MEDIA_TYPE_MAP[mediaType];
+
+    const upstreamUrl = `${origin}/api/${prefix}/file/${encodeURIComponent(fileName)}`;
     const upstream = await fetch(upstreamUrl, {
       cache: "force-cache",
     });

@@ -41,8 +41,8 @@ export default async function ServicesCarousel() {
         >
           Services We Provide
         </Typography>
-        <Typography className="text-xl font-light text-center">
-          Explore the problems we assess and the care we provide
+        <Typography className="text-xl font-light text-center max-w-[25ch]">
+          Explore the problems we assess and the care we provide.
         </Typography>
       </div>
 

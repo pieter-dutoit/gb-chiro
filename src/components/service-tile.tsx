@@ -69,16 +69,18 @@ export default function ServiceTile({
             </p>
           )}
 
-          {hasArticle && (
-            <div
-              className={twMerge(
-                "text-primary text-sm hover:underline underline-offset-2 font-semibold text-center",
-                variant === "default" ? "text-start mt-auto" : "text-center"
-              )}
-            >
-              Read more
-            </div>
-          )}
+          <div>
+            {hasArticle && (
+              <div
+                className={twMerge(
+                  "text-primary text-sm hover:underline underline-offset-2 font-semibold text-center",
+                  variant === "default" ? "text-start mt-auto" : "text-center"
+                )}
+              >
+                Read more
+              </div>
+            )}
+          </div>
         </div>
       </Wrapper>
     </li>

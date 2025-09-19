@@ -10,6 +10,7 @@ export const typographyVariants = cva("", {
       pageTitle:
         "leading-tight text-center text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-extrabold [text-wrap:balance]",
       sectionTitle: "font-light text-center lg:text-left text-3xl xl:text-5xl",
+      miniHeading: "font-extrabold text-sm md:text-base",
       paragraphs:
         "flex flex-col gap-4 text-base leading-6 xl:text-lg xl:leading-8 tracking-[0.005em] text-center lg:text-start [text-wrap:balance]",
       articleH1:
@@ -30,6 +31,7 @@ export const typographyVariants = cva("", {
     tone: {
       default: "text-black/90",
       primary: "text-primary",
+      light: "text-primary/70",
     },
   },
   defaultVariants: {

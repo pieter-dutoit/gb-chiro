@@ -8,7 +8,8 @@ export default async function About() {
   return (
     <section className="flex flex-col container mx-auto px-4 md:px-12 py-16 lg:py-24 xl:py-30 gap-20 lg:gap-30 relative">
       {/* Header */}
-      <Typography as="h1" variant="pageTitle" tone="primary">
+
+      <Typography as="h1" variant="pageTitle" className="mt-6">
         Welcome to <br />
         GB Chiropractic
       </Typography>

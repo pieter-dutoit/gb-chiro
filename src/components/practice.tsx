@@ -12,11 +12,12 @@ export default async function Practice() {
   const { operatingHours, address } = await getBusinessDetails();
 
   return (
-    <section className="bg-gradient-to-b to-primary/20 from-white">
+    <section className="bg-gradient-to-b to-primary/10 from-white">
       <div className="flex flex-col items-center container mx-auto px-4 md:px-12 py-16 lg:py-24 xl:py-30 gap-10">
         <Typography as="h2" variant="sectionTitle" className="font-bold">
-          Practice
+          Our Practice
         </Typography>
+
         {/* About paragraphs */}
         <Typography variant="paragraphs">
           <p className="text-center">

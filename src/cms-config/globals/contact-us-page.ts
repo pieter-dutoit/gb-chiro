@@ -4,8 +4,8 @@ import { isLoggedInOrIsPublished } from "../access/logged-in-or-published";
 import revalidateCache from "../hooks/revalidate-cache";
 import SEOFields from "../fields/seo";
 
-export const TreatmentAndCarePage: GlobalConfig = {
-  slug: "treatment-and-care-page",
+export const ContactUsPage: GlobalConfig = {
+  slug: "contact-us-page",
   versions: {
     drafts: true,
   },
@@ -13,24 +13,12 @@ export const TreatmentAndCarePage: GlobalConfig = {
     read: isLoggedInOrIsPublished,
   },
   hooks: {
-    afterChange: [revalidateCache("services")],
+    afterChange: [revalidateCache("contact-us-page")],
   },
   fields: [
     {
       type: "tabs",
       tabs: [
-        {
-          label: "Page Content",
-          fields: [
-            {
-              type: "relationship",
-              label: "Services",
-              relationTo: "services",
-              name: "services",
-              hasMany: true,
-            },
-          ],
-        },
         {
           name: "seo",
           label: "SEO",

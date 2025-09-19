@@ -22,7 +22,7 @@ export default async function Hero() {
         <CMSImage
           priority
           media={landingImage}
-          sizes="70vw"
+          sizes="(min-width: 768px) 40vw, 70vw"
           className="object-cover w-[70vw]  ml-auto"
         />
         <div className="absolute inset-0 size-full bg-gradient-to-r from-[#014335] sm:from-[#00271e] via-[#014335]  via-[30%] to-[#014335]/90 sm:to-[#000000]/0" />
@@ -32,16 +32,17 @@ export default async function Hero() {
       <div className="container mx-auto px-4 md:px-12 z-10">
         {/* Left */}
         <div className="flex flex-col gap-8 lg:gap-12 xl:gap-16 text-white w-full items-baseline">
-          <div>
-            <h1 className="opacity-80 text-lg lg:text-xl font-bold ">
+          <h1>
+            <span className="opacity-80 text-lg lg:text-xl font-bold ">
               Chiropractor in Griffith
-            </h1>
+            </span>
+            <br />
             {/* Title */}
-            <p className="text-5xl md:text-6xl xl:text-8xl font-bold tracking-tight whitespace-pre-wrap mt-2 ">
+            <span className="text-5xl md:text-6xl xl:text-8xl font-bold tracking-tight whitespace-pre-wrap mt-2 ">
               Move Better{`\n`}
               <span>Live Freely</span>
-            </p>
-          </div>
+            </span>
+          </h1>
 
           {/* Overview */}
           <p className="text-lg xl:text-2xl max-w-[50ch]">

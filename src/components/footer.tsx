@@ -2,10 +2,11 @@ import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { parsePhoneNumber } from "libphonenumber-js/min";
 
-import { getBusinessDetails } from "@/lib/data";
+import { getBusinessDetails, getSocials } from "@/lib/data";
 import { formatOperatingHours } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/constants";
 import { Button } from "./ui/button";
+import SocialLink from "./social-link";
 
 export default async function Footer() {
   const {
@@ -16,6 +17,8 @@ export default async function Footer() {
     bookingLink,
   } = await getBusinessDetails();
 
+  const socials = await getSocials();
+
   const number = parsePhoneNumber(phone, "AU");
 
   return (
@@ -24,13 +27,11 @@ export default async function Footer() {
         {/* Col 1: Business details */}
         <li className="flex flex-col gap-4">
           {/* Logo */}
-          <h3 className="font-semibold text-2xl">
-            GB Chiropractic <span className="sr-only">in Griffith</span>
-          </h3>
+          <h3 className="font-semibold text-2xl">GB Chiropractic</h3>
 
           {/* Contact details */}
-          <h4 className="sr-only">Contact details</h4>
-          <ul className="flex flex-col gap-2 font-light opacity-70">
+          <h4 className="font-semibold">Contact details</h4>
+          <ul className="flex flex-col gap-2 font-light opacity-80">
             <li>
               <Link
                 href={`tel:${number.number}`}
@@ -52,8 +53,8 @@ export default async function Footer() {
           </ul>
 
           {/* Address */}
-          <h4 className="sr-only">Address</h4>
-          <ul className="flex flex-col gap-2 font-light opacity-70">
+          <h4 className="font-semibold">Address</h4>
+          <ul className="flex flex-col gap-2 font-light opacity-80">
             <li>
               <p className="font-light">
                 {street}, {suburb}, {state.toUpperCase()}, {code}
@@ -73,7 +74,7 @@ export default async function Footer() {
           {/* Hours */}
           <div className="flex flex-col gap-2">
             <h4 className="font-semibold">Operating Hours</h4>
-            <ul className="opacity-70 font-light">
+            <ul className="opacity-80 font-light">
               {formatOperatingHours(operatingHours).map((hrs, index) => {
                 const note = operatingHours[index]?.note ?? null;
 
@@ -85,7 +86,7 @@ export default async function Footer() {
                 );
               })}
             </ul>
-            <ul className="mt-2 text-sm opacity-60">
+            <ul className="mt-2 text-sm opacity-80">
               {operatingHours
                 .filter(({ note }) => Boolean(note))
                 .map(({ note }) => (
@@ -99,14 +100,28 @@ export default async function Footer() {
         </li>
 
         {/* Col 3: CTAs */}
-        <li className="flex flex-col gap-4">
+        <li className="flex flex-col gap-4 items-start">
           <div className="font-semibold text-2xl">Make an Appointment</div>
+
+          <Button asChild className="bg-blue-600 xl:text-lg">
+            <Link href={bookingLink}>Book Online</Link>
+          </Button>
+
+          <p className="text-sm opacity-80 italic max-w-[40ch]">
+            Once appointment is booked online an email will be sent to you with
+            a link to complete your online profile. (This must be done before
+            your appointment)
+          </p>
+
+          <div className="font-semibold text-2xl">Follow Us</div>
           <ul className="flex flex-col gap-1 ">
-            <li>
-              <Button asChild className="bg-blue-600 xl:text-lg">
-                <Link href={bookingLink}>Book Online</Link>
-              </Button>
-            </li>
+            {socials.map((platform) => {
+              return (
+                <li key={platform.id}>
+                  <SocialLink {...platform} />
+                </li>
+              );
+            })}
           </ul>
         </li>
 
@@ -117,7 +132,7 @@ export default async function Footer() {
           {/* Logo */}
           <div className="font-semibold text-2xl">Links</div>
 
-          <ul className="flex flex-col gap-3 opacity-70 font-light">
+          <ul className="flex flex-col gap-3 opacity-80 font-light">
             {NAV_LINKS.map(({ name, path }) => {
               return (
                 <li key={path}>

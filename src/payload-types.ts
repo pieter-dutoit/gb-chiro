@@ -68,9 +68,11 @@ export interface Config {
   blocks: {};
   collections: {
     media: Media;
+    'seo-media': SeoMedia;
     services: Service;
     'new-patient-steps': NewPatientStep;
     articles: Article;
+    'social-media-platforms': SocialMediaPlatform;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -79,9 +81,11 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
+    'seo-media': SeoMediaSelect<false> | SeoMediaSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
     'new-patient-steps': NewPatientStepsSelect<false> | NewPatientStepsSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
+    'social-media-platforms': SocialMediaPlatformsSelect<false> | SocialMediaPlatformsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -97,6 +101,7 @@ export interface Config {
     'about-us-page': AboutUsPage;
     'treatment-and-care-page': TreatmentAndCarePage;
     'what-to-expect-page': WhatToExpectPage;
+    'contact-us-page': ContactUsPage;
   };
   globalsSelect: {
     'business-details': BusinessDetailsSelect<false> | BusinessDetailsSelect<true>;
@@ -105,6 +110,7 @@ export interface Config {
     'about-us-page': AboutUsPageSelect<false> | AboutUsPageSelect<true>;
     'treatment-and-care-page': TreatmentAndCarePageSelect<false> | TreatmentAndCarePageSelect<true>;
     'what-to-expect-page': WhatToExpectPageSelect<false> | WhatToExpectPageSelect<true>;
+    'contact-us-page': ContactUsPageSelect<false> | ContactUsPageSelect<true>;
   };
   locale: null;
   user: User & {
@@ -285,6 +291,36 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo-media".
+ */
+export interface SeoMedia {
+  id: number;
+  alt: string;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services".
  */
 export interface Service {
@@ -373,6 +409,31 @@ export interface NewPatientStep {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-media-platforms".
+ */
+export interface SocialMediaPlatform {
+  id: number;
+  name:
+    | 'facebook'
+    | 'instagram'
+    | 'x'
+    | 'linkedin'
+    | 'youtube'
+    | 'tiktok'
+    | 'snapchat'
+    | 'reddit'
+    | 'threads'
+    | 'twitch'
+    | 'telegram'
+    | 'whatsapp'
+    | 'weChat';
+  link: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -407,6 +468,10 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
+        relationTo: 'seo-media';
+        value: number | SeoMedia;
+      } | null)
+    | ({
         relationTo: 'services';
         value: number | Service;
       } | null)
@@ -417,6 +482,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'articles';
         value: number | Article;
+      } | null)
+    | ({
+        relationTo: 'social-media-platforms';
+        value: number | SocialMediaPlatform;
       } | null)
     | ({
         relationTo: 'users';
@@ -649,6 +718,39 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo-media_select".
+ */
+export interface SeoMediaSelect<T extends boolean = true> {
+  alt?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services_select".
  */
 export interface ServicesSelect<T extends boolean = true> {
@@ -683,6 +785,17 @@ export interface ArticlesSelect<T extends boolean = true> {
   thumbnail?: T;
   title?: T;
   body?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-media-platforms_select".
+ */
+export interface SocialMediaPlatformsSelect<T extends boolean = true> {
+  name?: T;
+  link?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -812,9 +925,40 @@ export interface HomePage {
    */
   landingImage: number | Media;
   whatToExpectImage: number | Media;
+  seo: {
+    meta: MetadataField;
+    open_graph: OpenGraphField;
+    twitter?: TwitterField;
+  };
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MetadataField".
+ */
+export interface MetadataField {
+  title: string;
+  description: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OpenGraphField".
+ */
+export interface OpenGraphField {
+  site_name: string;
+  title: string;
+  description: string;
+  image: (number | SeoMedia)[];
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TwitterField".
+ */
+export interface TwitterField {
+  creator?: string | null;
+  creatorId?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -831,6 +975,11 @@ export interface AboutUsPage {
    * Requires 4 images
    */
   practiceImages: (number | Media)[];
+  seo: {
+    meta: MetadataField;
+    open_graph: OpenGraphField;
+    twitter?: TwitterField;
+  };
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -842,6 +991,11 @@ export interface AboutUsPage {
 export interface TreatmentAndCarePage {
   id: number;
   services?: (number | Service)[] | null;
+  seo: {
+    meta: MetadataField;
+    open_graph: OpenGraphField;
+    twitter?: TwitterField;
+  };
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -853,6 +1007,26 @@ export interface TreatmentAndCarePage {
 export interface WhatToExpectPage {
   id: number;
   steps?: (number | NewPatientStep)[] | null;
+  seo: {
+    meta: MetadataField;
+    open_graph: OpenGraphField;
+    twitter?: TwitterField;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-us-page".
+ */
+export interface ContactUsPage {
+  id: number;
+  seo: {
+    meta: MetadataField;
+    open_graph: OpenGraphField;
+    twitter?: TwitterField;
+  };
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -915,10 +1089,43 @@ export interface GraphicsSelect<T extends boolean = true> {
 export interface HomePageSelect<T extends boolean = true> {
   landingImage?: T;
   whatToExpectImage?: T;
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>;
+        open_graph?: T | OpenGraphFieldSelect<T>;
+        twitter?: T | TwitterFieldSelect<T>;
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MetadataField_select".
+ */
+export interface MetadataFieldSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OpenGraphField_select".
+ */
+export interface OpenGraphFieldSelect<T extends boolean = true> {
+  site_name?: T;
+  title?: T;
+  description?: T;
+  image?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TwitterField_select".
+ */
+export interface TwitterFieldSelect<T extends boolean = true> {
+  creator?: T;
+  creatorId?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -928,6 +1135,13 @@ export interface AboutUsPageSelect<T extends boolean = true> {
   welcomeImage?: T;
   meetTheChiroImage?: T;
   practiceImages?: T;
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>;
+        open_graph?: T | OpenGraphFieldSelect<T>;
+        twitter?: T | TwitterFieldSelect<T>;
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -939,6 +1153,13 @@ export interface AboutUsPageSelect<T extends boolean = true> {
  */
 export interface TreatmentAndCarePageSelect<T extends boolean = true> {
   services?: T;
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>;
+        open_graph?: T | OpenGraphFieldSelect<T>;
+        twitter?: T | TwitterFieldSelect<T>;
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -950,6 +1171,30 @@ export interface TreatmentAndCarePageSelect<T extends boolean = true> {
  */
 export interface WhatToExpectPageSelect<T extends boolean = true> {
   steps?: T;
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>;
+        open_graph?: T | OpenGraphFieldSelect<T>;
+        twitter?: T | TwitterFieldSelect<T>;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-us-page_select".
+ */
+export interface ContactUsPageSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        meta?: T | MetadataFieldSelect<T>;
+        open_graph?: T | OpenGraphFieldSelect<T>;
+        twitter?: T | TwitterFieldSelect<T>;
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;

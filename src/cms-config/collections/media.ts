@@ -3,6 +3,7 @@ import type {
   ImageSize,
   ImageUploadFormatOptions,
 } from "payload";
+import prewarmImages from "../hooks/prewarm-images";
 
 const webpFormat: ImageUploadFormatOptions = {
   format: "webp",
@@ -38,6 +39,9 @@ export const Media: CollectionConfig = {
   access: {
     read: () => true,
   },
+  hooks: {
+    afterChange: [prewarmImages],
+  },
   fields: [
     {
       name: "alt",
@@ -47,6 +51,7 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
+    disableLocalStorage: true,
     staticDir: "media",
     mimeTypes: ["image/*"],
     formatOptions: {
