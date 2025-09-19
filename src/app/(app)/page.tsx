@@ -2,6 +2,7 @@ import CallToAction from "@/components/call-to-action";
 import Hero from "@/components/hero";
 import HomeAbout from "@/components/home-about";
 import NewPatients from "@/components/new-patients";
+import Reviews from "@/components/reviews";
 import ServicesCarousel from "@/components/service-carousel";
 
 import { getBusinessDetails, getHomePageData } from "@/lib/data";
@@ -29,6 +30,7 @@ export default async function Home() {
       <ServicesCarousel />
       <NewPatients />
       <HomeAbout />
+      <Reviews />
       <CallToAction
         withMap
         miniHeading="Find Our Clinic"

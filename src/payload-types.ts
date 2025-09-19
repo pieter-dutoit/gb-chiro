@@ -441,9 +441,7 @@ export interface SocialMediaPlatform {
 export interface Review {
   id: number;
   name: string;
-  title?: string | null;
   text: string;
-  rating: number;
   platform?: ('Google' | 'Facebook' | 'HealthEngine' | 'Whitecoat' | 'Word of Mouth' | 'HotDoc' | 'Yelp') | null;
   link?: string | null;
   updatedAt: string;
@@ -828,9 +826,7 @@ export interface SocialMediaPlatformsSelect<T extends boolean = true> {
  */
 export interface ReviewsSelect<T extends boolean = true> {
   name?: T;
-  title?: T;
   text?: T;
-  rating?: T;
   platform?: T;
   link?: T;
   updatedAt?: T;

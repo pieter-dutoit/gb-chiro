@@ -3,7 +3,7 @@ import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 
 import config from "@payload-config";
-import { Article, Service, SocialMediaPlatform } from "@/payload-types";
+import { Article, Review, Service, SocialMediaPlatform } from "@/payload-types";
 
 const payload = await getPayload({ config });
 
@@ -152,4 +152,31 @@ export const getSocials = unstable_cache(
   },
   [],
   { revalidate: false, tags: ["payload", "social-media-platforms"] }
+);
+
+export const getReviews = unstable_cache(
+  async (query?: Where): Promise<Review[]> => {
+    const payload = await getPayload({ config });
+    const res = await payload.find({
+      draft: false,
+      collection: "reviews",
+      depth: 1,
+      pagination: false,
+      sort: "-name",
+      where: {
+        ...query,
+        _status: {
+          equals: "published",
+        },
+      },
+    });
+
+    if (!res) {
+      throw new Error("Failed to fetch rooms data");
+    }
+
+    return res.docs;
+  },
+  [],
+  { revalidate: false, tags: ["reviews"] }
 );

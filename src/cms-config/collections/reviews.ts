@@ -1,5 +1,7 @@
 import type { CollectionConfig } from "payload";
-import revalidateCollection from "../hooks/revalidate-collection";
+import revalidateCollection, {
+  revalidateAfterDelete,
+} from "../hooks/revalidate-collection";
 import { isLoggedInOrIsPublished } from "../access/logged-in-or-published";
 
 export const Reviews: CollectionConfig = {
@@ -10,6 +12,7 @@ export const Reviews: CollectionConfig = {
   },
   hooks: {
     afterChange: [revalidateCollection("reviews")],
+    afterDelete: [revalidateAfterDelete({ tags: ["reviews"] })],
   },
   versions: {
     drafts: true,
@@ -24,13 +27,6 @@ export const Reviews: CollectionConfig = {
       maxLength: 100,
     },
     {
-      name: "title",
-      type: "text",
-      label: "Review Title (Optional)",
-      minLength: 1,
-      maxLength: 100,
-    },
-    {
       name: "text",
       type: "textarea",
       label: "Review Text",
@@ -38,15 +34,7 @@ export const Reviews: CollectionConfig = {
       minLength: 1,
       maxLength: 1000,
     },
-    {
-      name: "rating",
-      type: "number",
-      label: "Rating (1 to 5)",
-      required: true,
-      min: 1,
-      max: 5,
-      defaultValue: 5,
-    },
+
     {
       name: "platform",
       type: "select",
