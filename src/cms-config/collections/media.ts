@@ -57,6 +57,12 @@ export const Media: CollectionConfig = {
         quality: 75,
       },
     },
+    resizeOptions: {
+      width: 1980,
+      height: 1080,
+      fit: "inside",
+      position: "center",
+    },
     imageSizes: IMAGE_SIZES.map((size) => ({
       name: `${size}w`,
       width: size,
