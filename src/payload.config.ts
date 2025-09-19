@@ -7,6 +7,7 @@ import { postgresAdapter } from "@payloadcms/db-postgres";
 import { fileURLToPath } from "url";
 import path from "path";
 
+import { Graphics } from "./cms-config/globals/graphics";
 import { BusinessDetailsGlobal } from "./cms-config/globals/business-details";
 import { HomePage } from "./cms-config/globals/home-page";
 import { AboutUsPage } from "./cms-config/globals/about-us-page";
@@ -17,11 +18,11 @@ import { ContactUsPage } from "./cms-config/globals/contact-us-page";
 import { Media } from "./cms-config/collections/media";
 import { SEOMedia } from "./cms-config/collections/seo-media";
 
-import { Graphics } from "./cms-config/globals/graphics";
 import { Services } from "./cms-config/collections/services";
 import { NewPatientSteps } from "./cms-config/collections/new-patient-steps";
 import { Article } from "./cms-config/collections/articles";
 import { SocialMediaPlatforms } from "./cms-config/collections/social-media-platforms";
+import { Reviews } from "./cms-config/collections/reviews";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -44,6 +45,7 @@ export default buildConfig({
     NewPatientSteps,
     Article,
     SocialMediaPlatforms,
+    Reviews,
   ],
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({
