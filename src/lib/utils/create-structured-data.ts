@@ -171,35 +171,6 @@ export function getImageObject(media: Media | number) {
   };
 }
 
-const BUSINESS_AUDIENCE = [
-  {
-    "@type": "Patient",
-    audienceType: "People seeking chiropractic care",
-    suggestedGender: "unisex",
-    suggestedMinAge: 0,
-    suggestedMaxAge: 120,
-    geographicArea: {
-      "@type": "AdministrativeArea",
-      name: "Griffith",
-    },
-    healthCondition: [
-      { "@type": "MedicalCondition", name: "Back pain" },
-      { "@type": "MedicalCondition", name: "Lower Back pain" },
-      { "@type": "MedicalCondition", name: "Neck pain" },
-      { "@type": "MedicalCondition", name: "Headaches and migraines" },
-      { "@type": "MedicalCondition", name: "Sports injuries" },
-      { "@type": "MedicalCondition", name: "Work injuries" },
-      { "@type": "MedicalCondition", name: "Joint pain and mobility issues" },
-      { "@type": "MedicalCondition", name: "Posture-related pain" },
-      { "@type": "MedicalCondition", name: "Pregnancy-related back pain" },
-      {
-        "@type": "MedicalCondition",
-        name: "Paediatric musculoskeletal issues",
-      },
-    ],
-  },
-];
-
 type Crumbs = { slug: string; name: string }[];
 
 type CreateStructuredDataArgs = {

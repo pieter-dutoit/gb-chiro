@@ -33,6 +33,9 @@ export async function GET(
       cache: "force-cache",
     });
 
+    console.log("upstream url: ", upstreamUrl);
+    console.log("upstream response: ", upstream);
+
     if (!upstream.ok) {
       return new Response(
         `Failed to fetch image ${fileName} from ${upstreamUrl}: ${upstream.statusText}`,

@@ -73,6 +73,7 @@ export interface Config {
     'new-patient-steps': NewPatientStep;
     articles: Article;
     'social-media-platforms': SocialMediaPlatform;
+    reviews: Review;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     'new-patient-steps': NewPatientStepsSelect<false> | NewPatientStepsSelect<true>;
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     'social-media-platforms': SocialMediaPlatformsSelect<false> | SocialMediaPlatformsSelect<true>;
+    reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -434,6 +436,22 @@ export interface SocialMediaPlatform {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: number;
+  name: string;
+  title?: string | null;
+  text: string;
+  rating: number;
+  platform?: ('Google' | 'Facebook' | 'HealthEngine' | 'Whitecoat' | 'Word of Mouth' | 'HotDoc' | 'Yelp') | null;
+  link?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -486,6 +504,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'social-media-platforms';
         value: number | SocialMediaPlatform;
+      } | null)
+    | ({
+        relationTo: 'reviews';
+        value: number | Review;
       } | null)
     | ({
         relationTo: 'users';
@@ -795,6 +817,21 @@ export interface ArticlesSelect<T extends boolean = true> {
  */
 export interface SocialMediaPlatformsSelect<T extends boolean = true> {
   name?: T;
+  link?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews_select".
+ */
+export interface ReviewsSelect<T extends boolean = true> {
+  name?: T;
+  title?: T;
+  text?: T;
+  rating?: T;
+  platform?: T;
   link?: T;
   updatedAt?: T;
   createdAt?: T;
