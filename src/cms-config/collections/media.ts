@@ -58,7 +58,7 @@ export const Media: CollectionConfig = {
     },
     resizeOptions: {
       width: 1980,
-      height: 1080,
+      height: 1980,
       fit: "inside",
       position: "center",
     },
