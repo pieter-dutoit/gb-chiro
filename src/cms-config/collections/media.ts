@@ -3,7 +3,6 @@ import type {
   ImageSize,
   ImageUploadFormatOptions,
 } from "payload";
-import prewarmImages from "../hooks/prewarm-images";
 
 const webpFormat: ImageUploadFormatOptions = {
   format: "webp",
