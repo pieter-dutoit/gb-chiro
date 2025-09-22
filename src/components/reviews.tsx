@@ -53,7 +53,7 @@ export default async function Reviews() {
         className="w-full"
         opts={{
           align: "center",
-          loop: (reviews?.length ?? 0) > 1,
+          loop: true,
         }}
       >
         <CarouselPrevious className="hidden md:flex" />

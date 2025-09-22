@@ -18,6 +18,7 @@ import { ContactUsPage } from "./cms-config/globals/contact-us-page";
 import { Media } from "./cms-config/collections/media";
 import { SEOMedia } from "./cms-config/collections/seo-media";
 
+import { Users } from "./cms-config/collections/users";
 import { Services } from "./cms-config/collections/services";
 import { NewPatientSteps } from "./cms-config/collections/new-patient-steps";
 import { Article } from "./cms-config/collections/articles";
@@ -28,6 +29,9 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
+  admin: {
+    user: Users.slug,
+  },
   editor: lexicalEditor({}),
   globals: [
     BusinessDetailsGlobal,
@@ -39,6 +43,7 @@ export default buildConfig({
     ContactUsPage,
   ],
   collections: [
+    Users,
     Media,
     SEOMedia,
     Services,
