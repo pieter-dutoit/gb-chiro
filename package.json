@@ -6,7 +6,7 @@
   "packageManager": "pnpm@10.9.0",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "payload": "cross-env PAYLOAD_CONFIG_PATH=./src/payload.config.ts payload",
@@ -24,15 +24,14 @@
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.6.0",
     "graphql": "^16.11.0",
-    "i": "^0.3.7",
     "libphonenumber-js": "^1.12.15",
     "lucide-react": "^0.542.0",
-    "next": "15.5.2",
+    "next": "15.5.9",
     "npm": "^11.6.0",
     "payload": "^3.54.0",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "sharp": "^0.32.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "sharp": "^0.34.5",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
@@ -47,5 +46,10 @@
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.7",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "sharp": "0.34.5"
+    }
   }
 }
