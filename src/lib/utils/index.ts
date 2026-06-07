@@ -1,6 +1,9 @@
-import { BusinessDetail, Media } from "@/payload-types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+
+import type { BusinessDetails, DayKey, SiteMedia } from "@/lib/site-types";
+
+import { createMediaUrl } from "./media-url";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -20,14 +23,7 @@ export function getBaseUrl(): string {
   return "http://localhost:3000";
 }
 
-export type DayKey =
-  | "Monday"
-  | "Tuesday"
-  | "Wednesday"
-  | "Thursday"
-  | "Friday"
-  | "Saturday"
-  | "Sunday";
+export type { DayKey } from "@/lib/site-types";
 
 export const DAY_KEYS = [
   "Monday",
@@ -64,7 +60,7 @@ function formatTime(hhmm: string): string {
  * Convert operating hours to strings like: ["Mon - Fri 8am to 6pm", "Sat 8am to 11am"]
  */
 export function formatOperatingHours(
-  hours: BusinessDetail["operatingHours"]
+  hours: BusinessDetails["operatingHours"]
 ): string[] {
   // Build a per-day map of opening/closing times (null = closed)
   const perDay: Array<{ opens: string; closes: string } | null> = DAY_KEYS.map(
@@ -162,14 +158,14 @@ export function getDaysDifference(created: string, updated: string): number {
 }
 
 export function extractMediaUrl(
-  media: Media | number | null | undefined | false
+  media: SiteMedia | null | undefined | false
 ): string {
-  if (!media || typeof media === "number") return "";
-  return `${getBaseUrl()}/images/${encodeURIComponent(media.filename ?? "")}`;
+  if (!media) return "";
+  return createMediaUrl(media.filename, "media");
 }
 
-export function extractMediaUrls(media: (Media | number)[]): string[] {
-  return media
-    .filter((item): item is Media => typeof item !== "number" && "url" in item)
-    .map(extractMediaUrl);
+export function extractMediaUrls(
+  media: (SiteMedia | null | undefined | false)[]
+): string[] {
+  return media.filter((item): item is SiteMedia => !!item).map(extractMediaUrl);
 }

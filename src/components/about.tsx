@@ -1,5 +1,5 @@
 import { getAboutUsPageData } from "@/lib/data";
-import CMSImage from "./cms-image";
+import MediaImage from "./media-image";
 import { Typography } from "./ui/typography";
 
 export default async function About() {
@@ -51,7 +51,7 @@ export default async function About() {
         </div>
         {/* Image */}
         <div className="relative w-full lg:w-6/12 aspect-[4/3] rounded-lg overflow-hidden shadow-lg">
-          <CMSImage
+          <MediaImage
             media={welcomeImage}
             className="object-cover"
             priority

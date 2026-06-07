@@ -5,7 +5,7 @@ import { parsePhoneNumber } from "libphonenumber-js/min";
 import { getBusinessDetails, getHomePageData } from "@/lib/data";
 import { formatOperatingHours } from "@/lib/utils";
 
-import CMSImage from "./cms-image";
+import MediaImage from "./media-image";
 import OversizedLink from "./oversized-link";
 
 export default async function Hero() {
@@ -19,7 +19,7 @@ export default async function Hero() {
     <section className="w-screen py-16 lg:py-24 xl:py-32 flex items-center relative">
       {/* Graphics */}
       <div className=" absolute w-full h-full overflow-hidden -z-10">
-        <CMSImage
+        <MediaImage
           priority
           media={landingImage}
           sizes="(min-width: 768px) 40vw, 70vw"

@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 
-import { Article } from "@/payload-types";
+import type { Article } from "@/lib/site-types";
 
 import { getBaseUrl } from ".";
+import { createMediaUrl, getMediaVariants } from "./media-url";
 
 interface ArticleMetaOptions {
   description?: string;
@@ -21,21 +22,9 @@ export function generateArticleMetadata(
     opts.siteName ?? "GB Chiropractic – Chiropractor in Griffith";
   const baseUrl = getBaseUrl();
 
-  const thumbnail =
-    !!article.thumbnail &&
-    typeof article.thumbnail !== "number" &&
-    article.thumbnail;
+  const thumbnail = article.thumbnail;
 
-  const preferredOrder = [
-    "750w",
-    "640w",
-    "384w",
-    "256w",
-    "128w",
-    "96w",
-    "64w",
-    "48w",
-  ] as const;
+  const preferredWidths = [750, 640, 384, 256, 128, 96, 64, 48] as const;
 
   let ogUrl: string | undefined;
   let ogWidth: number | undefined;
@@ -43,21 +32,26 @@ export function generateArticleMetadata(
   const ogAlt: string | undefined =
     (thumbnail && thumbnail?.alt) || title || undefined;
 
-  if (thumbnail && thumbnail?.sizes) {
-    for (const key of preferredOrder) {
-      const candidate = thumbnail.sizes[key];
-      if (candidate?.filename) {
-        ogUrl = new URL(`images/${candidate.filename}`, baseUrl).toString();
-        ogWidth = candidate.width ?? undefined;
-        ogHeight = candidate.height ?? undefined;
-        break;
+  if (thumbnail) {
+    const variants = getMediaVariants(thumbnail);
+
+    for (const width of preferredWidths) {
+      const candidate = variants.find((variant) => variant.width === width);
+
+      if (!candidate?.filename) {
+        continue;
       }
+
+      ogUrl = createMediaUrl(candidate.filename, "media");
+      ogWidth = candidate.width ?? undefined;
+      ogHeight = candidate.height ?? undefined;
+      break;
     }
   }
 
   // Fallback to the original thumbnail URL
   if (!ogUrl && thumbnail && thumbnail?.filename) {
-    ogUrl = new URL(`images/${thumbnail.filename}`, baseUrl).toString();
+    ogUrl = createMediaUrl(thumbnail.filename, "media");
     ogWidth = thumbnail.width ?? undefined;
     ogHeight = thumbnail.height ?? undefined;
   }
@@ -80,7 +74,7 @@ export function generateArticleMetadata(
 
   // Default description
   const description =
-    opts.description ?? `${title} – an article from ${siteName}.`;
+    opts.description ?? article.description ?? `${title} - an article from ${siteName}.`;
 
   // Canonical URL (optional but recommended)
   const canonical =

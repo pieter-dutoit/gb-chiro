@@ -4,7 +4,7 @@ import { CalendarClock, Home, MapPin } from "lucide-react";
 import { getAboutUsPageData, getBusinessDetails } from "@/lib/data";
 import { formatOperatingHours } from "@/lib/utils";
 
-import CMSImage from "./cms-image";
+import MediaImage from "./media-image";
 import { Typography } from "./ui/typography";
 
 export default async function Practice() {
@@ -68,10 +68,10 @@ export default async function Practice() {
         <ul className="grid md:grid-cols-2 gap-4 lg:gap-8 mt-8 w-full">
           {practiceImages.map((media) => (
             <li
-              key={typeof media === "number" ? `${media}` : media.id}
+              key={media.id}
               className="relative aspect-[4/3] bg-primary/20 rounded-lg overflow-hidden shadow-lg opacity-95"
             >
-              <CMSImage
+              <MediaImage
                 media={media}
                 className="object-center object-cover filter contrast-[.96] saturate-[.92] brightness-[1.02]"
                 sizes="(min-width: 1540px) 696px, (min-width: 1280px) 570px, (min-width: 1024px) 440px, (min-width: 770px) 670px, 80vw"

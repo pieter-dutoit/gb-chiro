@@ -1,9 +1,8 @@
-import { getBaseUrl } from "@/lib/utils";
+import { createMediaUrl } from "@/lib/utils/media-url";
 import type { CollectionAfterChangeHook } from "payload";
 
 const prewarmImages: CollectionAfterChangeHook = async ({ doc }) => {
   try {
-    const baseURL = getBaseUrl();
     const main = doc?.filename ? [doc.filename] : [];
     const sizes = Object.values(doc?.sizes ?? {})
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,9 +11,7 @@ const prewarmImages: CollectionAfterChangeHook = async ({ doc }) => {
 
     const all = [...new Set([...main, ...sizes])]; // unique
 
-    const urls = all.map(
-      (filename) => `${baseURL}/images/${encodeURIComponent(filename)}`
-    );
+    const urls = all.map((filename) => createMediaUrl(filename, "media"));
 
     await Promise.allSettled(
       urls.map((url) =>

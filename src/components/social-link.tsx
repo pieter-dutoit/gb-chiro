@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Facebook, Globe, Instagram, LucideIcon } from "lucide-react";
 
-import { SocialMediaPlatform } from "@/payload-types";
+import type { SocialPlatform } from "@/lib/site-types";
 
-type SocialName = SocialMediaPlatform["name"];
+type SocialName = SocialPlatform["name"];
 
 const ICON_MAP = {
   facebook: Facebook,
@@ -14,7 +14,7 @@ function getIcon(name: SocialName): LucideIcon {
   return (ICON_MAP as Record<string, LucideIcon | undefined>)[name] ?? Globe;
 }
 
-type SocialLinkProps = Pick<SocialMediaPlatform, "name" | "link">;
+type SocialLinkProps = Pick<SocialPlatform, "name" | "link">;
 
 export default function SocialLink({ name, link }: SocialLinkProps) {
   const Icon = getIcon(name);

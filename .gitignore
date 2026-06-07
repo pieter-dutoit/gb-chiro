@@ -41,3 +41,8 @@ yarn-error.log*
 next-env.d.ts
 
 docs/resources
+
+cms-export
+public/images
+.wrangler
+.playwright*

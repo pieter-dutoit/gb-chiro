@@ -3,10 +3,9 @@ import Link from "next/link";
 
 import { getHomePageData, getWhatToExpectPageData } from "@/lib/data";
 
-import CMSImage from "./cms-image";
+import MediaImage from "./media-image";
 import { Typography } from "./ui/typography";
 import { Button } from "./ui/button";
-import { RichText } from "./rich-text";
 
 export default async function NewPatients() {
   const { whatToExpectImage } = await getHomePageData();
@@ -39,14 +38,13 @@ export default async function NewPatients() {
           {/* Steps */}
           <ul className="grid gap-8 flex-col items-center ">
             {steps?.map((step) => {
-              if (typeof step === "number") return null;
               const { icon, title, overview } = step;
 
               return (
                 <li key={overview} className="flex flex-col items-center gap-2">
                   <span className="mt-1">
                     <div className="size-5 relative">
-                      <CMSImage
+                      <MediaImage
                         media={icon}
                         sizes=""
                         className="object-center object-contain"
@@ -55,7 +53,7 @@ export default async function NewPatients() {
                   </span>
 
                   <div className="font-extrabold text-lg text-center">
-                    <RichText data={title} />
+                    {title}
                   </div>
                   <p className="text-center max-w-[30ch]">{overview}</p>
                 </li>
@@ -81,7 +79,7 @@ export default async function NewPatients() {
           className="flex-1 relative w-full bg-primary/5 pointer-events-none aspect-12/16 md:aspect-auto"
           tabIndex={-1}
         >
-          <CMSImage
+          <MediaImage
             media={whatToExpectImage}
             sizes="(min-width: 768px) 50vw, 100vw"
             className="absolute min-w-[100vw] left-1/2 -translate-x-1/2 md:-translate-x-0 object-center object-cover opacity-90 -z-0 md:absolute md:left-0 md:top-0 md:bottom-0 md:min-w-[50vw] 3xl:block 3xl:min-w-auto"

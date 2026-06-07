@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { getGraphics } from "@/lib/data";
-import CMSImage from "./cms-image";
+import MediaImage from "./media-image";
 
 import { Button } from "./ui/button";
 import { Typography } from "./ui/typography";
@@ -48,7 +48,7 @@ export default async function CallToAction({
             withMap ? "opacity-5" : "opacity-6 lg:opacity-10"
           )}
         >
-          <CMSImage media={backgroundGraphic} sizes="" />
+          <MediaImage media={backgroundGraphic} sizes="" />
         </div>
         {/* Container */}
         <div className="z-10 flex flex-col container mx-auto px-4 md:px-12 py-16 lg:py-24 xl:py-30 gap-8 lg:gap-12 relative">

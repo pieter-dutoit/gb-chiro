@@ -1,15 +1,14 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import type { ComponentType } from "react";
 
 import Breadcrumbs from "@/components/breadcrumbs";
-import CMSImage from "@/components/cms-image";
+import MediaImage from "@/components/media-image";
 import MoreArticlesCarousel from "@/components/more-articles";
-import { ArticleRichText } from "@/components/rich-text";
 import { Typography } from "@/components/ui/typography";
 
-import { Article } from "@/payload-types";
-
 import { generateArticleMetadata } from "@/lib/utils/generate-article-metadata";
-import { getArticle, getServices } from "@/lib/data";
+import { getArticle, getArticles } from "@/lib/data";
 import { formatDate, getBaseUrl, getDaysDifference } from "@/lib/utils";
 
 import {
@@ -17,16 +16,21 @@ import {
   getImageObject,
 } from "@/lib/utils/create-structured-data";
 
-export const dynamicParams = true;
+type ArticleModule = {
+  default: ComponentType;
+};
+
+const articleModules: Record<string, () => Promise<ArticleModule>> = {
+  "neck-and-back-pain-relief": () =>
+    import("@/content/articles/neck-and-back-pain-relief.mdx"),
+};
+
+export const dynamicParams = false;
 export const revalidate = false;
 export const dynamic = "force-static";
 
 export async function generateStaticParams() {
-  const services = await getServices({ article: { exists: true } });
-
-  const articles: Article[] = services
-    .filter((service) => service.article && typeof service.article !== "number")
-    .map(({ article }) => article as Article);
+  const articles = await getArticles();
 
   return articles.map(({ slug }) => ({
     slug,
@@ -38,7 +42,7 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
-  const article = await getArticle(slug)();
+  const article = await getArticle(slug);
   if (!article) return {};
 
   return generateArticleMetadata(article);
@@ -46,10 +50,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
-  const article = await getArticle(slug)();
-  if (!article) return null;
+  const article = await getArticle(slug);
+  const loadArticle = articleModules[slug];
 
-  const { title, thumbnail, body, author, createdAt, updatedAt } = article;
+  if (!article || !loadArticle) notFound();
+
+  const { default: ArticleContent } = await loadArticle();
+
+  const { title, thumbnail, author, createdAt, updatedAt } = article;
 
   const createdDate = formatDate(createdAt);
   const updatedDate = updatedAt?.length > 0 && formatDate(updatedAt);
@@ -144,14 +152,14 @@ export default async function ArticlePage({ params }: Props) {
           {thumbnail && (
             <div className="relative aspect-video w-full rounded-lg overflow-hidden bg-primary/10">
               {/* Blur bg */}
-              <CMSImage
+              <MediaImage
                 priority
                 media={thumbnail}
                 sizes="(min-width: 660px) 576px, 90vw"
                 className="object-cover object-center -z-0 blur-xl scale-125"
               />
 
-              <CMSImage
+              <MediaImage
                 priority
                 media={thumbnail}
                 sizes="(min-width: 660px) 576px, 90vw"
@@ -161,7 +169,9 @@ export default async function ArticlePage({ params }: Props) {
           )}
 
           {/* Content */}
-          <ArticleRichText data={body} />
+          <div className="article-content">
+            <ArticleContent />
+          </div>
         </div>
       </section>
 
