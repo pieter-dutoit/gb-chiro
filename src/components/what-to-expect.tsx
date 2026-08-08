@@ -1,7 +1,6 @@
 import { getWhatToExpectPageData } from "@/lib/data";
 
 import { Typography } from "./ui/typography";
-import { RichText } from "./rich-text";
 
 export default async function WhatToExpect() {
   const { steps } = await getWhatToExpectPageData();
@@ -24,7 +23,6 @@ export default async function WhatToExpect() {
 
       <ol className="flex flex-col gap-16 lg:gap-20 ">
         {steps?.map((step, index) => {
-          if (typeof step === "number") return null;
           const { title, description, overview } = step;
 
           return (
@@ -40,7 +38,7 @@ export default async function WhatToExpect() {
                 </div>
                 {/* Title */}
                 <Typography className="font-bold max-w-[30ch] text-xl sm:text-2xl lg:text-3xl">
-                  <RichText data={title} />
+                  {title}
                 </Typography>
 
                 <div className="opacity-60 font-semibold text-sm lg:text-base">
@@ -53,7 +51,9 @@ export default async function WhatToExpect() {
                 variant="paragraphs"
                 className="text-left max-w-[65ch] lg:text-lg"
               >
-                <RichText data={description} className="" />
+                {description.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
               </Typography>
             </li>
           );

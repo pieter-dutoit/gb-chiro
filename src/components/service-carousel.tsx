@@ -12,7 +12,7 @@ import { getGraphics, getTreatmentAndCareData } from "@/lib/data";
 
 import { Typography } from "./ui/typography";
 import { Button } from "./ui/button";
-import CMSImage from "./cms-image";
+import MediaImage from "./media-image";
 import ServiceTile from "./service-tile";
 
 export default async function ServicesCarousel() {
@@ -25,7 +25,7 @@ export default async function ServicesCarousel() {
         className="absolute inset-0 overflow-hidden pointer-events-none"
         tabIndex={-1}
       >
-        <CMSImage
+        <MediaImage
           media={backgroundGraphic}
           sizes=""
           className="scale-200 object-contain opacity-4 -z-10 translate-x-1/4"
@@ -67,8 +67,7 @@ export default async function ServicesCarousel() {
       >
         <CarouselPrevious className="hidden md:flex" />
         <CarouselContent className="lg:-ml-6">
-          {services?.map((service, index) => {
-            if (typeof service === "number") return null;
+          {services?.map((service) => {
             return (
               <CarouselItem
                 key={service.id}
@@ -77,7 +76,6 @@ export default async function ServicesCarousel() {
                 <ServiceTile
                   variant="carousel"
                   service={service}
-                  index={index}
                 />
               </CarouselItem>
             );

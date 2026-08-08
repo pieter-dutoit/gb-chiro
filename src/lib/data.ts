@@ -1,182 +1,65 @@
-import { getPayload, Where } from "payload";
-import { unstable_cache } from "next/cache";
-import { notFound } from "next/navigation";
+import {
+  aboutUsPageData,
+  articles,
+  businessDetails,
+  contactUsPageData,
+  graphics,
+  homePageData,
+  reviews,
+  services,
+  socials,
+  treatmentAndCarePageData,
+  whatToExpectPageData,
+} from "./site-data";
 
-import config from "@payload-config";
-import { Article, Review, Service, SocialMediaPlatform } from "@/payload-types";
+export async function getGraphics() {
+  return graphics;
+}
 
-const payload = await getPayload({ config });
+export async function getBusinessDetails() {
+  return businessDetails;
+}
 
-export const getGraphics = unstable_cache(
-  async () => payload.findGlobal({ slug: "graphics", depth: 1 }),
-  undefined,
-  {
-    tags: ["payload", "graphics"],
-    revalidate: false,
-  }
-);
+export async function getHomePageData() {
+  return homePageData;
+}
 
-export const getBusinessDetails = unstable_cache(
-  async () => payload.findGlobal({ slug: "business-details", depth: 1 }),
-  undefined,
-  {
-    tags: ["payload", "business-details"],
-    revalidate: false,
-  }
-);
+export async function getAboutUsPageData() {
+  return aboutUsPageData;
+}
 
-export const getHomePageData = unstable_cache(
-  async () => payload.findGlobal({ slug: "home-page", depth: 1 }),
-  undefined,
-  {
-    tags: ["payload", "home-page"],
-    revalidate: false,
-  }
-);
+export async function getWhatToExpectPageData() {
+  return whatToExpectPageData;
+}
 
-export const getAboutUsPageData = unstable_cache(
-  async () => payload.findGlobal({ slug: "about-us-page", depth: 1 }),
-  undefined,
-  {
-    tags: ["payload", "about-us-page"],
-    revalidate: false,
-  }
-);
+export async function getTreatmentAndCareData() {
+  return treatmentAndCarePageData;
+}
 
-export const getWhatToExpectPageData = unstable_cache(
-  async () => payload.findGlobal({ slug: "what-to-expect-page", depth: 2 }),
-  undefined,
-  {
-    tags: ["payload", "what-to-expect"],
-    revalidate: false,
-  }
-);
+export async function getContactUsPageData() {
+  return contactUsPageData;
+}
 
-export const getTreatmentAndCareData = unstable_cache(
-  async () => payload.findGlobal({ slug: "treatment-and-care-page", depth: 2 }),
-  undefined,
-  {
-    tags: ["payload", "services"],
-    revalidate: false,
-  }
-);
+export async function getServices() {
+  return services;
+}
 
-export const getContactUsPageData = unstable_cache(
-  async () => payload.findGlobal({ slug: "contact-us-page", depth: 1 }),
-  undefined,
-  {
-    tags: ["payload", "contact-us-page"],
-    revalidate: false,
-  }
-);
+export async function getServicesWithArticles() {
+  return services.filter((service) => Boolean(service.article));
+}
 
-export const getArticle = (slug: string) =>
-  unstable_cache(
-    async (): Promise<Article> => {
-      const payload = await getPayload({ config });
-      const res = await payload.find({
-        draft: false,
-        collection: "articles",
-        depth: 2,
-        where: {
-          slug: {
-            equals: slug,
-          },
-          _status: {
-            equals: "published",
-          },
-        },
-      });
+export async function getArticles() {
+  return articles;
+}
 
-      if (!res || res.docs.length < 1) {
-        console.error(`Article with slug ${slug} not found`);
-        notFound();
-      }
+export async function getArticle(slug: string) {
+  return articles.find((article) => article.slug === slug);
+}
 
-      return res.docs[0];
-    },
-    ["payload", "articles", slug],
-    { revalidate: false, tags: ["payload", "articles", slug] }
-  );
+export async function getSocials() {
+  return socials;
+}
 
-export const getServices = unstable_cache(
-  async (where?: Where): Promise<Service[]> => {
-    const payload = await getPayload({ config });
-    const res = await payload.find({
-      draft: false,
-      collection: "services",
-      depth: 1,
-      pagination: false,
-      limit: 100,
-      where: {
-        ...where,
-        _status: {
-          equals: "published",
-        },
-      },
-    });
-
-    if (!res) {
-      console.error("Failed to fetch articles");
-      notFound();
-    }
-
-    return res.docs;
-  },
-  [],
-  { revalidate: false, tags: ["payload", "services"] }
-);
-
-export const getSocials = unstable_cache(
-  async (): Promise<SocialMediaPlatform[]> => {
-    const payload = await getPayload({ config });
-    const res = await payload.find({
-      draft: false,
-      collection: "social-media-platforms",
-      depth: 1,
-      pagination: false,
-      limit: 100,
-      where: {
-        _status: {
-          equals: "published",
-        },
-      },
-    });
-
-    if (!res) {
-      console.error("Failed to fetch articles");
-      notFound();
-    }
-
-    return res.docs;
-  },
-  [],
-  { revalidate: false, tags: ["payload", "social-media-platforms"] }
-);
-
-export const getReviews = unstable_cache(
-  async (query?: Where): Promise<Review[]> => {
-    const payload = await getPayload({ config });
-    const res = await payload.find({
-      draft: false,
-      collection: "reviews",
-      depth: 1,
-      pagination: false,
-      sort: "-name",
-      where: {
-        ...query,
-        _status: {
-          equals: "published",
-        },
-      },
-    });
-
-    if (!res) {
-      throw new Error("Failed to fetch rooms data");
-    }
-
-    return res.docs;
-  },
-  [],
-  { revalidate: false, tags: ["reviews"] }
-);
+export async function getReviews() {
+  return reviews;
+}

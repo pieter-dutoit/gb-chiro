@@ -23,10 +23,10 @@ export default async function Services() {
       </div>
 
       <ul className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 xl:grid-cols-3 xl:gap-6">
-        {services?.map((service, index) => {
+        {services?.map((service) => {
           if (typeof service === "number") return null;
           return (
-            <ServiceTile key={service.id} index={index} service={service} />
+            <ServiceTile key={service.id} service={service} />
           );
         })}
       </ul>

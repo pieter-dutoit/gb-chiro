@@ -25,8 +25,6 @@ export default async function MoreArticlesCarousel({
 
   const toShow = services?.filter(
     (service) =>
-      typeof service !== "number" &&
-      typeof service.article !== "number" &&
       service.article?.slug !== slugToExclude
   );
 
@@ -63,8 +61,7 @@ export default async function MoreArticlesCarousel({
         >
           <CarouselPrevious className="hidden md:flex" />
           <CarouselContent className="lg:-ml-6">
-            {toShow?.map((service, index) => {
-              if (typeof service === "number") return null;
+            {toShow?.map((service) => {
               return (
                 <CarouselItem
                   key={service.id}
@@ -73,7 +70,6 @@ export default async function MoreArticlesCarousel({
                   <ServiceTile
                     variant="carousel"
                     service={service}
-                    index={index}
                   />
                 </CarouselItem>
               );

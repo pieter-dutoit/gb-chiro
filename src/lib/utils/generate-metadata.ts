@@ -1,20 +1,12 @@
 import { Metadata } from "next";
 
-import { MetadataField, OpenGraphField } from "@/payload-types";
+import type { SiteSEO } from "@/lib/site-types";
 
 import { getBaseUrl } from ".";
+import { createMediaUrl } from "./media-url";
 
-interface SEO {
-  meta: MetadataField;
-  open_graph: OpenGraphField;
-}
-
-export default function createMetadataConfig(seo: SEO): Metadata {
-  const { meta, open_graph } = seo;
-
-  const ogImages = open_graph.image.filter(
-    (item) => !!item && typeof item !== "number"
-  );
+export default function createMetadataConfig(seo: SiteSEO): Metadata {
+  const { meta, openGraph } = seo;
 
   const baseUrl = getBaseUrl();
 
@@ -37,12 +29,12 @@ export default function createMetadataConfig(seo: SEO): Metadata {
     description: meta.description,
     // OpenGraph:
     openGraph: {
-      title: open_graph.title,
-      description: open_graph.description,
-      siteName: open_graph.site_name,
+      title: openGraph.title,
+      description: openGraph.description,
+      siteName: openGraph.siteName,
       type: "website",
-      images: ogImages.map(({ filename, alt, height, width }) => ({
-        url: filename ? `${baseUrl}/seo-images/${filename}` : "",
+      images: openGraph.image.map(({ filename, alt, height, width }) => ({
+        url: createMediaUrl(filename, "seo-media"),
         alt,
         height: height ?? 0,
         width: width ?? 0,

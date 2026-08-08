@@ -1,10 +1,9 @@
 import type { MetadataRoute } from "next";
 
-import { Article } from "@/payload-types";
 import { extractMediaUrls, getBaseUrl } from "@/lib/utils";
 import {
   getAboutUsPageData,
-  getArticle,
+  getArticles,
   getBusinessDetails,
   getGraphics,
   getHomePageData,
@@ -13,6 +12,8 @@ import {
   getTreatmentAndCareData,
   getWhatToExpectPageData,
 } from "@/lib/data";
+
+export const dynamic = "force-static";
 
 async function getLastModified(
   fetchers: Array<() => Promise<unknown>>
@@ -52,10 +53,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseURL = getBaseUrl();
 
   // Articles data
-  const services = await getServices({ article: { exists: true } });
-  const articles: Article[] = services
-    .filter((service) => service.article && typeof service.article !== "number")
-    .map(({ article }) => article as Article);
+  const services = await getServices();
+  const articles = await getArticles();
 
   // Images
   const { logo, horizontalLogo } = await getGraphics();
@@ -105,7 +104,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...(await Promise.all(
       articles.map(async ({ slug }) => ({
         url: baseURL + "/treatment-and-care/" + slug,
-        lastModified: await getLastModified([getArticle(slug || "")]),
+        lastModified: await getLastModified([
+          async () => articles.find((article) => article.slug === slug),
+        ]),
         priority: 0.7,
         changeFrequency: "monthly" as const,
       }))

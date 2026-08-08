@@ -1,8 +1,9 @@
 import { parsePhoneNumber } from "libphonenumber-js/min";
 
-import { BusinessDetail, Media, Service } from "@/payload-types";
+import type { BusinessDetails, Service, SiteMedia } from "@/lib/site-types";
 
 import { DAY_KEYS, DayKey, extractMediaUrl, getBaseUrl } from ".";
+import { createMediaSizeUrl, getMediaVariants } from "./media-url";
 import {
   getAboutUsPageData,
   getBusinessDetails,
@@ -34,7 +35,7 @@ export function createTreatmentEntity({
   thumbnail,
   article,
 }: Service) {
-  const linkedArticle = !!article && typeof article !== "number" && article;
+  const linkedArticle = article;
 
   return {
     "@id": `${getBaseUrl()}/treatment-and-care#${id}`,
@@ -45,14 +46,14 @@ export function createTreatmentEntity({
     description: description,
     image: getImageObject(thumbnail),
     url: new URL(
-      `treatment-and-care/${linkedArticle ? article.slug : ""}`,
+      linkedArticle ? `treatment-and-care/${linkedArticle.slug}` : "treatment-and-care",
       getBaseUrl()
     ),
   };
 }
 
 export function buildOpeningHours(
-  rows: BusinessDetail["operatingHours"]
+  rows: BusinessDetails["operatingHours"]
 ): string[] {
   const windowToDays = new Map<string, Set<number>>();
 
@@ -103,7 +104,7 @@ export function buildOpeningHours(
 }
 
 export function buildOpeningHoursSpecification(
-  rows: BusinessDetail["operatingHours"] // or BusinessDetail["operatingHours"]
+  rows: BusinessDetails["operatingHours"]
 ): OpeningHoursSpecification[] {
   const windowToDays = new Map<string, Set<number>>();
 
@@ -145,22 +146,22 @@ export function buildOpeningHoursSpecification(
   return specs;
 }
 
-export function getImageObject(media: Media | number) {
-  if (typeof media === "number") return;
-
-  const thumbnailName = encodeURIComponent(
-    media.sizes?.["256w"]?.filename ?? ""
-  );
+export function getImageObject(media: SiteMedia | null | undefined) {
+  if (!media) return;
   const currentYear = new Date().getFullYear();
   const baseUrl = getBaseUrl();
+  const deployedImage = getMediaVariants(media).at(-1) ?? media;
 
   return {
     "@type": "ImageObject",
     caption: media.alt,
-    width: media?.width,
-    height: media?.height,
+    width: deployedImage.width,
+    height: deployedImage.height,
     contentUrl: extractMediaUrl(media),
-    thumbnailUrl: `${baseUrl}/images/${thumbnailName}`,
+    thumbnailUrl: new URL(
+      createMediaSizeUrl(media, "256w"),
+      baseUrl
+    ).toString(),
     creditText: "GB Chiropractic",
     creator: {
       "@type": "Organization",
@@ -178,8 +179,8 @@ type CreateStructuredDataArgs = {
   name?: string;
   identifier: string;
   slug: string;
-  primaryImage?: Media | number;
-  otherImages?: (Media | number)[];
+  primaryImage?: SiteMedia;
+  otherImages?: SiteMedia[];
   crumbs: Crumbs;
   additionalData?: Record<string, unknown>;
 };

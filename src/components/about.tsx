@@ -1,5 +1,5 @@
 import { getAboutUsPageData } from "@/lib/data";
-import CMSImage from "./cms-image";
+import MediaImage from "./media-image";
 import { Typography } from "./ui/typography";
 
 export default async function About() {
@@ -51,10 +51,9 @@ export default async function About() {
         </div>
         {/* Image */}
         <div className="relative w-full lg:w-6/12 aspect-[4/3] rounded-lg overflow-hidden shadow-lg">
-          <CMSImage
+          <MediaImage
             media={welcomeImage}
             className="object-cover"
-            priority
             sizes="(min-width: 1540px) 696px, (min-width: 1280px) 570px, (min-width: 1024px) 440px, (min-width: 770px) 670px, 80vw"
           />
         </div>
