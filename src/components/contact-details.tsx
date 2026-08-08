@@ -115,7 +115,7 @@ export default async function ContactDetails() {
             <div className="w-full h-[28rem] mt-4">
               <iframe
                 title="Map Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3298.597713281765!2d146.0460939757263!3d-34.281409573071585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b1fae72bfdebe37%3A0xdeaaad55252d45cf!2s2%20Noorebar%20Ave%2C%20Griffith%20NSW%202680!5e0!3m2!1sen!2sau!4v1757483283999!5m2!1sen!2sau"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3296.7114495825335!2d146.0486689!3d-34.281409599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b1faf896671dfef%3A0x6c278ec8f9bdff4b!2sGB%20Chiropractic!5e0!3m2!1sen!2sza!4v1786191404977!5m2!1sen!2sza"
                 width="600"
                 height="400"
                 style={{ border: 0 }}

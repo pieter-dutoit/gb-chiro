@@ -1,8 +1,8 @@
 # GB Chiropractic
 
-A fully static Next.js site for GB Chiropractic. Content is stored in the
-repository, the build has no database or CMS dependency, and `pnpm build`
-exports the deployable site to `out/`.
+A Next.js site for GB Chiropractic. Content is stored in the repository, and
+the build has no database or CMS dependency. `pnpm build` creates the standard
+Next.js production build in `.next/`.
 
 ## Development
 
@@ -50,6 +50,5 @@ removing it from a development machine.
 
 ## Deployment
 
-Vercel can deploy this as a Next.js project. `output: "export"` in
-`next.config.ts` ensures all public routes and metadata files are generated at
-build time with no server functions required.
+Vercel can deploy this as a standard Next.js project. For a local production
+run, use `pnpm build` followed by `pnpm start`.

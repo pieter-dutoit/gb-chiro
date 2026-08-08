@@ -384,7 +384,7 @@ export const businessDetails: BusinessDetails = {
     suburb: "Griffith",
     state: "nsw",
     code: "2680",
-    mapsLink: "https://maps.app.goo.gl/eWTXS1nY71JmZXnMA",
+    mapsLink: "https://maps.app.goo.gl/j4iS5PKYcWLgyuXq9",
     coords: [146.048690351, -34.28122338],
   },
   operatingHours: [
