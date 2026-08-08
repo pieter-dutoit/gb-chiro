@@ -67,7 +67,7 @@ export default async function ServicesCarousel() {
       >
         <CarouselPrevious className="hidden md:flex" />
         <CarouselContent className="lg:-ml-6">
-          {services?.map((service, index) => {
+          {services?.map((service) => {
             return (
               <CarouselItem
                 key={service.id}
@@ -76,7 +76,6 @@ export default async function ServicesCarousel() {
                 <ServiceTile
                   variant="carousel"
                   service={service}
-                  index={index}
                 />
               </CarouselItem>
             );

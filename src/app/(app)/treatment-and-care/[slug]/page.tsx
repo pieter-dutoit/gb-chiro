@@ -53,7 +53,8 @@ export default async function ArticlePage({ params }: Props) {
   const article = await getArticle(slug);
   const loadArticle = articleModules[slug];
 
-  if (!article || !loadArticle) notFound();
+  if (!article) return notFound();
+  if (!loadArticle) return notFound();
 
   const { default: ArticleContent } = await loadArticle();
 
@@ -153,14 +154,12 @@ export default async function ArticlePage({ params }: Props) {
             <div className="relative aspect-video w-full rounded-lg overflow-hidden bg-primary/10">
               {/* Blur bg */}
               <MediaImage
-                priority
                 media={thumbnail}
                 sizes="(min-width: 660px) 576px, 90vw"
                 className="object-cover object-center -z-0 blur-xl scale-125"
               />
 
               <MediaImage
-                priority
                 media={thumbnail}
                 sizes="(min-width: 660px) 576px, 90vw"
                 className="object-contain object-center z-10"

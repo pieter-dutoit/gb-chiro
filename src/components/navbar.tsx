@@ -16,9 +16,7 @@ export default async function Navbar() {
         {/* Left: Logo */}
         <Link href="/" className="font-bold h-12 w-50 max-w-[80vw] relative">
           <MediaImage
-            priority
             media={horizontalLogo}
-            fill
             className="object-contain object-left"
             sizes="12.5rem"
           />

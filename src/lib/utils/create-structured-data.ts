@@ -3,7 +3,7 @@ import { parsePhoneNumber } from "libphonenumber-js/min";
 import type { BusinessDetails, Service, SiteMedia } from "@/lib/site-types";
 
 import { DAY_KEYS, DayKey, extractMediaUrl, getBaseUrl } from ".";
-import { createMediaSizeUrl } from "./media-url";
+import { createMediaSizeUrl, getMediaVariants } from "./media-url";
 import {
   getAboutUsPageData,
   getBusinessDetails,
@@ -150,14 +150,18 @@ export function getImageObject(media: SiteMedia | null | undefined) {
   if (!media) return;
   const currentYear = new Date().getFullYear();
   const baseUrl = getBaseUrl();
+  const deployedImage = getMediaVariants(media).at(-1) ?? media;
 
   return {
     "@type": "ImageObject",
     caption: media.alt,
-    width: media?.width,
-    height: media?.height,
+    width: deployedImage.width,
+    height: deployedImage.height,
     contentUrl: extractMediaUrl(media),
-    thumbnailUrl: createMediaSizeUrl(media, "256w"),
+    thumbnailUrl: new URL(
+      createMediaSizeUrl(media, "256w"),
+      baseUrl
+    ).toString(),
     creditText: "GB Chiropractic",
     creator: {
       "@type": "Organization",

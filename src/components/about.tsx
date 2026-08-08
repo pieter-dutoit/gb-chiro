@@ -54,7 +54,6 @@ export default async function About() {
           <MediaImage
             media={welcomeImage}
             className="object-cover"
-            priority
             sizes="(min-width: 1540px) 696px, (min-width: 1280px) 570px, (min-width: 1024px) 440px, (min-width: 770px) 670px, 80vw"
           />
         </div>

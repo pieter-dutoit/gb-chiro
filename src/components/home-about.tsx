@@ -20,7 +20,7 @@ export default async function HomeAbout() {
           <div className="relative w-full max-w-[25rem] lg:max-w-[35rem] aspect-square rounded-xl overflow-hidden bg-primary/100 mx-auto shadow-lg">
             <MediaImage
               media={meetTheChiroImage}
-              sizes="(min-width: 430px) 400px, (min-width: 768px) 320px, (min-width: 1024px) 450px, (min-width: 1290px) 550px 80vw"
+              sizes="(min-width: 1290px) 550px, (min-width: 1024px) 450px, (min-width: 768px) 320px, (min-width: 430px) 400px, 80vw"
               className="object-center object-cover"
             />
           </div>

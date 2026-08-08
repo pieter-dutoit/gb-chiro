@@ -7,7 +7,6 @@ import MediaImage from "./media-image";
 
 type ServiceTileProps = {
   service: Service;
-  index: number;
   className?: string;
   variant?: "default" | "carousel";
 };
@@ -16,7 +15,6 @@ export default function ServiceTile({
   variant = "default",
   service: { id, name, thumbnail, description, article },
   className,
-  index,
 }: ServiceTileProps) {
   const classNames = twMerge(
     "flex size-full bg-white rounded-md shadow-md border border-primary/50 flex items-center overflow-hidden",
@@ -33,9 +31,8 @@ export default function ServiceTile({
         )}
       >
         <MediaImage
-          priority={index < 6}
           media={thumbnail}
-          sizes="(min-width: 640px) 110px, (min-width: 1024) 125px, (min-width: 1540) 155px, 30vw"
+          sizes="(min-width: 1540px) 155px, (min-width: 1024px) 125px, (min-width: 640px) 110px, 30vw"
           className="object-center object-cover"
         />
       </div>

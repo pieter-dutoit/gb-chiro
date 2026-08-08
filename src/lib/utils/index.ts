@@ -10,17 +10,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getBaseUrl(): string {
-  const env = process.env.VERCEL_ENV || "";
-
-  if (env === "production") {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
-  }
-
-  if (["development", "preview"].includes(env)) {
-    return `https://${process.env.VERCEL_URL || process.env.VERCEL_BRANCH_URL}`;
-  }
-
-  return "http://localhost:3000";
+  return "https://gbchiropractic.com.au";
 }
 
 export type { DayKey } from "@/lib/site-types";
@@ -161,7 +151,7 @@ export function extractMediaUrl(
   media: SiteMedia | null | undefined | false
 ): string {
   if (!media) return "";
-  return createMediaUrl(media.filename, "media");
+  return new URL(createMediaUrl(media.filename, "media"), getBaseUrl()).toString();
 }
 
 export function extractMediaUrls(

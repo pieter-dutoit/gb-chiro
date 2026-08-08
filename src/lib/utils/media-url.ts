@@ -3,33 +3,42 @@ import { mediaVariants } from "@/lib/media-variants";
 
 type MediaPrefix = "media" | "seo-media";
 
-const MEDIA_PREFIX_PATHS: Record<MediaPrefix, string> = {
-  media: "media",
-  "seo-media": "media/seo",
+const LARGE_IMAGE_WIDTHS = [384, 640, 828, 1200, 1920];
+const SERVICE_IMAGE_WIDTHS = [128, 256, 384];
+
+// Only these pre-generated variants are deployed with the static site. The
+// original source files remain in the private CMS export archive.
+const PRODUCTION_WIDTHS: Record<string, number[]> = {
+  "Logo.jpg": [128, 256, 384],
+  "logo-horizontal.jpg": [200, 384, 480],
+  "About GB Chiro-1.jpg": LARGE_IMAGE_WIDTHS,
+  "Home Page.jpg": LARGE_IMAGE_WIDTHS,
+  "Meet the chiro-1.jpg": LARGE_IMAGE_WIDTHS,
+  "New patients-1.jpg": LARGE_IMAGE_WIDTHS,
+  "What to expect.jpg": LARGE_IMAGE_WIDTHS,
+  "Reception.jpg": LARGE_IMAGE_WIDTHS,
+  "Room.jpg": LARGE_IMAGE_WIDTHS,
+  "Practice Entry.jpg": LARGE_IMAGE_WIDTHS,
+  "Street View.jpg": LARGE_IMAGE_WIDTHS,
+  "Headache and migraine care.jpg": SERVICE_IMAGE_WIDTHS,
+  "Sports Injury Management.jpg": SERVICE_IMAGE_WIDTHS,
+  "Spinal adjustment and manipulation.jpg": SERVICE_IMAGE_WIDTHS,
+  "Pregnancy chiropractic care.jpg": SERVICE_IMAGE_WIDTHS,
+  "Rehab & strengthening exercises.jpg": SERVICE_IMAGE_WIDTHS,
+  "Wellness and preventative care.jpg": SERVICE_IMAGE_WIDTHS,
+  "Joint pain and mobility support.jpg": SERVICE_IMAGE_WIDTHS,
+  "Paediatric chiropractic care-2.jpg": SERVICE_IMAGE_WIDTHS,
+  "Posture correction.jpg": SERVICE_IMAGE_WIDTHS,
+  "Neck and back pain relief 1.jpg": [384, 640, 828],
 };
-
-function getMediaEndpoint(): string {
-  const endpoint = process.env.NEXT_PUBLIC_MEDIA_ENDPOINT?.replace(/\/+$/, "");
-
-  if (!endpoint) {
-    throw new Error("Missing NEXT_PUBLIC_MEDIA_ENDPOINT");
-  }
-
-  try {
-    const url = new URL(endpoint);
-
-    if (!["http:", "https:"].includes(url.protocol)) {
-      throw new Error("Invalid NEXT_PUBLIC_MEDIA_ENDPOINT protocol");
-    }
-
-    return url.toString().replace(/\/+$/, "");
-  } catch {
-    throw new Error("Invalid NEXT_PUBLIC_MEDIA_ENDPOINT");
-  }
-}
 
 function encodeFilename(filename: string): string {
   return filename.split("/").map(encodeURIComponent).join("/");
+}
+
+function localUrl(filename: string, prefix: MediaPrefix): string {
+  const directory = prefix === "seo-media" ? "/images/seo" : "/images";
+  return `${directory}/${encodeFilename(filename)}`;
 }
 
 function parseWidthKey(size: string): number | undefined {
@@ -37,26 +46,29 @@ function parseWidthKey(size: string): number | undefined {
   return match ? Number(match[1]) : undefined;
 }
 
-export function createMediaUrl(
-  filename: string | null | undefined,
-  prefix: MediaPrefix = "media"
-): string {
-  if (!filename) return "";
-
-  const endpoint = getMediaEndpoint();
-  const prefixPath = MEDIA_PREFIX_PATHS[prefix];
-
-  return `${endpoint}/${prefixPath}/${encodeFilename(filename)}`;
-}
-
 export function getMediaVariants(
   media: SiteMedia | null | undefined | false
 ): MediaSize[] {
   if (!media || !media.filename) return [];
 
-  return [...(mediaVariants[media.filename] ?? [])].sort(
-    (a, b) => (a.width ?? 0) - (b.width ?? 0)
-  );
+  const widths = PRODUCTION_WIDTHS[media.filename];
+  if (!widths) return [];
+
+  return [...(mediaVariants[media.filename] ?? [])]
+    .filter((variant) => variant.width && widths.includes(variant.width))
+    .sort((a, b) => (a.width ?? 0) - (b.width ?? 0));
+}
+
+export function createMediaUrl(
+  filename: string | null | undefined,
+  prefix: MediaPrefix = "media"
+): string {
+  if (!filename) return "";
+  if (prefix === "seo-media") return localUrl(filename, prefix);
+
+  const variants = getMediaVariants({ filename } as SiteMedia);
+  const largest = variants.at(-1)?.filename;
+  return localUrl(largest ?? filename, prefix);
 }
 
 export function createMediaSrcSet(
@@ -66,11 +78,11 @@ export function createMediaSrcSet(
     .filter((variant) => variant.filename && variant.width)
     .map(
       (variant) =>
-        `${createMediaUrl(variant.filename, "media")} ${variant.width}w`
+        `${localUrl(variant.filename, "media")} ${variant.width}w`
     )
     .join(", ");
 
-  return srcSet.length ? srcSet : undefined;
+  return srcSet || undefined;
 }
 
 export function createMediaSizeUrl(
@@ -79,10 +91,12 @@ export function createMediaSizeUrl(
 ): string {
   if (!media) return "";
 
-  const requestedWidth = parseWidthKey(String(size));
+  const variants = getMediaVariants(media);
+  const requestedWidth = parseWidthKey(size);
   const variant = requestedWidth
-    ? getMediaVariants(media).find((item) => item.width === requestedWidth)
-    : undefined;
+    ? variants.find((item) => (item.width ?? 0) >= requestedWidth) ??
+      variants.at(-1)
+    : variants.at(-1);
 
-  return createMediaUrl(variant?.filename ?? media.filename, "media");
+  return localUrl(variant?.filename ?? media.filename, "media");
 }
