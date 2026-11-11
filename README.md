@@ -99,6 +99,36 @@ checked by size and checksum. Private snapshots and a receipt are saved under
 `.cms-import/`. A populated destination is never overwritten. The production
 database and the local source are not modified.
 
+## Production preparation
+
+Keep production overrides in the ignored `.env.production.local`: the production
+Neon `DATABASE_URL`, its distinct `PAYLOAD_SECRET`, `CMS_DB_SCHEMA=payload`,
+`CMS_SERVER_URL=https://gbchiropractic.com.au`, and `S3_PREFIX=production`.
+Shared R2 credentials come from `.env.local`. These values must match Vercel
+Production. Use normal `pnpm build` in Vercel; the commands below are local tools.
+
+```sh
+node --import tsx scripts/production.ts migrate:status
+node --import tsx scripts/production.ts migrate
+node --import tsx scripts/prepare-production.ts --email=YOUR_ADMIN_EMAIL
+node --import tsx scripts/prepare-production.ts --email=YOUR_ADMIN_EMAIL --apply
+pnpm build:production
+pnpm start:production --port 3001
+```
+
+Enable PostGIS in the target database before the initial migration. Preparation
+copies the current hosted preview CMS into an empty, migrated production schema.
+It preserves all content and revision dates exactly, including historical dates
+already set in preview, and copies only the selected administrator's credentials.
+Login sessions, reset tokens and editor preferences are excluded. Images are
+copied to the production prefix and verified by size and checksum. Private
+snapshots and a receipt are kept in `.cms-import/`. The command refuses a shared
+preview/production database endpoint or a populated destination.
+
+Production preparation is explicit; builds and deployments do not run imports or
+migrations automatically. Verify the prepared CMS before releasing the code to
+the production branch. The prior code commit remains available for rollback.
+
 ## Browser uploads
 
 Payload uploads files directly to R2, so uploads up to 20 MB do not pass through
@@ -174,19 +204,18 @@ Use the same overrides for `pnpm start`. `pnpm dev` reads them from
 
 ## Deployment handoff
 
-This branch does not deploy or modify production. When deployment is separately
-authorized:
+Use this sequence for production releases:
 
 1. Back up the target database and media; preserve the original recovery files.
 2. Configure Vercel Node 24, all required environment variables, the correct
    database branch and matching function/database regions, and R2 CORS origins.
 3. Enable PostGIS on the target Postgres database. The database role must be able
    to create the CMS schema and run migrations.
-4. Run `CMS_ENV=production pnpm payload migrate`, then the import and admin setup
-   commands with the same explicit environment. Never seed automatically on boot
-   or in every Vercel build. Schema push is disabled.
-5. Build and review a preview deployment, test editing/publishing/uploads, then
-   promote through the normal release process.
+4. Use the production preparation commands above to migrate and copy the approved
+   preview content, images and selected admin into the empty production CMS.
+   Never seed automatically on boot or in every Vercel build. Schema push is disabled.
+5. Verify the production configuration locally, then release through the production
+   Git branch. Check public pages, admin login, image previews and upload CORS.
 
 Migrations use `CMS_DB_SCHEMA` rather than a hardcoded development schema. Generate
 future migrations against the development schema and review their SQL before

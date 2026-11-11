@@ -12,6 +12,8 @@
     "dev:preview": "node --import tsx scripts/preview.ts dev",
     "build:preview": "node --import tsx scripts/preview.ts build",
     "start:preview": "node --import tsx scripts/preview.ts start",
+    "build:production": "node --import tsx scripts/production.ts build",
+    "start:production": "node --import tsx scripts/production.ts start",
     "payload": "node --import tsx scripts/payload.ts",
     "cms:import": "node --import tsx scripts/import-content.ts",
     "cms:admin": "node --import tsx scripts/admin.ts",
