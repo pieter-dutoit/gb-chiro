@@ -3,18 +3,20 @@ import { getPayload, type CollectionSlug, type GlobalSlug } from 'payload';
 import { unstable_cache } from 'next/cache';
 import config from '@payload-config';
 import * as map from './cms-mappers';
+import { cmsCacheKey } from './cms-cache-key';
 
 const options = { tags: ['payload-public'], revalidate: false as const };
+const namespace = cmsCacheKey(process.env);
 // Never bind a request/user to this cache: public queries always run anonymously.
 const global = <T extends GlobalSlug>(slug: T) => unstable_cache(async () => {
   const payload = await getPayload({ config });
   return payload.findGlobal({ slug, depth: 3, draft: false, overrideAccess: false });
-}, ['global', slug], options);
+}, [namespace, 'global', slug], options);
 const collection = <T extends CollectionSlug>(slug: T) => unstable_cache(async () => {
   const payload = await getPayload({ config });
   return (await payload.find({ collection: slug, depth: 2, draft: false, overrideAccess: false,
     where: { _status: { equals: 'published' } }, pagination: false, sort: 'id' })).docs;
-}, ['collection', slug], options);
+}, [namespace, 'collection', slug], options);
 
 const graphics = global('graphics');
 const business = global('business-details');

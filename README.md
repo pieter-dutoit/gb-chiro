@@ -70,6 +70,35 @@ For preview deployments, use a Neon preview branch and a unique `S3_PREFIX`
 cloned database can be displayed, but media changes/deletes are rejected when
 the record belongs to another prefix; upload a preview copy to replace it.
 
+For the persistent hosted `develop` CMS, `.env.preview.local` supplies its Neon
+connection, `CMS_DB_SCHEMA=payload`, `S3_PREFIX=preview/develop`, preview
+`PAYLOAD_SECRET`, and `CMS_SERVER_URL=http://localhost:3000`. Shared R2 settings
+come from `.env.local`. Both files are ignored by Git. Run `pnpm dev:preview`,
+`pnpm build:preview`, or `pnpm start:preview` to explicitly use these settings.
+An optional `--port 3001` also sets the matching local admin origin.
+Public content cache keys include the database and storage environment, so
+switching between local and hosted preview does not reuse the other CMS's data.
+Use the same Neon connection and `S3_PREFIX=preview/develop` in Vercel Preview.
+Once its URL is available, add that origin to the R2 upload CORS policy below.
+
+To initialise an empty, migrated preview database from the current local CMS:
+
+```sh
+node --import tsx scripts/prepare-preview.ts --email=YOUR_ADMIN_EMAIL
+node --import tsx scripts/prepare-preview.ts --email=YOUR_ADMIN_EMAIL --apply
+```
+
+The first command is a dry run. The second copies content, relationships and
+saved revisions, plus that existing local admin's password hash and role. It
+does not copy login sessions, password-reset tokens or saved preferences.
+Original content dates are read from the available SQL archive; its SQL and
+accounts are never executed/imported. Subsequent saved edits and newly uploaded
+media keep their actual dates. Preview internal identifiers use `content:`.
+Images and admin thumbnails are copied byte-for-byte to the preview prefix and
+checked by size and checksum. Private snapshots and a receipt are saved under
+`.cms-import/`. A populated destination is never overwritten. The production
+database and the local source are not modified.
+
 ## Browser uploads
 
 Payload uploads files directly to R2, so uploads up to 20 MB do not pass through

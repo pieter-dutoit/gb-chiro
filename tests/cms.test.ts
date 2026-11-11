@@ -48,7 +48,7 @@ const contract: Record<string, Record<string, string>> = {
   'social-media-platforms': { name: 'select', link: 'text' },
   media: { alt: 'text' }, 'seo-media': { alt: 'text' }, users: { roles: 'select' },
 };
-for (const config of configs) test(`Legacy editor fields: ${config.slug}`, () => {
+for (const config of configs) test(`Editor field parity: ${config.slug}`, () => {
   const expected = { ...contract[config.slug] };
   if (['home-page','about-us-page','treatment-and-care-page','what-to-expect-page','contact-us-page'].includes(config.slug)) Object.assign(expected, {
     'seo.meta.title': 'text', 'seo.meta.description': 'textarea', 'seo.open_graph.site_name': 'text', 'seo.open_graph.title': 'text', 'seo.open_graph.description': 'textarea', 'seo.open_graph.image': 'upload', 'seo.twitter.creator': 'text', 'seo.twitter.creatorId': 'text',

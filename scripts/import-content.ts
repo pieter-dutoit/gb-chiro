@@ -39,8 +39,9 @@ if (fs.existsSync(manifestPath)) Object.assign(manifest, JSON.parse(fs.readFileS
 function record(key: string, value: unknown) { manifest[key] = value; fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n'); }
 
 async function ensure(collection: CollectionSlug, oldID: number, data: Record<string, unknown>, filePath?: string) {
-  const sourceID = `legacy:${collection}:${oldID}`;
-  const existing = await payload.find({ collection, where: { sourceID: { equals: sourceID } }, depth: 0, limit: 1, overrideAccess: true, draft: true });
+  const sourceID = `content:${collection}:${oldID}`;
+  const previousSourceID = `legacy:${collection}:${oldID}`;
+  const existing = await payload.find({ collection, where: { sourceID: { in: [sourceID, previousSourceID] } }, depth: 0, limit: 1, overrideAccess: true, draft: true });
   let doc = existing.docs[0] ?? await payload.create({ collection, data: { ...data, sourceID } as RequiredDataFromCollectionSlug<CollectionSlug>, filePath, overrideAccess: true, context: importContext() });
   if (filePath) {
     const image = doc as unknown as { filename: string; prefix: string; _objectKey?: string; sizes?: Record<string, { filename?: string | null }> };
