@@ -19,12 +19,14 @@ export default async function Hero() {
     <section className="w-screen py-16 lg:py-24 xl:py-32 flex items-center relative">
       {/* Graphics */}
       <div className=" absolute w-full h-full overflow-hidden -z-10">
-        <MediaImage
-          priority
-          media={landingImage}
-          sizes="70vw"
-          className="object-cover w-[70vw]  ml-auto"
-        />
+        <div className="absolute inset-y-0 right-0 w-[70vw]">
+          <MediaImage
+            priority
+            media={landingImage}
+            sizes="70vw"
+            className="object-cover"
+          />
+        </div>
         <div className="absolute inset-0 size-full bg-gradient-to-r from-[#014335] sm:from-[#00271e] via-[#014335]  via-[30%] to-[#014335]/90 sm:to-[#000000]/0" />
       </div>
 

@@ -80,11 +80,13 @@ export default async function NewPatients() {
           className="flex-1 relative w-full bg-primary/5 pointer-events-none aspect-12/16 md:aspect-auto"
           tabIndex={-1}
         >
-          <MediaImage
-            media={whatToExpectImage}
-            sizes="(min-width: 768px) 50vw, 100vw"
-            className="absolute min-w-[100vw] left-1/2 -translate-x-1/2 md:-translate-x-0 object-center object-cover opacity-90 -z-0 md:absolute md:left-0 md:top-0 md:bottom-0 md:min-w-[50vw] 3xl:block 3xl:min-w-auto"
-          />
+          <div className="absolute inset-y-0 left-1/2 w-full min-w-[100vw] -translate-x-1/2 md:left-0 md:min-w-[50vw] md:translate-x-0 3xl:min-w-auto">
+            <MediaImage
+              media={whatToExpectImage}
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-center object-cover opacity-90"
+            />
+          </div>
         </div>
       </div>
     </section>
