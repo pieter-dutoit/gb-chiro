@@ -5,6 +5,7 @@ import revalidateCache from "../hooks/revalidate-cache";
 
 export const Graphics: GlobalConfig = {
   slug: "graphics",
+  label: "Logos & Graphics",
   versions: {
     drafts: true,
   },

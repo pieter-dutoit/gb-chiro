@@ -6,6 +6,7 @@ export const Users: CollectionConfig = {
   slug: "users",
   admin: {
     useAsTitle: "email",
+    hidden: ({ user }) => !user?.roles?.includes("admin"),
   },
   hooks: { beforeValidate: [({ operation, req, context, data }) => {
     if (operation === "create" && !req.user && !context.bootstrap) throw new APIError("An administrator must set up this account.", 403);

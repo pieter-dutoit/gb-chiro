@@ -9,8 +9,8 @@ export const SocialMediaPlatforms: CollectionConfig = {
   access: contentAccess,
   slug: "social-media-platforms",
   labels: {
-    singular: "Social Media Platform",
-    plural: "Social Media Platforms",
+    singular: "Social Link",
+    plural: "Social Links",
   },
   admin: {
     useAsTitle: "name",

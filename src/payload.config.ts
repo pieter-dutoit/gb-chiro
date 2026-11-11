@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
-import { buildConfig, type CollectionConfig, type Field } from 'payload';
+import { buildConfig, type CollectionConfig, type Field, type GlobalConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { s3Storage } from '@payloadcms/storage-s3';
@@ -24,8 +24,25 @@ import { databaseSchema, requiredEnv, serverURL, storagePrefix } from './cms-con
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 // Internal, immutable migration identity makes interrupted imports resumable.
-const sourceID: Field = { name: 'sourceID', type: 'text', unique: true, index: true, admin: { hidden: true }, access: { create: () => false, update: () => false } };
+const sourceID: Field = { name: 'sourceID', type: 'text', unique: true, index: true, admin: { hidden: true, disableListColumn: true, disableListFilter: true }, access: { create: () => false, update: () => false } };
 const importable = (collection: CollectionConfig): CollectionConfig => ({ ...collection, fields: [...collection.fields, sourceID] });
+const collectionGroups: Record<string, string | false> = {
+  services: 'Content', reviews: 'Content', media: 'Content',
+  users: 'Settings', 'social-media-platforms': 'Settings',
+  articles: false, 'new-patient-steps': false, 'seo-media': false,
+};
+const collectionAdmin = (collection: CollectionConfig): CollectionConfig => ({
+  ...collection, admin: { ...collection.admin, group: collectionGroups[collection.slug], hideAPIURL: true },
+});
+const pageLabels: Record<string, string> = {
+  'home-page': 'Home', 'about-us-page': 'About Us', 'treatment-and-care-page': 'Treatment & Care',
+  'what-to-expect-page': 'What to Expect', 'contact-us-page': 'Contact Us',
+};
+const globalAdmin = (global: GlobalConfig): GlobalConfig => ({
+  ...global,
+  label: pageLabels[global.slug] ?? global.label,
+  admin: { ...global.admin, group: pageLabels[global.slug] ? 'Pages' : 'Settings', hideAPIURL: true },
+});
 const prefix = storagePrefix();
 const publicURL = requiredEnv('CF_PUBLIC_URL').replace(/\/$/, '');
 const generateFileURL = ({ filename, prefix: filePrefix }: { filename: string; prefix?: string }) =>
@@ -48,8 +65,8 @@ export default buildConfig({
   }),
   sharp,
   typescript: { outputFile: path.resolve(dirname, 'payload-types.ts') },
-  collections: [Users, ...[Media, SEOMedia, Services, NewPatientSteps, Article, SocialMediaPlatforms, Reviews].map(importable)],
-  globals: [BusinessDetailsGlobal, Graphics, HomePage, AboutUsPage, TreatmentAndCarePage, WhatToExpectPage, ContactUsPage],
+  collections: [Users, ...[Media, SEOMedia, Services, NewPatientSteps, Article, SocialMediaPlatforms, Reviews].map(importable)].map(collectionAdmin),
+  globals: [BusinessDetailsGlobal, Graphics, HomePage, AboutUsPage, TreatmentAndCarePage, WhatToExpectPage, ContactUsPage].map(globalAdmin),
   plugins: [s3Storage({
     clientUploads: true,
     collections: {
