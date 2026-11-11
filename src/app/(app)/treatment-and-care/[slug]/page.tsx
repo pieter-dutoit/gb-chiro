@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import type { ComponentType } from "react";
+import CMSRichText from "@/components/cms-rich-text";
 
 import Breadcrumbs from "@/components/breadcrumbs";
 import MediaImage from "@/components/media-image";
@@ -8,7 +8,7 @@ import MoreArticlesCarousel from "@/components/more-articles";
 import { Typography } from "@/components/ui/typography";
 
 import { generateArticleMetadata } from "@/lib/utils/generate-article-metadata";
-import { getArticle, getArticles } from "@/lib/data";
+import { getArticle } from "@/lib/data";
 import { formatDate, getBaseUrl, getDaysDifference } from "@/lib/utils";
 
 import {
@@ -16,26 +16,8 @@ import {
   getImageObject,
 } from "@/lib/utils/create-structured-data";
 
-type ArticleModule = {
-  default: ComponentType;
-};
-
-const articleModules: Record<string, () => Promise<ArticleModule>> = {
-  "neck-and-back-pain-relief": () =>
-    import("@/content/articles/neck-and-back-pain-relief.mdx"),
-};
-
-export const dynamicParams = false;
-export const revalidate = false;
-export const dynamic = "force-static";
-
-export async function generateStaticParams() {
-  const articles = await getArticles();
-
-  return articles.map(({ slug }) => ({
-    slug,
-  }));
-}
+export const dynamicParams = true;
+export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -43,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
 
   const article = await getArticle(slug);
-  if (!article) return {};
+  if (!article) return notFound();
 
   return generateArticleMetadata(article);
 }
@@ -51,12 +33,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
   const article = await getArticle(slug);
-  const loadArticle = articleModules[slug];
 
   if (!article) return notFound();
-  if (!loadArticle) return notFound();
-
-  const { default: ArticleContent } = await loadArticle();
 
   const { title, thumbnail, author, createdAt, updatedAt } = article;
 
@@ -169,7 +147,7 @@ export default async function ArticlePage({ params }: Props) {
 
           {/* Content */}
           <div className="article-content">
-            <ArticleContent />
+            <CMSRichText data={article.body} article />
           </div>
         </div>
       </section>

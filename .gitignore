@@ -44,3 +44,6 @@ docs/resources
 
 cms-export
 .playwright*
+
+!.env.example
+.cms-import/

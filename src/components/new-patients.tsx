@@ -1,3 +1,4 @@
+import CMSRichText from "./cms-rich-text";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
@@ -53,7 +54,7 @@ export default async function NewPatients() {
                   </span>
 
                   <div className="font-extrabold text-lg text-center">
-                    {title}
+                    <CMSRichText data={title} />
                   </div>
                   <p className="text-center max-w-[30ch]">{overview}</p>
                 </li>

@@ -1,3 +1,7 @@
+// Render public pages per request; Payload queries remain explicitly cached.
+// This avoids stale full-page responses after an editor unpublishes content.
+export const dynamic = "force-dynamic";
+
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 

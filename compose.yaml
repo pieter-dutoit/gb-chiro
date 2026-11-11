@@ -1,0 +1,18 @@
+services:
+  cms-db:
+    image: postgis/postgis:17-3.5
+    ports:
+      - "127.0.0.1:55433:5432"
+    environment:
+      POSTGRES_DB: gb_chiro_cms_dev
+      POSTGRES_USER: gb_chiro
+      POSTGRES_PASSWORD: local-development-only
+    volumes:
+      - cms-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gb_chiro -d gb_chiro_cms_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+volumes:
+  cms-db:

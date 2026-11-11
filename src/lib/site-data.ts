@@ -12,9 +12,9 @@ import type {
   SocialPlatform,
   TreatmentAndCarePageData,
   WhatToExpectPageData,
-} from "./site-types";
+} from "./seed-types";
 
-const media = {
+export const media = {
   logo: {
     id: 1,
     alt: "logo",
@@ -267,7 +267,7 @@ const media = {
   },
 } satisfies Record<string, SiteMedia>;
 
-const seoMedia = {
+export const seoMedia = {
   chiropractor: {
     id: 9,
     alt: "Chiropractor in Griffith",

@@ -13,7 +13,7 @@ import {
   getWhatToExpectPageData,
 } from "@/lib/data";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 async function getLastModified(
   fetchers: Array<() => Promise<unknown>>

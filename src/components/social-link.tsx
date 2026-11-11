@@ -10,14 +10,10 @@ const ICON_MAP = {
   instagram: Instagram,
 } as const satisfies Partial<Record<SocialName, LucideIcon>>;
 
-function getIcon(name: SocialName): LucideIcon {
-  return (ICON_MAP as Record<string, LucideIcon | undefined>)[name] ?? Globe;
-}
-
 type SocialLinkProps = Pick<SocialPlatform, "name" | "link">;
 
 export default function SocialLink({ name, link }: SocialLinkProps) {
-  const Icon = getIcon(name);
+  const Icon = (ICON_MAP as Partial<Record<SocialName, LucideIcon>>)[name] ?? Globe;
 
   return (
     <Link

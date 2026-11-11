@@ -42,7 +42,7 @@ export function generateArticleMetadata(
         continue;
       }
 
-      ogUrl = createMediaUrl(candidate.filename, "media");
+      ogUrl = createMediaUrl(thumbnail);
       ogWidth = candidate.width ?? undefined;
       ogHeight = candidate.height ?? undefined;
       break;
@@ -51,7 +51,7 @@ export function generateArticleMetadata(
 
   // Fallback to the original thumbnail URL
   if (!ogUrl && thumbnail && thumbnail?.filename) {
-    ogUrl = createMediaUrl(thumbnail.filename, "media");
+    ogUrl = createMediaUrl(thumbnail);
     ogWidth = thumbnail.width ?? undefined;
     ogHeight = thumbnail.height ?? undefined;
   }

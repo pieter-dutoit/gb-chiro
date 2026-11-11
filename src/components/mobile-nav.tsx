@@ -2,7 +2,7 @@
 
 import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, type PropsWithChildren } from "react";
+import { useState, type PropsWithChildren } from "react";
 import {
   Sheet,
   SheetContent,
@@ -13,12 +13,12 @@ import {
 } from "./ui/sheet";
 
 export default function MobileNav({ children }: PropsWithChildren) {
-  const [open, setOpen] = useState(false);
   const path = usePathname();
+  return <MobileNavContent key={path}>{children}</MobileNavContent>;
+}
 
-  useEffect(() => {
-    setOpen(false);
-  }, [path]);
+function MobileNavContent({ children }: PropsWithChildren) {
+  const [open, setOpen] = useState(false);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>

@@ -1,3 +1,4 @@
+import CMSRichText from "./cms-rich-text";
 import { getWhatToExpectPageData } from "@/lib/data";
 
 import { Typography } from "./ui/typography";
@@ -38,7 +39,7 @@ export default async function WhatToExpect() {
                 </div>
                 {/* Title */}
                 <Typography className="font-bold max-w-[30ch] text-xl sm:text-2xl lg:text-3xl">
-                  {title}
+                  <CMSRichText data={title} />
                 </Typography>
 
                 <div className="opacity-60 font-semibold text-sm lg:text-base">
@@ -51,9 +52,7 @@ export default async function WhatToExpect() {
                 variant="paragraphs"
                 className="text-left max-w-[65ch] lg:text-lg"
               >
-                {description.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
+                <CMSRichText data={description} />
               </Typography>
             </li>
           );

@@ -1,13 +1,11 @@
-import type { NextConfig } from "next";
-import createMDX from "@next/mdx";
+import type { NextConfig } from 'next';
+import { withPayload } from '@payloadcms/next/withPayload';
 
+const mediaURL = process.env.CF_PUBLIC_URL ? new URL(process.env.CF_PUBLIC_URL) : undefined;
 const nextConfig: NextConfig = {
-  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
-  turbopack: {
-    resolveExtensions: [".mdx", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"],
+  images: {
+    remotePatterns: mediaURL ? [{ protocol: 'https', hostname: mediaURL.hostname, pathname: `${mediaURL.pathname.replace(/\/$/, '')}/**` }] : [],
+    qualities: [75],
   },
 };
-
-const withMDX = createMDX({});
-
-export default withMDX(nextConfig);
+export default withPayload(nextConfig);

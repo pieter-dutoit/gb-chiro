@@ -1,3 +1,5 @@
+import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+
 export type DayKey =
   | "Monday"
   | "Tuesday"
@@ -9,6 +11,7 @@ export type DayKey =
 
 export type MediaSize = {
   filename: string;
+  url?: string;
   width?: number;
   height?: number;
 };
@@ -17,6 +20,7 @@ export type SiteMedia = {
   id: number;
   alt: string;
   filename: string;
+  url?: string;
   width?: number;
   height?: number;
   mimeType?: string;
@@ -80,13 +84,14 @@ export type Article = {
   thumbnail?: SiteMedia;
   description?: string;
   tags?: string[];
+  body: SerializedEditorState;
   createdAt: string;
   updatedAt: string;
 };
 
 export type SocialPlatform = {
   id: number;
-  name: "facebook" | "instagram";
+  name: "facebook" | "instagram" | "x" | "linkedin" | "youtube" | "tiktok" | "snapchat" | "reddit" | "threads" | "twitch" | "telegram" | "whatsapp" | "weChat";
   link: string;
   createdAt: string;
   updatedAt: string;
@@ -105,9 +110,9 @@ export type Review = {
 export type NewPatientStep = {
   id: number;
   icon: SiteMedia;
-  title: string;
+  title: SerializedEditorState;
   overview: string;
-  description: string[];
+  description: SerializedEditorState;
   createdAt: string;
   updatedAt: string;
 };

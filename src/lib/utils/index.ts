@@ -151,7 +151,7 @@ export function extractMediaUrl(
   media: SiteMedia | null | undefined | false
 ): string {
   if (!media) return "";
-  return new URL(createMediaUrl(media.filename, "media"), getBaseUrl()).toString();
+  return new URL(createMediaUrl(media), getBaseUrl()).toString();
 }
 
 export function extractMediaUrls(

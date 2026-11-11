@@ -33,11 +33,11 @@ export default function createMetadataConfig(seo: SiteSEO): Metadata {
       description: openGraph.description,
       siteName: openGraph.siteName,
       type: "website",
-      images: openGraph.image.map(({ filename, alt, height, width }) => ({
-        url: createMediaUrl(filename, "seo-media"),
-        alt,
-        height: height ?? 0,
-        width: width ?? 0,
+      images: openGraph.image.map((image) => ({
+        url: createMediaUrl(image),
+        alt: image.alt,
+        height: image.height ?? 0,
+        width: image.width ?? 0,
       })),
     },
   };
