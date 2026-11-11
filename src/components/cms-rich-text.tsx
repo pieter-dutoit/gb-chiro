@@ -13,8 +13,8 @@ const converters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConverters
   },
   paragraph: ({ node, nodesToJSX }) => <Typography as="p" variant="articleParagraph">{nodesToJSX({ nodes: node.children })}</Typography>,
   list: ({ node, nodesToJSX }) => node.tag === 'ol'
-    ? <ol start={node.start} className="list-decimal flex flex-col gap-2 pl-6 text-base leading-6 md:leading-7 mb-5">{nodesToJSX({ nodes: node.children })}</ol>
-    : <ul className="list-disc flex flex-col gap-2 pl-6 text-base leading-6 md:leading-7 mb-5">{nodesToJSX({ nodes: node.children })}</ul>,
+    ? <ol start={node.start} className="list-decimal flex flex-col gap-2 pl-6 text-base leading-6 md:leading-7 mb-5 [&>li]:pl-1">{nodesToJSX({ nodes: node.children })}</ol>
+    : <ul className="list-disc flex flex-col gap-2 pl-6 text-base leading-6 md:leading-7 mb-5 [&>li]:pl-1">{nodesToJSX({ nodes: node.children })}</ul>,
   upload: ({ node }) => {
     if (node.relationTo !== 'media' && node.relationTo !== 'seo-media') return null;
     if (typeof node.value !== "object") return null;

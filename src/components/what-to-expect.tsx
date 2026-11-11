@@ -52,7 +52,7 @@ export default async function WhatToExpect() {
                 variant="paragraphs"
                 className="text-left max-w-[65ch] lg:text-lg"
               >
-                <CMSRichText data={description} />
+                <CMSRichText data={description} className="flex flex-col gap-4" />
               </Typography>
             </li>
           );
